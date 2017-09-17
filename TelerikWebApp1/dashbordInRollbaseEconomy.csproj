@@ -71,9 +71,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="projectPage.html" />
+    <Content Include="dss.css" />
+    <Content Include="footer.html" />
+    <Content Include="Header.html" />
+    <Content Include="projectPage1.html" />
+    <Content Include="projectPage2.html" />
+    <Content Include="_.js" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="secondLoactionsSelector.js" />
+    <Content Include="secondLocations.js" />
+    <Content Include="StyleSheetForEveryPage.css" />
+    <Content Include="thirdLoactionsSelector.js" />
+    <Content Include="thirdLocations.js" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
@@ -113,7 +123,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

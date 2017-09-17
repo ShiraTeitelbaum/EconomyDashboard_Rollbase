@@ -1,0 +1,12 @@
+﻿@media (max-width: 480px) {
+
+    html.k-rtl .rbs-pageTitle {
+        margin-right: -15rem;
+    }
+
+    .rbs-pageTitle {
+        font-size: 1.95rem;
+        margin-top: 3.5rem;
+        font-weight: bold;
+    }
+}

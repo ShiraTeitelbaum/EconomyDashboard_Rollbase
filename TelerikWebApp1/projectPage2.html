@@ -1,0 +1,147 @@
+﻿<!-- Section 2 -->
+<!-- PANEL 2 -->
+
+<div class="col-md-6">
+    <div id="panel-two_sec2" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+            <!--מדד בטיחות-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="row">
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-7">
+                    <div id="gauge"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="tile_stats_count">
+                        <h4 class="count_top">ציון</h4>
+                        <div class="count">0</div>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="reportList"></div>-->
+        </div>
+    </div>
+</div>
+
+<script>
+    var gauge = $("#gauge").kendoLinearGauge({
+        pointer: {
+            color: "#000000",
+            size: 14,
+            shape: "arrow"
+        },
+        scale: {
+            majorUnit: 10,
+            minorUnit: 5,
+            min: 0,
+            max: 100,
+            ranges: [
+                {
+                    from: 0,
+                    to: 45,
+                    color: "#ecb09b"
+                },
+                {
+                    from: 45,
+                    to: 70,
+                    color: "#fff9b8"
+                },
+                {
+                    from: 70,
+                    to: 100,
+                    color: "#bfdbb5"
+                }
+            ],
+            majorTicks: {
+                size: 20
+            },
+            minorTicks: {
+                size: 27
+            },
+            vertical: false,
+            transitions: false
+        }
+    }).data('kendoLinearGauge');
+
+</script>
+
+<!-- PANEL 1 -->
+
+<div class="col-md-6">
+    <div id="panel-one" class="panel panel-default">
+        <div class="panel-heading" style="height: 20.39px;">
+            <h3 class="panel-title" style="height: 0px;color:transparent">siur</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="demo-section k-content wide" style="max-width: 644px;">
+                <div id="mediaplayer" style="height:360px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var updateAllPanels = function (e) {
+
+        $('#panel-two').find('.titleGray').html("מדד בטיחות");
+        $('#panel-two_second').find('.titleGray').html("דו''ח בקרה אחרון");
+        $('#panel-one').find('.titleGray').html("סיור רחפן");
+
+        debugger
+        rbf_selectQuery('SELECT LastSafeguardScore FROM ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, function (values) {
+            debugger
+            gauge.value(values[0][0]);
+            $('#panel-two').find('.count').html(values[0][0] + "%");
+        });
+
+
+        //for the last report!
+        rbf_selectQuery('SELECT URL_report,dateOfCreatedAt,CheckScore FROM Checkup WHERE URL_report!="null" and cb_endCheck=true and locationId = ' + e.detail.locationId, 1, function (values) {
+            document.getElementById('reportList').innerHTML = "";
+            if (values) {
+                //for (var i = 0; i < values.length; i++) {
+
+                var reportLink = document.createElement('a');
+                reportLink.target = "_blank";
+                reportLink.href = values[0][0];
+                reportLink.id = 'reportLink' + 0;
+                //reportLink.innerHTML = values[i][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[i][2] + "\n";
+
+                reportLink.innerHTML = values[0][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[0][2] + "</br>";
+                //reportLink.innerHTML = values[i][1] + "</br>";
+
+                //see that it wont do problems
+                //if (i != (values.length - 1))   //for some reason with the last report does too much space- paddingRight
+                //    reportLink.style.paddingRight = "24px";
+                reportLink.style.fontSize = "18px";
+
+                //document.getElementById('reportList').innerHTML = "";
+                document.getElementById('reportList').appendChild(reportLink);
+                //}
+
+            }
+        });
+    }
+    $(document).on('secondLocations:context-update', updateAllPanels);
+
+    //the mediaPlayer will happens for now- once just when entering the page
+    $(document).ready(function () {
+        $("#mediaplayer").kendoMediaPlayer({
+            autoPlay: true,
+            navigatable: true,
+            media: {
+                title: "Recap of Progress Ringing The Bell at Nasdaq (2016)",
+                source: "https://www.youtube.com/watch?v=tc3xhD24iTU"
+            }
+        });
+    });
+</script>
