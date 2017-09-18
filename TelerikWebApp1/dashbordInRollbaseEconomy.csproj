@@ -74,8 +74,12 @@
     <Content Include="dss.css" />
     <Content Include="footer.html" />
     <Content Include="Header.html" />
+    <Content Include="mapRefael.html" />
+    <Content Include="nisui.html" />
+    <Content Include="nisui2.html" />
     <Content Include="projectPage1.html" />
     <Content Include="projectPage2.html" />
+    <Content Include="projectPage3.html" />
     <Content Include="_.js" />
   </ItemGroup>
   <ItemGroup>

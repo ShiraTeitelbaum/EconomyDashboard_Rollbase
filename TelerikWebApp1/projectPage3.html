@@ -1,0 +1,29 @@
+﻿<!-- Section 3 -->
+<!-- PANEL 1 -->
+
+<div class="col-md-12">
+    <div id="panel_sec3" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">slider</h3>
+            <!--מדד בטיחות-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="map" style="height: 412px;"></div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var updateSec_3_Panel = function (e) {
+        $('#panel_sec3').find('.titleGray').html("גלרית תמונות של מפגעי בטיחות");
+
+        // maybe i can get also those who are null- but then just not put them in the slider....
+        rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null" and locationId = ' + e.detail.locationId, 1, function (values) {
+        });
+    }
+    $(document).on('secondLocations:context-update', updateSec_3_Panel);
+
+</script>

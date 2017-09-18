@@ -1,0 +1,50 @@
+﻿<html>
+
+<body>
+    <div id="map"></div>
+
+    <script>
+        function Location(values) {
+            var gridData = [];
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    var data = {
+                        shape: "pinTarget",
+                        location: [values[i][0], values[i][1]],
+                        //    tooltip: {content: "<div><img src='values[i][4]' alt='WorkerPhoto' height='42' width='42'><br>values[i][2] + " " + values[i][3] </div>"},
+                        tooltip: {
+                            content: "<div id='btnToProj'>" + values[i][2]+" "+ values[i][3] + "<br><img height='80px' width='80px' padding-top='10px' src='" + values[i][4] + "' </img></div>" },
+
+                        colorField: "green"
+                    }
+                    gridData.push(data);
+                }
+                createMap(gridData);
+            }
+        }
+        function createMap(gridData) {
+            $("#map").kendoMap({
+                center: ["31.7656212", "35.1910332 "],
+                zoom: 10,
+                layers: [{
+                    type: "tile",
+                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                    subdomains: ["a", "b", "c"],
+                    attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                }],
+                markers: gridData
+            });
+        }
+        rb.newui.util.addEventListener("rbs_pageRender", function () {
+            rbf_selectQuery("select Latitude,longitude,firstName,lastName,userProfilePicURL from USER WHERE cb_inWorkNow = true Order By firstName ASC", 1000, Location);
+        });
+    </script>
+    <style>
+        .k-map .k-marker {
+            background-image: url('{!#HOSTED_FILE.WUc-OouRSNaG1HpQavvn-w#url}');
+            background-size: 100% 100%;
+            color: black;
+        }
+    </style>
+</body>
+</html>
