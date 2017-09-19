@@ -74,6 +74,7 @@
     <Content Include="dss.css" />
     <Content Include="footer.html" />
     <Content Include="Header.html" />
+    <Content Include="HtmlPage4.html" />
     <Content Include="mapRefael.html" />
     <Content Include="nisui.html" />
     <Content Include="nisui2.html" />
