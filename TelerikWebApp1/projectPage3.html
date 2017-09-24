@@ -1,23 +1,4 @@
-﻿<!-- because it changes for each project selected,
-    so ita a problem with the remove - if classes were removed already...-->
-<!-- PANEL 1 -->
-<!-- כשירות ציוד תאגידי -->
-<!--<div class="col-md-12">
-    <div id="panel-donats2" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="height: 0px;color:transparent">Donats</h3>
-            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
-        </div>
-
-        <div class="panel-body" data-mh="group-four">
-
-        </div>
-    </div>
-</div>-->
-
-
-
-<style>
+﻿<style>
     /*the style for the dounuts of contractors*/
 
     [id^="div_LocImg2_"] {
@@ -71,16 +52,6 @@
 </style>
 
 <style>
-    /*#myImg {
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-        #myImg:hover {
-            opacity: 0.7;
-        }*/
-
     /* The Modal (background) */
     .modal {
         display: none; /* Hidden by default */
@@ -126,21 +97,21 @@
 
     @-webkit-keyframes zoom {
         from {
-            -webkit-transform: scale(0)
+            -webkit-transform: scale(0);
         }
 
         to {
-            -webkit-transform: scale(1)
+            -webkit-transform: scale(1);
         }
     }
 
     @keyframes zoom {
         from {
-            transform: scale(0)
+            transform: scale(0);
         }
 
         to {
-            transform: scale(1)
+            transform: scale(1);
         }
     }
 
@@ -198,7 +169,7 @@
     <div id="divsWithLocImagesInHere2" class="carousel-inner">
         <!--style="padding-top: 20px;"-->
 
-
+        <!-- the most photos that can be is 26 photos- thats why dont need more than 5 circles -->
         <div id="item2_1" class="item active">
 
             <div id="divWithLocImgContainer2_1">
@@ -232,36 +203,6 @@
 
             </div>
         </div>
-        <div id="item2_6" class="item">
-
-            <div id="divWithLocImgContainer2_6">
-
-            </div>
-        </div>
-        <div id="item2_7" class="item">
-
-            <div id="divWithLocImgContainer2_7">
-
-            </div>
-        </div>
-        <div id="item2_8" class="item">
-
-            <div id="divWithLocImgContainer2_8">
-
-            </div>
-        </div>
-        <div id="item2_9" class="item">
-
-            <div id="divWithLocImgContainer2_9">
-
-            </div>
-        </div>
-        <div id="item2_10" class="item">
-
-            <div id="divWithLocImgContainer2_10">
-
-            </div>
-        </div>
     </div>
 
     <!-- Left and right controls -->
@@ -278,7 +219,7 @@
 
 <!-- script for כשירות ציוד תאגידי ופרויקטאלי יחד -->
 <script>
-
+    
     //chart כשירות ציוד פרויקטאלי
     var arrNames1 = [];
     var arrEquipmentItems = [];
@@ -300,7 +241,7 @@
         //$('#panel-donats2').find('.titleGray').html("כשירות ציוד");
 
         //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
-        rbf_selectQuery('SELECT URL_Image1,ControlPointName FROM ItemCheckObject WHERE URL_Image1!="null" and locationId = ' + e.detail.locationId, 100, function (values) {
+        rbf_selectQuery('SELECT URL_Image1,ControlPointName FROM ItemCheckObject WHERE URL_Image1!="null" and locationId = ' + e.detail.locationId, 26, function (values) {
             //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
 
             for (var i = 0; i < values.length; i++) {
@@ -312,7 +253,7 @@
 
             for (var i = 0; i < values.length; i++) {
                 createDivWithImgLoc2(j1, values[i]);
-                debugger
+                //debugger
                 j1++;
             }
 
@@ -331,7 +272,7 @@
     function createDivsForImagesLocation2(values) {
         if (values) {
 
-            debugger
+            //debugger
             //just Clear Before
             document.getElementById('olForShowing2').innerHTML = "";
 
@@ -359,10 +300,21 @@
 
             //then- build the divWithLocImgContainer2_
             //need the same number of divWithLocImgContainer2_ (containers) divs as Count amount
-            for (var k = 1; k <= count2; k++) {
-                debugger
+
+            //for (var k = 1; k <= count2; k++) {
+            //    debugger
+            //    document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
+            //}
+
+
+            //here didn't do remove - because each time there is different number of divs depends on what location
+            //was chosen, therefor need to clear all of them- not just untill the number of count!!
+
+            for (var k = 1; k <= 5; k++) {
+                //debugger
                 document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
             }
+
 
             //for (var k = count2 + 1; k <= 10; k++) {
             //    document.getElementById('item2_' + k).remove();
@@ -415,7 +367,15 @@
         if (values1 != "") {
             divLoc.style.backgroundImage = "url(" + values1[0] + ")";
             debugger
-            divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] + "')");
+
+            //divLoc.setAttribute("bakara", values1[1]);
+
+          //  divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] + "')");
+           // divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + divLoc + ")");
+          //  divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + this + ")");
+            debugger
+            divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] +"' , '" + values1[1] + "')");
+            //divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + values1 + ")");
         }
         else {
             divForSiteName.innerHTML = "לא מופיע שם אתר";
@@ -435,16 +395,16 @@
 
     }
 
-    function clickedOnProjectImgTziud(values1) {
-        //  alert("clicked " + values1);
-
+    function clickedOnProjectImgTziud(values1, values1Sec) {
+      //  alert("clicked " + values1 + " values1Sec" + values1Sec);
+        debugger
         // Get the modal
         var modal = document.getElementById('myModal');
 
         //// Get the image and insert it inside the modal - use its "alt" text as a caption
         //var img = document.getElementById('myImg');
 
-        debugger
+        //debugger
         // img.style.backgroundImage = "url(" + values1 + ")";
 
         var modalImg = document.getElementById("img01");
@@ -454,9 +414,11 @@
         //modalImg.src = this.src;
         modalImg.src = values1;
         //captionText.innerHTML = this.alt;
-        // captionText.innerHTML = "picture one";
 
-        //  }
+        //captionText.innerHTML.style.fontSiz= "20px";
+        captionText.innerHTML = "תחום מבדק: " + values1Sec;
+        captionText.style.fontSize = "20px";
+
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];

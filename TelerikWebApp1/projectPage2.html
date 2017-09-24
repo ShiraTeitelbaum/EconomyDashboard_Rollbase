@@ -10,8 +10,8 @@
             <!-- added same style as for panel-title to titleGray-->
         </div>
         <div class="panel-body" data-mh="group-one">
-            <div id="map" style="height: 412px;"></div>          
-         
+            <div id="map" style="height: 412px;"></div>
+
         </div>
     </div>
 </div>
@@ -27,11 +27,11 @@
             <!-- added same style as for panel-title to titleGray-->
         </div>
         <div class="panel-body" data-mh="group-one">
-                <div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 20px;"></div>
-                <div id="listLikuim" style="    height: 360px;width: 33.333%;float: right;font-size:18px;"></div>
-                <div id="listLikuim2" style="    height: 360px;width: 33.333%;float: right;font-size:18px;"></div>
-                <div id="listLikuim3" style="    height: 360px;font-size:18px;"></div>
-           
+            <div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 20px;"></div>
+            <div id="listLikuim" style="    height: 360px;width: 33.333%;float: right;font-size:18px;"></div>
+            <div id="listLikuim2" style="    height: 360px;width: 33.333%;float: right;font-size:18px;"></div>
+            <div id="listLikuim3" style="    height: 360px;font-size:18px;"></div>
+
         </div>
     </div>
 </div>
@@ -42,73 +42,72 @@
         $('#panel-one_sec2').find('.titleGray').html("תחומים שבהם קיימים ליקויים");
         $('#panel-two_sec2').find('.titleGray').html("מיקום גאוגרפי");
 
-       
+
         function Location(values) {
             debugger
             //alert("Loc")
-                    var gridData = [];
-                    if (values) {
-                        for (var i = 0; i < values.length; i++) {
-                            var data = {
-                shape: "pinTarget",
-                                location: [values[i][1], values[i][2]],                                   
-                                tooltip: {
-                    content: "<div id='btnToProj'>" + values[i][0]+"</div>"
-                                },
-                                //colorField: "green"
-                            }
-                            gridData.push(data);
-                        }
-                        createMap(gridData);
+            var gridData = [];
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    var data = {
+                        shape: "pinTarget",
+                        location: [values[i][1], values[i][2]],
+                        tooltip: {
+                            content: "<div id='btnToProj'>" + values[i][0] + "</div>"
+                        },
+                        //colorField: "green"
                     }
+                    gridData.push(data);
                 }
-                function createMap(gridData) {
-                        $("#map").kendoMap({
-                            //center: ["31.7656212", "35.1910332"],
-                            center: [gridData[0]["location"][0], gridData[0]["location"][1]],
-                            zoom: 10,
-                            layers: [{
-                                type: "tile",
-                                urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-                                subdomains: ["a", "b", "c"],
-                                attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
-                            }],
-                            markers: gridData                         
-                    });
-                        $("#map").unbind("mousewheel");
-                        $("#map").unbind("DOMMouseScroll");
-                    }
-                //rb.newui.util.addEventListener("rbs_pageRender", function () {
-                rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
-                //});
+                createMap(gridData);
+            }
+        }
+        function createMap(gridData) {
+            $("#map").kendoMap({
+                //center: ["31.7656212", "35.1910332"],
+                center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                zoom: 10,
+                layers: [{
+                    type: "tile",
+                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                    subdomains: ["a", "b", "c"],
+                    attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                }],
+                markers: gridData
+            });
+            $("#map").unbind("mousewheel");
+            $("#map").unbind("DOMMouseScroll");
+        }
+        //rb.newui.util.addEventListener("rbs_pageRender", function () {
+        rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
+        //});
 
 
-                rbf_selectQuery('SELECT ControlPointName FROM ItemCheckObject WHERE Wrong=1 and locationId = ' + e.detail.locationId +' Group By ControlPointName', 100, function (values) {
-                    debugger
-                    //alert("values" + values);
+        rbf_selectQuery('SELECT ControlPointName FROM ItemCheckObject WHERE Wrong=1 and locationId = ' + e.detail.locationId + ' Group By ControlPointName', 100, function (values) {
+            debugger
+            alert("values" + values);
 
-                    document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים"+"</br>";
-                    //document.getElementById('listLikuimAll').innerHTML = "<label style='fontSize:20px; color:red; width:100%;'>:רשימת הליקויים החריגים" + "</br></label>";
+            document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים" + "</br>";
+            //document.getElementById('listLikuimAll').innerHTML = "<label style='fontSize:20px; color:red; width:100%;'>:רשימת הליקויים החריגים" + "</br></label>";
 
-                    for (var i = 0; i < values.length && i < 10; i++) {
-                        debugger
-                        document.getElementById('listLikuim').innerHTML += values[i][0] + "</br>";
-                    }
-                    for (i; i < values.length && i < 20; i++) {
-                        document.getElementById('listLikuim2').innerHTML += values[i][0] + "</br>";
-                    }
-                    for (i; i < values.length; i++) {
-                        document.getElementById('listLikuim3').innerHTML += values[i][0] + "</br>";
-                    }
-                });
+            for (var i = 0; i < values.length && i < 10; i++) {
+                debugger
+                document.getElementById('listLikuim').innerHTML += values[i][0] + "</br>";
+            }
+            for (i; i < values.length && i < 20; i++) {
+                document.getElementById('listLikuim2').innerHTML += values[i][0] + "</br>";
+            }
+            for (i; i < values.length; i++) {
+                document.getElementById('listLikuim3').innerHTML += values[i][0] + "</br>";
+            }
+        });
     }
     $(document).on('secondLocations:context-update', updateSec_2_Panels);
-    
+
 </script>
 
 <style>
     .k-map .k-marker {
-    	
         /*background-image: url('{!#HOSTED_FILE.WUc-OouRSNaG1HpQavvn-w#url}');*/
         background-image: url('{!#HOSTED_FILE.NBFQnHvMQjWrGHpXDoVZeA#url}');
         background-size: 100% 100%;

@@ -1,30 +1,10 @@
-﻿<!-- because it changes for each project selected,
-    so ita a problem with the remove - if classes were removed already...-->
-<!-- PANEL 1 -->
-<!-- כשירות ציוד תאגידי -->
-
-<!--<div class="col-md-12">
-    <div id="panel-donats2" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="height: 0px;color:transparent">Donats</h3>
-            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
-        </div>
-
-        <div class="panel-body" data-mh="group-four">
-
-        </div>
-    </div>
-</div>-->
-
-
-
-<style>
+﻿<style>
     /*the style for the dounuts of contractors*/
 
     [id^="div_LocImg2_"] {
         /*width: 190px;
         height: 280px;*/
-        width: 190px;
+        width: 16%;
         float: left;
     }
 
@@ -41,7 +21,7 @@
     /* The controlsy */
     .carousel-control {
         left: -12px;
-        top:0px;
+        top: -67px;
         /*top: 53%;*/
         height: 40px;
         width: 40px;
@@ -72,16 +52,6 @@
 </style>
 
 <style>
-    /*#myImg {
-        border-radius: 5px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-        #myImg:hover {
-            opacity: 0.7;
-        }*/
-
     /* The Modal (background) */
     .modal {
         display: none; /* Hidden by default */
@@ -127,21 +97,21 @@
 
     @-webkit-keyframes zoom {
         from {
-            -webkit-transform: scale(0)
+            -webkit-transform: scale(0);
         }
 
         to {
-            -webkit-transform: scale(1)
+            -webkit-transform: scale(1);
         }
     }
 
     @keyframes zoom {
         from {
-            transform: scale(0)
+            transform: scale(0);
         }
 
         to {
-            transform: scale(1)
+            transform: scale(1);
         }
     }
 
@@ -154,7 +124,6 @@
         font-size: 40px;
         font-weight: bold;
         transition: 0.3s;*/
-
         position: absolute;
         left: 80%;
         color: #f1f1f1;
@@ -186,8 +155,7 @@
     <!-- Indicators -->
     <ol id="olForShowing2" class="carousel-indicators"></ol>
 
-   <!-- <img id="myImg" alt="Trolltunga, Norway" width="300" height="200">-->
-
+    <!-- <img id="myImg" alt="Trolltunga, Norway" width="300" height="200">-->
     <!-- The Modal -->
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
@@ -281,6 +249,7 @@
 
 <!-- script for כשירות ציוד תאגידי ופרויקטאלי יחד -->
 <script>
+    var nameControlPoint = "";
 
     //chart כשירות ציוד פרויקטאלי
     var arrNames1 = [];
@@ -293,7 +262,7 @@
     //var data_1_active = 0, data_2_coachAdam = 0, data_3_begova = 0, data_4_Guidance = 0, data_5_permit = 0, data_6_residance = 0;
 
     var updateDonatsAguranim = function (e) {
-    
+
         arrNames1 = [];
         arrEquipmentItems = [];
         arrExceptions = [];
@@ -303,7 +272,7 @@
         //$('#panel-donats2').find('.titleGray').html("כשירות ציוד");
 
         //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
-        rbf_selectQuery('SELECT URL_Image1 FROM ItemCheckObject WHERE URL_Image1!="null" and locationId = ' + e.detail.locationId, 100, function (values) {
+        rbf_selectQuery('SELECT URL_Image1,ControlPointName FROM ItemCheckObject WHERE URL_Image1!="null" and locationId = ' + e.detail.locationId, 100, function (values) {
             //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
 
             for (var i = 0; i < values.length; i++) {
@@ -315,7 +284,7 @@
 
             for (var i = 0; i < values.length; i++) {
                 createDivWithImgLoc2(j1, values[i]);
-                debugger
+                //debugger
                 j1++;
             }
 
@@ -334,7 +303,7 @@
     function createDivsForImagesLocation2(values) {
         if (values) {
 
-            debugger
+            //debugger
             //just Clear Before
             document.getElementById('olForShowing2').innerHTML = "";
 
@@ -362,10 +331,20 @@
 
             //then- build the divWithLocImgContainer2_
             //need the same number of divWithLocImgContainer2_ (containers) divs as Count amount
-            for (var k = 1; k <= count2; k++) {
-                debugger
+
+            //for (var k = 1; k <= count2; k++) {
+            //    debugger
+            //    document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
+            //}
+
+
+            //here didn't do remove - because each time there is different number of divs depends on what location
+            //was chosen, therefor need to clear all of them- not just untill the number of count!!
+            for (var k = 1; k <= 10; k++) {
+                //debugger
                 document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
             }
+
 
             //for (var k = count2 + 1; k <= 10; k++) {
             //    document.getElementById('item2_' + k).remove();
@@ -378,6 +357,10 @@
                 var divInSlider2 = document.createElement('div');
 
                 divInSlider2.id = 'div_LocImg2_' + i;
+
+                //try now
+                divInSlider2.style.width = "16%";
+
 
                 //divInSlider2.style.paddingTop = "3em";
                 //divInSlider2.style.paddingBottom = "5em";
@@ -413,16 +396,20 @@
 
         if (values1 != "") {
             divLoc.style.backgroundImage = "url(" + values1[0] + ")";
-            debugger
+            //debugger
+
+            nameControlPoint = values1[1];
             divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] + "')");
+            //divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + values1[0] + ", " + values1[1] + ")");
+            //divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + values1 + ")");
         }
         else {
             divForSiteName.innerHTML = "לא מופיע שם אתר";
         }
 
         divLoc.style.height = "120px";
-        divLoc.style.width = "185px";
-
+        //divLoc.style.width = "185px";
+        divLoc.style.width = "90%";
 
         if (document.getElementById('div_LocImg2_' + i)) {
             document.getElementById('div_LocImg2_' + i).appendChild(divLoc);
@@ -435,27 +422,27 @@
     }
 
     function clickedOnProjectImgTziud(values1) {
-      //  alert("clicked " + values1);
-       
+        //  alert("clicked " + values1);
+        debugger
         // Get the modal
         var modal = document.getElementById('myModal');
 
         //// Get the image and insert it inside the modal - use its "alt" text as a caption
         //var img = document.getElementById('myImg');
-    
-        debugger
-       // img.style.backgroundImage = "url(" + values1 + ")";
+
+        //debugger
+        // img.style.backgroundImage = "url(" + values1 + ")";
 
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
-      //  img.onclick = function () {
-            modal.style.display = "block";
-            //modalImg.src = this.src;
-            modalImg.src = values1;
-            //captionText.innerHTML = this.alt;
-           // captionText.innerHTML = "picture one";
-            
-      //  }
+        //  img.onclick = function () {
+        modal.style.display = "block";
+        //modalImg.src = this.src;
+        modalImg.src = values1;
+        //captionText.innerHTML = this.alt;
+        captionText.innerHTML = nameControlPoint;
+
+        //  }
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];

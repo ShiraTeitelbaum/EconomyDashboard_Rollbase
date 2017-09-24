@@ -1,0 +1,153 @@
+﻿<!-- Section 2 -->
+<!-- PANEL 2 -->
+
+<div class="col-md-6">
+    <div id="panel-two_sec2" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">Map</h3>
+            <!--מדד בטיחות-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="map" style="height: 412px;"></div>
+
+        </div>
+    </div>
+</div>
+
+<!-- PANEL 1 -->
+
+<div class="col-md-6">
+    <div id="panel-one_sec2" class="panel panel-default">
+        <div class="panel-heading" style="height: 20.39px;">
+            <h3 class="panel-title" style="height: 0px;color:transparent">sivugLikuim</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 20px;"></div>
+            <div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim5" style="    height: 360px;font-size:18px;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var updateSec_2_Panels = function (e) {
+
+        $('#panel-one_sec2').find('.titleGray').html("תחומים שבהם קיימים ליקויים");
+        $('#panel-two_sec2').find('.titleGray').html("מיקום גאוגרפי");
+
+        //to clear the images from the last location:
+        document.getElementById('listLikuim').innerHTML = "";
+        document.getElementById('listLikuim2').innerHTML = "";
+        document.getElementById('listLikuim3').innerHTML = "";
+        document.getElementById('listLikuim4').innerHTML = "";
+        document.getElementById('listLikuim5').innerHTML = "";
+
+        function Location(values) {
+            debugger
+            //alert("Loc")
+                    var gridData = [];
+                    if (values) {
+                        for (var i = 0; i < values.length; i++) {
+                            var data = {
+                shape: "pinTarget",
+                                location: [values[i][1], values[i][2]],
+                                tooltip: {
+                    content: "<div id='btnToProj'>" + values[i][0]+"</div>"
+                                },
+                                //colorField: "green"
+                            }
+                            gridData.push(data);
+                        }
+                        createMap(gridData);
+                    }
+                }
+                function createMap(gridData) {
+                        $("#map").kendoMap({
+                            //center: ["31.7656212", "35.1910332"],
+                            center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                            zoom: 10,
+                            layers: [{
+                                type: "tile",
+                                urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                                subdomains: ["a", "b", "c"],
+                                attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                            }],
+                            markers: gridData
+                    });
+                        $("#map").unbind("mousewheel");
+                        $("#map").unbind("DOMMouseScroll");
+                    }
+                //rb.newui.util.addEventListener("rbs_pageRender", function () {
+                rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
+                //});
+
+
+                //rbf_selectQuery('SELECT ControlPointName FROM ItemCheckObject WHERE Wrong=1 and locationId = ' + e.detail.locationId +' Group By ControlPointName', 100, function (values) {
+                //rbf_selectQuery('SELECT ControlPointName,imageURL FROM ItemCheckObject WHERE locationId = ' + e.detail.locationId + ' Group By ControlPointName', 20, function (values) {
+        //the problem was the field imageURL because it is from a different object- its from ControlPoint... (but there- there is no field like 'wrong'...)
+        // mayeb just ill do loop in loop that foreach name of controlpointname-bring the image of it
+
+                rbf_selectQuery('SELECT name,imageURL FROM ControlPoint', 20, function (values) {
+                debugger
+                    alert("values" + values);
+
+                    document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים"+"</br>";
+                    //document.getElementById('listLikuimAll').innerHTML = "<label style='fontSize:20px; color:red; width:100%;'>:רשימת הליקויים החריגים" + "</br></label>";
+
+                    for (var i = 0; i < values.length && i < 4; i++) {
+                        debugger
+                        document.getElementById('listLikuim').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
+                        //padding - top='10px' 
+                        document.getElementById('listLikuim').innerHTML += values[i][0] + "</br>";
+                    }
+                    for (i; i < values.length && i < 8; i++) {
+                        document.getElementById('listLikuim2').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
+                        document.getElementById('listLikuim2').innerHTML += values[i][0] + "</br>";
+                    }
+                    for (i; i < values.length && i < 12; i++) {
+                        document.getElementById('listLikuim3').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
+                        document.getElementById('listLikuim3').innerHTML += values[i][0] + "</br>";
+                    }
+                    for (i; i < values.length && i < 16; i++) {
+                        document.getElementById('listLikuim4').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
+                        document.getElementById('listLikuim4').innerHTML += values[i][0] + "</br>";
+                    }
+                    for (i; i < values.length; i++) {
+                        document.getElementById('listLikuim5').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
+                        document.getElementById('listLikuim5').innerHTML += values[i][0] + "</br>";
+                    }
+                    //for (var i = 0; i < values.length; i++) {
+                    //    debugger
+                    //    document.getElementById('listLikuimAll').innerHTML += values[i][0] + "</br>";
+                    //}
+
+
+                    //פשוט לבקש מתהילה שה שיעזור לי בשביל זה
+                    //try....
+                    //rbf_selectQuery('SELECT ControlPointName FROM ItemCheckObject WHERE Wrong=1 and locationId = ' + e.detail.locationId + ' Group By ControlPointName', 20, function (values1) {
+                    //    for (i; i < values1.length; i++) {                        
+                    //    }
+                    //});
+
+                });
+    }
+    $(document).on('secondLocations:context-update', updateSec_2_Panels);
+
+</script>
+
+<style>
+    .k-map .k-marker {
+        /*background-image: url('{!#HOSTED_FILE.WUc-OouRSNaG1HpQavvn-w#url}');*/
+        background-image: url('{!#HOSTED_FILE.NBFQnHvMQjWrGHpXDoVZeA#url}');
+        background-size: 100% 100%;
+        color: black;
+    }
+</style>

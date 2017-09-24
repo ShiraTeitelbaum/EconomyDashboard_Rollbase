@@ -80,6 +80,7 @@
     <Content Include="nisui2.html" />
     <Content Include="projectPage1.html" />
     <Content Include="projectPage2.html" />
+    <Content Include="projectPage2New.html" />
     <Content Include="projectPage3.html" />
     <Content Include="_.js" />
   </ItemGroup>
@@ -128,7 +129,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -1,360 +1,217 @@
-﻿<!-- PANEL 1 -->
-<!-- כשירות ציוד תאגידי -->
+﻿<!-- Section 1 -->
+<!-- PANEL 2 -->
 
-<div class="col-md-12">
-    <div id="panel-donats2" class="panel panel-default">
+<div class="col-md-6">
+    <div id="panel-two" class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title" style="height: 0px;color:transparent">Donats</h3>
+            <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+            <!--מדד בטיחות-->
             <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="row">
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-7">
+                    <div id="gauge"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="tile_stats_count">
+                        <h4 class="count_top">ציון</h4>
+                        <div class="count">0</div>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="reportList"></div>-->
+        </div>
+    </div>
+
+
+    <div style="height: 277px;" id="panel-two_second" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">Madad2</h3>
+            <!--דוח בקרה אחרון-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="row">
+                <div id="reportList"></div>
+            </div>
         </div>
 
-        <div class="panel-body" data-mh="group-four">
-
-        </div>
     </div>
 </div>
 
-
-
-<style>
-    /*the style for the dounuts of contractors*/
-    [id^="donat"] {
-        width: 190px;
-        height: 180px;
-        float: left;
-    }
-
-    .carousel {
-        margin-bottom: 0;
-        padding: 0 40px 30px 40px;
-    }
-    /* The controlsy */
-    .carousel-control {
-        left: -12px;
-        top: 53%;
-        height: 40px;
-        width: 40px;
-        background: none repeat scroll 0 0 #222222;
-        border: 4px solid #FFFFFF;
-        border-radius: 23px 23px 23px 23px;
-        margin-top: 90px;
-    }
-
-        .carousel-control.right {
-            right: -12px;
-        }
-    /* The indicators */
-    .carousel-indicators {
-        right: 50%;
-        top: auto;
-        bottom: -10px;
-        margin-right: -19px;
-    }
-        /* The colour of the indicators */
-        .carousel-indicators li {
-            background: #cecece;
-        }
-
-        .carousel-indicators .active {
-            background: #5372b8;
-        }
-</style>
-
-
-<style>
-    [id^="div_LocImg2_"] {
-        /*width: 190px;
-        height: 280px;*/
-        width: 190px;
-        float: left;
-    }
-
-    /*dont need here again to declare the style of the arrows....*/
-    /*.carousel {
-        margin-bottom: 0;
-        padding: 0 40px 30px 40px;
-    }
-
-    .carousel-control {
-        left: -12px;
-        top: 57%;
-        height: 40px;
-        width: 40px;
-        background: none repeat scroll 0 0 #222222;
-        border: 4px solid #FFFFFF;
-        border-radius: 23px 23px 23px 23px;
-        margin-top: 90px;
-    }
-
-        .carousel-control.right {
-            right: -12px;
-        }
-
-    .carousel-indicators {
-        right: 50%;
-        top: auto;
-        bottom: -10px;
-        margin-right: -19px;
-    }
-
-        .carousel-indicators li {
-            background: #cecece;
-        }
-
-        .carousel-indicators .active {
-            background: #5372b8;
-        }*/
-</style>
-
-<div id="myCarousel2" class="carousel slide" data-ride="carousel">
-    <!-- Indicators -->
-    <ol id="olForShowing2" class="carousel-indicators"></ol>
-
-    <div id="taagidiDonat" style="height:300px;width:407px;padding-left: 33em; padding-bottom:95px"></div>
-    <div id="btnShowDonatTaagidi" style="position: absolute;top: 23%;padding-left: 10%; visibility:hidden">
-        <button onclick="taagidiDonat()" style="height: 22px;
-    font-size: larger;
-    color:white;
-    background-color: #7d9ece;
-    border-radius: 2.5px 2.5px 2.5px 2.5px;">
-            לצפיה ברמה תאגידית
-        </button>
-    </div>
-
-    <!--display:none-->
-    <!-- Wrapper for slides -->
-    <div id="divsWithLocImagesInHere2" class="carousel-inner">
-        <!--style="padding-top: 20px;"-->
-
-
-        <div id="item2_1" class="item active">
-
-            <div id="divWithLocImgContainer2_1">
-
-            </div>
-        </div>
-
-
-        <div id="item2_2" class="item">
-
-            <div id="divWithLocImgContainer2_2">
-
-            </div>
-        </div>
-
-        <div id="item2_3" class="item">
-
-            <div id="divWithLocImgContainer2_3">
-
-            </div>
-        </div>
-        <div id="item2_4" class="item">
-
-            <div id="divWithLocImgContainer2_4">
-
-            </div>
-        </div>
-        <div id="item2_5" class="item">
-
-            <div id="divWithLocImgContainer2_5">
-
-            </div>
-        </div>
-        <div id="item2_6" class="item">
-
-            <div id="divWithLocImgContainer2_6">
-
-            </div>
-        </div>
-        <div id="item2_7" class="item">
-
-            <div id="divWithLocImgContainer2_7">
-
-            </div>
-        </div>
-        <div id="item2_8" class="item">
-
-            <div id="divWithLocImgContainer2_8">
-
-            </div>
-        </div>
-        <div id="item2_9" class="item">
-
-            <div id="divWithLocImgContainer2_9">
-
-            </div>
-        </div>
-        <div id="item2_10" class="item">
-
-            <div id="divWithLocImgContainer2_10">
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Left and right controls -->
-    <a class="left carousel-control" href="#myCarousel2" data-slide="prev" style="right: 95%;">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel2" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
-
-<!-- script for כשירות ציוד תאגידי ופרויקטאלי יחד -->
 <script>
-
-    //chart כשירות ציוד פרויקטאלי
-    var arrNames1 = [];
-    var arrEquipmentItems = [];
-    var arrExceptions = [];
-
-    var j1 = 0;
-
-    //here will be the data for the taagidi donat
-    //var data_1_active = 0, data_2_coachAdam = 0, data_3_begova = 0, data_4_Guidance = 0, data_5_permit = 0, data_6_residance = 0;
-
-    var updateDonatsAguranim = function (e) {
-
-        alert("again");
-        arrNames1 = [];
-        arrEquipmentItems = [];
-        arrExceptions = [];
-
-        j1 = 0;
-
-        $('#panel-donats2').find('.titleGray').html("כשירות ציוד");
-
-        //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
-        rbf_selectQuery('SELECT URL_Image1 FROM ItemCheckObject WHERE URL_Image1!="null" and locationId = ' + e.detail.locationId, 100, function (values) {
-            //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
-
-            for (var i = 0; i < values.length; i++) {
-                if (i == values.length - 1) {
-                    createDivsForImagesLocation2(values);
+    var gauge = $("#gauge").kendoLinearGauge({
+        pointer: {
+            color: "#000000",
+            size: 14,
+            shape: "arrow"
+        },
+        scale: {
+            majorUnit: 10,
+            minorUnit: 5,
+            min: 0,
+            max: 100,
+            ranges: [
+                {
+                    from: 0,
+                    to: 45,
+                    color: "#ecb09b"
+                },
+                {
+                    from: 45,
+                    to: 70,
+                    color: "#fff9b8"
+                },
+                {
+                    from: 70,
+                    to: 100,
+                    color: "#bfdbb5"
                 }
-            }
+            ],
+            majorTicks: {
+                size: 20
+            },
+            minorTicks: {
+                size: 27
+            },
+            vertical: false,
+            transitions: false
+        }
+    }).data('kendoLinearGauge');
 
+</script>
 
-            for (var i = 0; i < values.length; i++) {
-                createDivWithImgLoc2(j1, values[i]);
-                debugger
-                j1++;
-            }
+<!-- PANEL 1 -->
 
+<div class="col-md-6">
+    <div id="panel-one" class="panel panel-default">
+        <div class="panel-heading" style="height: 20.39px;">
+            <h3 class="panel-title" style="height: 0px;color:transparent">siur</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="demo-section k-content wide" style="max-width: 644px;">
+                <div id="mediaplayer" style="height:360px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var updateAllPanels = function (e) {
+
+        $('#panel-two').find('.titleGray').html("מדד בטיחות");
+        $('#panel-two_second').find('.titleGray').html("דו''ח בקרה אחרון");
+        $('#panel-one').find('.titleGray').html("סיור רחפן");
+
+        debugger
+        rbf_selectQuery('SELECT LastSafeguardScore FROM ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, function (values) {
+            debugger
+            gauge.value(values[0][0]);
+            $('#panel-two').find('.count').html(values[0][0] + "%");
         });
 
 
-        //do here also select for the taagidi pieChart   - בעיקרון אפשר לשמור את הנתונים כמו ששמרתי בגורם אנוש ואז לא לעשות את השליפה כל פעם מחדש
+        //for the last report!
+        rbf_selectQuery('SELECT URL_report,dateOfCreatedAt,CheckScore FROM Checkup WHERE URL_report!="null" and cb_endCheck=true and locationId = ' + e.detail.locationId, 1, function (values) {
+            document.getElementById('reportList').innerHTML = "";
+            if (values) {
+                //for (var i = 0; i < values.length; i++) {
 
-        // taagidiDonat();
+                var reportLink = document.createElement('a');
+                reportLink.target = "_blank";
+                reportLink.href = values[0][0];
+                reportLink.id = 'reportLink' + 0;
+                //reportLink.innerHTML = values[i][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[i][2] + "\n";
 
+                reportLink.innerHTML = values[0][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[0][2] + "</br>";
+                //reportLink.innerHTML = values[i][1] + "</br>";
+
+                //see that it wont do problems
+                //if (i != (values.length - 1))   //for some reason with the last report does too much space- paddingRight
+                //    reportLink.style.paddingRight = "24px";
+                reportLink.style.fontSize = "18px";
+
+                //document.getElementById('reportList').innerHTML = "";
+                document.getElementById('reportList').appendChild(reportLink);
+                //}
+
+            }
+        });
     }
+    $(document).on('secondLocations:context-update', updateAllPanels);
 
-    $(document).on('secondLocations:context-update', updateDonatsAguranim);
+    //the mediaPlayer will happens for now- once just when entering the page
+    $(document).ready(function () {
 
-
-    function createDivsForImagesLocation2(values) {
-        if (values) {
-
+        rbf_selectQuery('SELECT LastSafeguardScore FROM ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, function (values) {
             debugger
-            //just Clear Before
-            document.getElementById('olForShowing2').innerHTML = "";
+            gauge.value(values[0][0]);
+            $('#panel-two').find('.count').html(values[0][0] + "%");
+        });
 
-            var count2 = ((values.length % 6) == 0) ? ((values.length / 6) + 1) : (Math.ceil(values.length / 6));
 
-            for (var j = 0; j < count2; j++) {
-                if (j == 0) {
-
-                    //for the circles that show how many pages
-                    var li = document.createElement('li');
-                    li.dataTarget = "#myCarousel2";
-                    li.dataSlideTo = "0";
-                    li.class = "active";
-                    document.getElementById('olForShowing2').appendChild(li);
-                }
-                else {
-                    //for the circles that show how many pages
-                    var li = document.createElement('li');
-                    li.dataTarget = "#myCarousel2";
-                    li.dataSlideTo = "1";
-                    document.getElementById('olForShowing2').appendChild(li);
-
-                }
+        $("#mediaplayer").kendoMediaPlayer({
+            autoPlay: true,
+            navigatable: true,
+            media: {
+                title: "Recap of Progress Ringing The Bell at Nasdaq (2016)",
+                source: "https://www.youtube.com/watch?v=tc3xhD24iTU"
             }
-
-            //then- build the divWithLocImgContainer2_
-            //need the same number of divWithLocImgContainer2_ (containers) divs as Count amount
-            for (var k = 1; k <= count2; k++) {
-                document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
-            }
-
-            for (var k = count2 + 1; k <= 10; k++) {
-                document.getElementById('item2_' + k).remove();
-            }
-
-            for (var i = 0; i < values.length; i++) {
-                //    for (var i = 0; i <= values.length; i++) {  הוספתי את השווה...
-                //debugger
-
-                var divInSlider2 = document.createElement('div');
-
-                divInSlider2.id = 'div_LocImg2_' + i;
-
-                //divInSlider2.style.paddingTop = "3em";
-                //divInSlider2.style.paddingBottom = "5em";
-
-                var myVar2;
-                if ((i % 6) == 0)
-                { myVar2 = (i / 6) + 1; }
-                else
-                { myVar2 = Math.ceil(i / 6); }
-
-                //  debugger
-                document.getElementById('divWithLocImgContainer2_' + myVar2).appendChild(divInSlider2);
-
-                // rbf_selectQuery("SELECT URL_LocationImage,LocationName FROM OurUserLocation WHERE LocationName = '" + values[i][0] + "'", 1, function (values1) {
-
-                //createDivWithImgLoc2(j1, values[i]);
-                //debugger
-                //j1++;
-            }
-        }
-    }
-
-    function createDivWithImgLoc2(i, values1) {
-        debugger
-
-        var divLoc = document.createElement('div');
-        divLoc.style.backgroundColor = "gray";
-
-        var divForSiteName = document.createElement('div');
-        divForSiteName.style.paddingRight = "56px";
-        divForSiteName.style.fontSize = "14px";
-        divForSiteName.style.color = "gray";
-
-        if (values1 != "") {
-            divLoc.style.backgroundImage = "url(" + values1[0] + ")";
-        }
-        else {
-            divForSiteName.innerHTML = "לא מופיע שם אתר";
-        }
-
-        divLoc.style.height = "120px";
-        divLoc.style.width = "185px";
-
-
-        if (document.getElementById('div_LocImg2_' + i)) {
-            document.getElementById('div_LocImg2_' + i).appendChild(divLoc);
-            document.getElementById('div_LocImg2_' + i).appendChild(divForSiteName);
-
-        }
-        else
-            alert("no 2");
-
-    }
-
+        });
+    });
 </script>
+
+<style>
+    /*for coloring the background color of the dashboard*/
+    #rb-styleable-content-box {
+        /*background-color: gray;*/
+        background-color: darkgray;
+    }
+    /*for coloring the background color of the dashboard*/
+    .rbs-sectionContentPadding {
+        /*background-color: darkgray;*/
+        background-color: #d9d3d3;
+    }
+    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
+    .rbs-sectionTitleContainer {
+        /*padding: .5em 0;*/
+        background-color: white;
+    }
+    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
+    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
+        /*border-width: 0 !important;*/
+        background-color: darkgray;
+    }
+
+
+    .k-gauge svg g text {
+        padding-left: 5px;
+        font: 18px;
+    }
+
+    .k-gauge g text {
+        padding-left: 5px;
+        font: 18px;
+    }
+
+
+    /*זה אכן שלט הכתב- אבל לא היה אפשר לעשות פאדינג*/
+    .k-gauge text {
+        padding-right: 5px;
+        font: 18px;
+    }
+
+    /*ul.breadcrumb {
+            background-color: transparent;
+        }*/
+</style>
+
