@@ -27,17 +27,31 @@
             <!-- added same style as for panel-title to titleGray-->
         </div>
         <div class="panel-body" data-mh="group-one">
-            <div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 20px;"></div>
-            <div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+
+            <!--<div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 10px;"></div>-->
+
+            <!--<div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
-            <div id="listLikuim5" style="    height: 360px;font-size:18px;"></div>
+            <div id="listLikuim5" style="    height: 360px;font-size:18px;"></div>-->
+
+            <div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:13px; text-align:center"></div>
+            <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:13px;  text-align:center"></div>
+            <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:13px;  text-align:center"></div>
+            <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:13px;  text-align:center"></div>
+            <div id="listLikuim5" style="    height: 360px;font-size:13px; text-align:center"></div>
+
         </div>
     </div>
 </div>
 
 <script>
+    var arrCotrolPNames = [];
+    var arrCotrolPImages = [];
+    var arrCotrolPScores = [];
+    var arrColorsBorders = [];
+
     var updateSec_2_Panels = function (e) {
 
         $('#panel-one_sec2').find('.titleGray').html("תחומים שבהם קיימים ליקויים");
@@ -53,91 +67,135 @@
         function Location(values) {
             debugger
             //alert("Loc")
-                    var gridData = [];
-                    if (values) {
-                        for (var i = 0; i < values.length; i++) {
-                            var data = {
-                shape: "pinTarget",
-                                location: [values[i][1], values[i][2]],
-                                tooltip: {
-                    content: "<div id='btnToProj'>" + values[i][0]+"</div>"
-                                },
-                                //colorField: "green"
-                            }
-                            gridData.push(data);
-                        }
-                        createMap(gridData);
+            var gridData = [];
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    var data = {
+                        shape: "pinTarget",
+                        location: [values[i][1], values[i][2]],
+                        tooltip: {
+                            content: "<div id='btnToProj'>" + values[i][0] + "</div>"
+                        },
+                        //colorField: "green"
+                    }
+                    gridData.push(data);
+                }
+                createMap(gridData);
+            }
+        }
+        function createMap(gridData) {
+            $("#map").kendoMap({
+                //center: ["31.7656212", "35.1910332"],
+                center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                zoom: 10,
+                layers: [{
+                    type: "tile",
+                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                    subdomains: ["a", "b", "c"],
+                    attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                }],
+                markers: gridData
+            });
+            $("#map").unbind("mousewheel");
+            $("#map").unbind("DOMMouseScroll");
+        }
+        //rb.newui.util.addEventListener("rbs_pageRender", function () {
+        rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
+        //});
+
+        //<------------------------------------------------------------------------>
+
+        rbf_selectQuery('SELECT name,imageURL FROM ControlPoint', 20, function (values) {
+            debugger
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    arrCotrolPNames[i] = values[i][0];
+                    arrCotrolPImages[i] = values[i][1];
+                    //arrCotrolPScores[i] = -1; //in the score for now put -1
+                    //arrCotrolPoints[i][1] = values[i][1];
+                    // arrCotrolPoints[i][2] = -1;
+                    if (i == values.length - 1) {
+                        getControlPointScores();
+
                     }
                 }
-                function createMap(gridData) {
-                        $("#map").kendoMap({
-                            //center: ["31.7656212", "35.1910332"],
-                            center: [gridData[0]["location"][0], gridData[0]["location"][1]],
-                            zoom: 10,
-                            layers: [{
-                                type: "tile",
-                                urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-                                subdomains: ["a", "b", "c"],
-                                attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
-                            }],
-                            markers: gridData
-                    });
-                        $("#map").unbind("mousewheel");
-                        $("#map").unbind("DOMMouseScroll");
-                    }
-                //rb.newui.util.addEventListener("rbs_pageRender", function () {
-                rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
-                //});
+            }
+        });
 
+        function getControlPointScores() {
+            alert("getControlPointScores")
+            var count = 0;
+            for (var j = 0; j < arrCotrolPNames.length; j++) {
+                //rbf_selectNumber("SELECT ScoreItemCheck FROM ItemCheckObject where ControlPointName = " + arrCotrolPNames[i] + " Order By createdAt DESC", function (values) {
+                rbf_selectNumber("SELECT ScoreItemCheck FROM ItemCheckObject where ControlPointName = '" + arrCotrolPNames[j] + "'", function (values1) {
 
-                //rbf_selectQuery('SELECT ControlPointName FROM ItemCheckObject WHERE Wrong=1 and locationId = ' + e.detail.locationId +' Group By ControlPointName', 100, function (values) {
-                //rbf_selectQuery('SELECT ControlPointName,imageURL FROM ItemCheckObject WHERE locationId = ' + e.detail.locationId + ' Group By ControlPointName', 20, function (values) {
-        //the problem was the field imageURL because it is from a different object- its from ControlPoint... (but there- there is no field like 'wrong'...)
-        // mayeb just ill do loop in loop that foreach name of controlpointname-bring the image of it
+                    arrCotrolPScores[count] = values1;
+                    count++;
+                    debugger
 
-                rbf_selectQuery('SELECT name,imageURL FROM ControlPoint', 20, function (values) {
-                debugger
-                    alert("values" + values);
-
-                    document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים"+"</br>";
-                    //document.getElementById('listLikuimAll').innerHTML = "<label style='fontSize:20px; color:red; width:100%;'>:רשימת הליקויים החריגים" + "</br></label>";
-
-                    for (var i = 0; i < values.length && i < 4; i++) {
-                        debugger
-                        document.getElementById('listLikuim').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
-                        //padding - top='10px' 
-                        document.getElementById('listLikuim').innerHTML += values[i][0] + "</br>";
-                    }
-                    for (i; i < values.length && i < 8; i++) {
-                        document.getElementById('listLikuim2').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
-                        document.getElementById('listLikuim2').innerHTML += values[i][0] + "</br>";
-                    }
-                    for (i; i < values.length && i < 12; i++) {
-                        document.getElementById('listLikuim3').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
-                        document.getElementById('listLikuim3').innerHTML += values[i][0] + "</br>";
-                    }
-                    for (i; i < values.length && i < 16; i++) {
-                        document.getElementById('listLikuim4').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
-                        document.getElementById('listLikuim4').innerHTML += values[i][0] + "</br>";
-                    }
-                    for (i; i < values.length; i++) {
-                        document.getElementById('listLikuim5').innerHTML += "<div><img height='60px' width='60px' src='" + values[i][1] + "' </img></div>";
-                        document.getElementById('listLikuim5').innerHTML += values[i][0] + "</br>";
-                    }
-                    //for (var i = 0; i < values.length; i++) {
-                    //    debugger
-                    //    document.getElementById('listLikuimAll').innerHTML += values[i][0] + "</br>";
+                    //if (count == arrCotrolPNames.length - 1) {
+                    //    createImgsInListView();
                     //}
 
-
-                    //פשוט לבקש מתהילה שה שיעזור לי בשביל זה
-                    //try....
-                    //rbf_selectQuery('SELECT ControlPointName FROM ItemCheckObject WHERE Wrong=1 and locationId = ' + e.detail.locationId + ' Group By ControlPointName', 20, function (values1) {
-                    //    for (i; i < values1.length; i++) {                        
-                    //    }
-                    //});
+                    if (count == arrCotrolPNames.length) {
+                        createImgsInListView();
+                    }
 
                 });
+            }
+
+            //for (var j2 = 0; j2 < arrCotrolPScores.length; j2++) {
+            //    alert("arrCotrolPScores[j2]: " + arrCotrolPScores[j2]);
+            //}
+        }
+
+        function createImgsInListView() {
+
+            alert("createImgsInListView");
+
+            for (var j2 = 0; j2 < arrCotrolPScores.length; j2++) {
+                debugger
+                if (arrCotrolPScores[j2] < 45)
+                    arrColorsBorders[j2] = "#ecb09b";
+                    //arrColorsBorders[j2] = 'red';
+                   
+                if (arrCotrolPScores[j2] >= 45 && arrCotrolPScores[j2]<70)
+                    arrColorsBorders[j2] = "#fff9b8";
+                else
+                    arrColorsBorders[j2] = "#bfdbb5";
+            }
+
+
+            //document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים" + "</br>";
+            
+            for (var i = 0; i < arrCotrolPNames.length && i < 3; i++) {
+                
+                document.getElementById('listLikuim').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                document.getElementById('listLikuim').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                //document.getElementById('listLikuim').innerHTML += "ציון: " + arrCotrolPScores[i];
+
+            }
+            for (var i; i < arrCotrolPNames.length && i < 6; i++) {
+                document.getElementById('listLikuim2').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                document.getElementById('listLikuim2').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+               // document.getElementById('listLikuim2').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 9; i++) {
+                document.getElementById('listLikuim3').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                 document.getElementById('listLikuim3').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+               // document.getElementById('listLikuim3').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 12; i++) {
+                document.getElementById('listLikuim4').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                 document.getElementById('listLikuim4').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                //document.getElementById('listLikuim4').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length; i++) {
+                document.getElementById('listLikuim5').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                 document.getElementById('listLikuim5').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+               // document.getElementById('listLikuim5').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+        }
     }
     $(document).on('secondLocations:context-update', updateSec_2_Panels);
 

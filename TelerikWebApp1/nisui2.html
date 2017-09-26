@@ -1,217 +1,189 @@
-﻿<!-- Section 1 -->
+﻿<!-- Section 2 -->
 <!-- PANEL 2 -->
 
 <div class="col-md-6">
-    <div id="panel-two" class="panel panel-default">
+    <div id="panel-two_sec2" class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+            <h3 class="panel-title" style="height: 0px;color:transparent">Map</h3>
             <!--מדד בטיחות-->
             <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
             <!-- added same style as for panel-title to titleGray-->
         </div>
         <div class="panel-body" data-mh="group-one">
-            <div class="row">
-                <div class="col-md-1">
+            <div id="map" style="height: 412px;"></div>
 
-                </div>
-                <div class="col-md-7">
-                    <div id="gauge"></div>
-                </div>
-                <div class="col-md-4">
-                    <div class="tile_stats_count">
-                        <h4 class="count_top">ציון</h4>
-                        <div class="count">0</div>
-                    </div>
-                </div>
-            </div>
-            <!--<div id="reportList"></div>-->
         </div>
-    </div>
-
-
-    <div style="height: 277px;" id="panel-two_second" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="height: 0px;color:transparent">Madad2</h3>
-            <!--דוח בקרה אחרון-->
-            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
-            <!-- added same style as for panel-title to titleGray-->
-        </div>
-        <div class="panel-body" data-mh="group-one">
-            <div class="row">
-                <div id="reportList"></div>
-            </div>
-        </div>
-
     </div>
 </div>
-
-<script>
-    var gauge = $("#gauge").kendoLinearGauge({
-        pointer: {
-            color: "#000000",
-            size: 14,
-            shape: "arrow"
-        },
-        scale: {
-            majorUnit: 10,
-            minorUnit: 5,
-            min: 0,
-            max: 100,
-            ranges: [
-                {
-                    from: 0,
-                    to: 45,
-                    color: "#ecb09b"
-                },
-                {
-                    from: 45,
-                    to: 70,
-                    color: "#fff9b8"
-                },
-                {
-                    from: 70,
-                    to: 100,
-                    color: "#bfdbb5"
-                }
-            ],
-            majorTicks: {
-                size: 20
-            },
-            minorTicks: {
-                size: 27
-            },
-            vertical: false,
-            transitions: false
-        }
-    }).data('kendoLinearGauge');
-
-</script>
 
 <!-- PANEL 1 -->
 
 <div class="col-md-6">
-    <div id="panel-one" class="panel panel-default">
+    <div id="panel-one_sec2" class="panel panel-default">
         <div class="panel-heading" style="height: 20.39px;">
-            <h3 class="panel-title" style="height: 0px;color:transparent">siur</h3>
+            <h3 class="panel-title" style="height: 0px;color:transparent">sivugLikuim</h3>
             <!--מדד בטיחות סייפגארד-יומי-->
             <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
             <!-- added same style as for panel-title to titleGray-->
         </div>
         <div class="panel-body" data-mh="group-one">
-            <div class="demo-section k-content wide" style="max-width: 644px;">
-                <div id="mediaplayer" style="height:360px"></div>
-            </div>
+            <div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 10px;"></div>
+            <!--<div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
+            <div id="listLikuim5" style="    height: 360px;font-size:18px;"></div>-->
+
+            <div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:15px;"></div>
+            <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:15px;"></div>
+            <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:15px;"></div>
+            <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:15px;"></div>
+            <div id="listLikuim5" style="    height: 360px;font-size:15px;"></div>
+
         </div>
     </div>
 </div>
 
 <script>
-    var updateAllPanels = function (e) {
+    var arrCotrolPNames = [];
+    var arrCotrolPImages = [];
+    var arrCotrolPScores = [];
 
-        $('#panel-two').find('.titleGray').html("מדד בטיחות");
-        $('#panel-two_second').find('.titleGray').html("דו''ח בקרה אחרון");
-        $('#panel-one').find('.titleGray').html("סיור רחפן");
+    var updateSec_2_Panels = function (e) {
 
-        debugger
-        rbf_selectQuery('SELECT LastSafeguardScore FROM ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, function (values) {
+        $('#panel-one_sec2').find('.titleGray').html("תחומים שבהם קיימים ליקויים");
+        $('#panel-two_sec2').find('.titleGray').html("מיקום גאוגרפי");
+
+        //to clear the images from the last location:
+        document.getElementById('listLikuim').innerHTML = "";
+        document.getElementById('listLikuim2').innerHTML = "";
+        document.getElementById('listLikuim3').innerHTML = "";
+        document.getElementById('listLikuim4').innerHTML = "";
+        document.getElementById('listLikuim5').innerHTML = "";
+
+        function Location(values) {
             debugger
-            gauge.value(values[0][0]);
-            $('#panel-two').find('.count').html(values[0][0] + "%");
-        });
-
-
-        //for the last report!
-        rbf_selectQuery('SELECT URL_report,dateOfCreatedAt,CheckScore FROM Checkup WHERE URL_report!="null" and cb_endCheck=true and locationId = ' + e.detail.locationId, 1, function (values) {
-            document.getElementById('reportList').innerHTML = "";
+            //alert("Loc")
+            var gridData = [];
             if (values) {
-                //for (var i = 0; i < values.length; i++) {
-
-                var reportLink = document.createElement('a');
-                reportLink.target = "_blank";
-                reportLink.href = values[0][0];
-                reportLink.id = 'reportLink' + 0;
-                //reportLink.innerHTML = values[i][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[i][2] + "\n";
-
-                reportLink.innerHTML = values[0][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[0][2] + "</br>";
-                //reportLink.innerHTML = values[i][1] + "</br>";
-
-                //see that it wont do problems
-                //if (i != (values.length - 1))   //for some reason with the last report does too much space- paddingRight
-                //    reportLink.style.paddingRight = "24px";
-                reportLink.style.fontSize = "18px";
-
-                //document.getElementById('reportList').innerHTML = "";
-                document.getElementById('reportList').appendChild(reportLink);
-                //}
-
+                for (var i = 0; i < values.length; i++) {
+                    var data = {
+                        shape: "pinTarget",
+                        location: [values[i][1], values[i][2]],
+                        tooltip: {
+                            content: "<div id='btnToProj'>" + values[i][0] + "</div>"
+                        },
+                        //colorField: "green"
+                    }
+                    gridData.push(data);
+                }
+                createMap(gridData);
             }
-        });
-    }
-    $(document).on('secondLocations:context-update', updateAllPanels);
+        }
+        function createMap(gridData) {
+            $("#map").kendoMap({
+                //center: ["31.7656212", "35.1910332"],
+                center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                zoom: 10,
+                layers: [{
+                    type: "tile",
+                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                    subdomains: ["a", "b", "c"],
+                    attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                }],
+                markers: gridData
+            });
+            $("#map").unbind("mousewheel");
+            $("#map").unbind("DOMMouseScroll");
+        }
+        //rb.newui.util.addEventListener("rbs_pageRender", function () {
+        rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
+        //});
 
-    //the mediaPlayer will happens for now- once just when entering the page
-    $(document).ready(function () {
+        //<------------------------------------------------------------------------>
 
-        rbf_selectQuery('SELECT LastSafeguardScore FROM ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, function (values) {
+        rbf_selectQuery('SELECT name,imageURL FROM ControlPoint', 20, function (values) {
             debugger
-            gauge.value(values[0][0]);
-            $('#panel-two').find('.count').html(values[0][0] + "%");
-        });
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    arrCotrolPNames[i] = values[i][0];
+                    arrCotrolPImages[i] = values[i][1];
+                    //arrCotrolPScores[i] = -1; //in the score for now put -1
+                    //arrCotrolPoints[i][1] = values[i][1];
+                    // arrCotrolPoints[i][2] = -1;
+                    if (i == values.length - 1)
+                    {
+                        getControlPointScores();
 
-
-        $("#mediaplayer").kendoMediaPlayer({
-            autoPlay: true,
-            navigatable: true,
-            media: {
-                title: "Recap of Progress Ringing The Bell at Nasdaq (2016)",
-                source: "https://www.youtube.com/watch?v=tc3xhD24iTU"
+                    }
+                }
             }
         });
-    });
+
+        function getControlPointScores() {
+            alert("getControlPointScores")
+            var count = 0;
+            for (var j = 0; j < arrCotrolPNames.length; j++) {
+                //rbf_selectNumber("SELECT ScoreItemCheck FROM ItemCheckObject where ControlPointName = " + arrCotrolPNames[i] + " Order By createdAt DESC", function (values) {
+                rbf_selectNumber("SELECT ScoreItemCheck FROM ItemCheckObject where ControlPointName = '" + arrCotrolPNames[j] + "'", function (values1) {
+
+                    arrCotrolPScores[count] = values1;
+                    count++;
+                    debugger
+
+                    if (count == arrCotrolPNames.length - 1) {
+                        createImgsInListView();
+                    }
+                });
+            }
+
+            //for (var j2 = 0; j2 < arrCotrolPScores.length; j2++) {
+            //    alert("arrCotrolPScores[j2]: " + arrCotrolPScores[j2]);
+            //}
+        }
+
+        function createImgsInListView() {
+            alert("createImgsInListView");
+
+            document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים" + "</br>";
+            //document.getElementById('listLikuimAll').innerHTML = "<label style='fontSize:20px; color:red; width:100%;'>:רשימת הליקויים החריגים" + "</br></label>";
+
+            for (var i = 0; i < arrCotrolPNames.length && i < 3; i++) {               
+                document.getElementById('listLikuim').innerHTML += "<div style='padding-top: 26px;'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";               
+                //document.getElementById('listLikuim').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 6; i++) {
+                document.getElementById('listLikuim2').innerHTML += "<div style='padding-top: 26px;'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                //document.getElementById('listLikuim2').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim2').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 9; i++) {
+                document.getElementById('listLikuim3').innerHTML += "<div style='padding-top: 26px;'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+               // document.getElementById('listLikuim3').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim3').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 12; i++) {
+                document.getElementById('listLikuim4').innerHTML += "<div style='padding-top: 26px;'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+               // document.getElementById('listLikuim4').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim4').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+            for (var i; i < arrCotrolPNames.length; i++) {
+                document.getElementById('listLikuim5').innerHTML += "<div style='padding-top: 26px;'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+               // document.getElementById('listLikuim5').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim5').innerHTML += "ציון: " + arrCotrolPScores[i];
+            }
+        }
+    }
+    $(document).on('secondLocations:context-update', updateSec_2_Panels);
+
 </script>
 
 <style>
-    /*for coloring the background color of the dashboard*/
-    #rb-styleable-content-box {
-        /*background-color: gray;*/
-        background-color: darkgray;
+    .k-map .k-marker {
+        /*background-image: url('{!#HOSTED_FILE.WUc-OouRSNaG1HpQavvn-w#url}');*/
+        background-image: url('{!#HOSTED_FILE.NBFQnHvMQjWrGHpXDoVZeA#url}');
+        background-size: 100% 100%;
+        color: black;
     }
-    /*for coloring the background color of the dashboard*/
-    .rbs-sectionContentPadding {
-        /*background-color: darkgray;*/
-        background-color: #d9d3d3;
-    }
-    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
-    .rbs-sectionTitleContainer {
-        /*padding: .5em 0;*/
-        background-color: white;
-    }
-    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
-    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
-        /*border-width: 0 !important;*/
-        background-color: darkgray;
-    }
-
-
-    .k-gauge svg g text {
-        padding-left: 5px;
-        font: 18px;
-    }
-
-    .k-gauge g text {
-        padding-left: 5px;
-        font: 18px;
-    }
-
-
-    /*זה אכן שלט הכתב- אבל לא היה אפשר לעשות פאדינג*/
-    .k-gauge text {
-        padding-right: 5px;
-        font: 18px;
-    }
-
-    /*ul.breadcrumb {
-            background-color: transparent;
-        }*/
 </style>
-
