@@ -1,0 +1,98 @@
+﻿
+<script>
+    rb.newui.util.addEventListener("rbs_pageRender", function () {
+        debugger;
+       
+        function Location(values) {
+            debugger;
+            var gridData = [];
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    var data = {
+                        shape: "pinTarget",
+                        location: [values[i][1], values[i][2]],
+                        tooltip: {
+                            content: "<div id='btnToProj'>" + values[i][0] + "</div>"
+                        },
+                        //elementStage: values[i][3]
+                        //colorField: "green"
+                    }
+                    gridData.push(data);
+                }
+                createMap(gridData);
+            }
+        }
+
+        function createMap(gridData) {
+            debugger;
+
+            $("#mapLeumi").kendoMap({
+                //center: ["31.7656212", "35.1910332"],
+                center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                zoom: 10,
+                layers: [{
+                    type: "tile",
+                    urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                    subdomains: ["a", "b", "c"],
+                    attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                }],
+                markers: gridData,
+                markerActivate: function (e) {
+                    debugger;
+                    switch (e.marker.options.name) {
+                        case 1:
+                            e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.ayQV5lowQYmXik2rZoq-pw#url}')";
+                            break;
+                        case 2:
+                            e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.7TZs_6K6RY-lYib9PCXJjw#url}')";
+                            break;
+                        case 3:
+                            e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.__Qr4g-2QBSUaezKEZbFzg#url}')";
+                            break;
+                        case 4:
+                            e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.eT7hqe9NRlyNy5rRnpbbgQ#url}')";
+                            break;
+                        case 5:
+                            e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.WiWtoo-XSNqIZGpbM-ZD-g#url}')";
+                            break;
+                        case 6:
+                            e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.qIRMXeBEQXOmnMTWfTDFqA#url}')";
+                            break;
+                        default:
+                    }
+                }
+            });
+            $("#mapLeumi").unbind("mousewheel");
+            $("#mapLeumi").unbind("DOMMouseScroll");
+        }
+
+
+         //rbf_selectQuery("select name,Latitude,Longtitud,elementStage from element2 ORDER BY createdAt DESC" , 1000, Location);
+        rbf_selectQuery('select name,Latitude,longitude from ConstructionSite', 100, Location);
+
+        $('#viewMap').click(function () {
+            if (document.getElementById("viewMap").title == "מפה") {
+                document.getElementById("page").style.display = 'none';
+                document.getElementById("myMap").style.display = 'inline';
+                document.getElementById("viewMap").title = "דאשבורד";
+                document.getElementById("viewDash").style.display = "inline";
+                //for the map that it'll be on the whole page 
+                //$("map").data("kendoMap").resize(); //didnt make difference
+            }
+            else {
+                document.getElementById("myMap").style.display = 'none';
+                document.getElementById("page").style.display = 'inline';
+                document.getElementById("viewMap").title = "מפה";
+                document.getElementById("viewDash").style.display = "none";
+            }
+        });
+        $('#viewDash').click(function () {
+            if (document.getElementById("viewDash").style.display == 'inline') {
+                document.getElementById("myMap").style.display = 'none';
+                document.getElementById("page").style.display = 'inline';
+                document.getElementById("viewMap").title = "מפה";
+                document.getElementById("viewDash").style.display = "none";
+            }
+        });    
+    });
+</script>

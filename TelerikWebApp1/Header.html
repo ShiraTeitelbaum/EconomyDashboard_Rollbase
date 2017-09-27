@@ -23,5 +23,50 @@
 <link rel="stylesheet" href="styles/kendo.default.min.css" />
 <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
 
-<script src="js/jquery.min.js"></script>
-<script src="js/kendo.all.min.js"></script>
+
+
+
+
+
+
+
+<!-- footer -->
+
+<script type="text/x-kendo-template" id="template">
+    <li>
+        # if (data.isCurrent) { #
+        #: text #
+        # } else { #
+        <a href="#= href #">#: text #</a>
+        # } #
+    </li>
+</script>
+
+<!--מכאן זה מה שהיה עד שהוספתי את הbreadCrumbs-->
+<script>
+    // from the mvc:   srRequest = "https://www.rollbase.com/rest/api/selectQuery?query=select+name,Latitude,longitude,locationId,LastSafeguardScore,LastScoreDate,LastReporter+from+ConstructionSite+where+R344829425=" + locationRegions[i] + "&maxRows=500&sessionId=" + sessionId;
+
+    $('.rbs-header3').secondLoactionsSelector({
+        objName: 'ConstructionSite',
+        columns: ['id', 'name', 'locationId']
+    });
+    $(".rbs-sidebar-recentItems-item").hide();
+    $(".rbs-sidebar-usermenu-profile").hide();
+
+    function resizeComponents() {
+        setTimeout(function () {
+            kendo.resize($("div.k-chart[data-role='chart'], div.k-gauge[data-role='lineargauge']"));
+        }, 90);
+    }
+
+    var lazyResize = _.debounce(resizeComponents, 100);
+
+    $(window).resize(lazyResize);
+
+</script>
+<style>
+    #rb-header-box > div.rbs-header3.k-content > span.k-widget.k-dropdown.k-header {
+        padding-right: 2%;
+        padding-top: 0.7%;
+    }
+</style>

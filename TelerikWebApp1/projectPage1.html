@@ -107,6 +107,13 @@
 
 <script>
     var updateAllPanels = function (e) {
+      
+        //var x = document.getElementsByClassName('rbs-pageTitle');
+        //document.getElementsByClassName('rbs-pageTitle').innerHTML = "aaa";
+
+        document.getElementsByClassName('rbs-pageTitle')[0].innerHTML = e.detail.name;
+
+        debugger
 
         $('#panel-two').find('.titleGray').html("מדד בטיחות");
         $('#panel-two_second').find('.titleGray').html("דו''ח בקרה אחרון");
