@@ -1,5 +1,4 @@
-﻿
-<!--<div id="mapIcon" class="col-md-12">
+﻿<!--<div id="mapIcon" class="col-md-12">
     <button title="1" id="btn" onclick="myFunction()">לבחירת פרויקט</button>
 </div>
 
@@ -12,7 +11,7 @@
 <!-- PANEL 2 -->
 
 <div class="col-md-6">
-    <div style="height: 205.5px;" id="panel-two" class="panel panel-default">
+    <div id="panel-two" class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
             <!--מדד בטיחות-->
@@ -39,7 +38,7 @@
     </div>
 
 
-    <div style="height: 205.5px;" id="panel-two_second" class="panel panel-default">
+    <div style="height: 277px;" id="panel-two_second" class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title" style="height: 0px;color:transparent">Madad2</h3>
             <!--דוח בקרה אחרון-->
@@ -117,8 +116,25 @@
 
 <script>
 
+    $(document).ready(function () {
+        alert("on ready");
+        //rbf_selectQuery('SELECT SiteVideo FROM Checkup WHERE locationId = ' + e.detail.locationId, 1, function (values) {
+        $("#mediaplayer").kendoMediaPlayer({
+            autoPlay: false,
+            navigatable: true,
+            media: {
+                title: "Recap of Progress Ringing The Bell at Nasdaq (2016)",
+                //source: "https://www.youtube.com/watch?v=tc3xhD24iTU"
+            }
+        });
+
+    });
+
+
     var updateAllPanels = function (e) {
-        document.getElementById('mediaplayer').innerHTML = "";
+
+        //var x = document.getElementsByClassName('rbs-pageTitle');
+        //document.getElementsByClassName('rbs-pageTitle').innerHTML = "aaa";
 
         document.getElementsByClassName('rbs-pageTitle')[0].innerHTML = e.detail.name;
 
@@ -139,18 +155,28 @@
         //for the video:
         rbf_selectQuery('SELECT SiteVideo FROM Checkup WHERE locationId = ' + e.detail.locationId + ' Order By updatedAt DESC', 1, function (values) {
             debugger
-            alert("mediaplayer url " + values[0]);
+            //  alert("mediaplayer url " + values[0]);
 
-            $("#mediaplayer").kendoMediaPlayer({
-                autoPlay: true,
-                navigatable: true,
-                media: {
-                    title: "gdrg",
-                    source: "'" + values[0] + "'"
-                }
-            });
+            //$("#mediaplayer").kendoMediaPlayer({
+            //    autoPlay: true,
+            //    navigatable: true,
+            //    media: {
+            //        title: "gdrg",
+            //        source: "'" + values[0] + "'"
+            //    }
+            //});
+
+            var player = $("#mediaplayer").data("kendoMediaPlayer");
+            debugger
+            alert(player + " player");
+
+            //multiselect.setDataSource(dataSourceB);
+            //player.source = "'" + values[0] + "'";
+            player.source = values[0];
+            //player.pause();
+            player.play();
         });
-
+        //up to here.....
 
         //for the last report!
         rbf_selectQuery('SELECT URL_report,dateOfCreatedAt,CheckScore FROM Checkup WHERE URL_report!="null" and cb_endCheck=true and locationId = ' + e.detail.locationId, 1, function (values) {
@@ -186,12 +212,6 @@
 </script>
 
 <style>
-
-    /*for making the title of the tab to be a little in the middle*/
-    html.k-rtl .rbs-sectionTitle:not(.isCollapsible) {
-        margin-right: 39px;
-    }
-
     /*for coloring the background color of the dashboard*/
     #rb-styleable-content-box {
         /*background-color: gray;*/
@@ -235,4 +255,3 @@
             background-color: transparent;
         }*/
 </style>
-

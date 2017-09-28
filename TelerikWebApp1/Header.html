@@ -1,72 +1,55 @@
-﻿<link rel="stylesheet" href="{!#HOSTED_FILE.Rh3z_37DTPaiZuCdclbPRg}">
+﻿
+<link rel="stylesheet" href="{!#HOSTED_FILE.87B9W-DKTiucXPLZNVfAvQ}">
+<!--underscore-->
 
-<!-- dss.css  // panels design etc... -->
-<link rel="stylesheet" href="{!#HOSTED_FILE.R1dJHpYCRA2j9HI6Mmp9tg}">
+<script src="{!#HOSTED_FILE.S9vB9o9OQ6Koa6kYtf1duA}"></script>
+<!--moment-->
+<script src="{!#HOSTED_FILE.J_NnkuZiS5-W8PSzHzYWVQ}"></script>
+<!--jquery.matchHeight-min.js-->
+<script src="{!#HOSTED_FILE.ZDTnjPPASTOc_p8BwLSzvw}"></script>
+<!--dss.js-->
+<script src="{!#HOSTED_FILE.fybARiAXRkKaYlW6pl1Z4w}"></script>
 
-<!--_.js-->
-<script src="{!#HOSTED_FILE.Q3jh2OnRS3yaHt7Htrlk6Q}"></script>
+<!--subject.js-->
+<script src="{!#HOSTED_FILE.OCDxVDI_ThOlNQ45_jraAQ}"></script>
+
+<!--dssContextSelector.js-->
+<script src="{!#HOSTED_FILE.oMIzhjFCR_i__Grv83IE4w}"></script>
+
+<!--subjectContextSelector.js-->
+<script src="{!#HOSTED_FILE.Kq3APakzRlmTf_YheP9ncQ}"></script>
 
 <!--secondLoactionsSelector.js-->
-<script src="{!#HOSTED_FILE.6V9i6eygRd-YAtu_9ffTag}"></script>
+<script src="{!#HOSTED_FILE.MKJyVZTHR2Ouao9V2yp4tA}"></script>
 
 <!--secondLoactions.js-->
-<script src="{!#HOSTED_FILE.r96qHpt5RECsSNNp-T1rzA}"></script>
+<script src="{!#HOSTED_FILE.50VV_xA8R2W4onyVvR6Ztg}"></script>
 
 <!--thirdLoactionsSelector.js-->
-<script src="{!#HOSTED_FILE.DKbahmScTB21hggeZdhR8w}"></script>
+<script src="{!#HOSTED_FILE.tFhqF19gTxGp2Ikb_nuQ6A}"></script>
 
 <!--thirdLoactions.js-->
-<script src="{!#HOSTED_FILE.NqRBAucHQtG5Lv7j7fJ10A}"></script>
+<script src="{!#HOSTED_FILE.yac9zN_7SpGrnsHeo6Fu_Q}"></script>
+
+<!--fourthLoactionsSelector.js-->
+<script src="{!#HOSTED_FILE.63fbAzJ2RoqFWmeBjmBPAQ}"></script>
+
+<!--fourthLoactions.js-->
+<script src="{!#HOSTED_FILE.1TY4ujdaTvyZbCIhwTqJKQ}"></script>
+
+
+
 
 <!--kendo-->
 <link rel="stylesheet" href="styles/kendo.common.min.css" />
 <link rel="stylesheet" href="styles/kendo.default.min.css" />
 <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
 
+<!--<script src="js/jquery.min.js"></script>
+<script src="js/kendo.all.min.js"></script>-->
 
 
-
-
-
-
-
-<!-- footer -->
-
-<script type="text/x-kendo-template" id="template">
-    <li>
-        # if (data.isCurrent) { #
-        #: text #
-        # } else { #
-        <a href="#= href #">#: text #</a>
-        # } #
-    </li>
-</script>
-
-<!--מכאן זה מה שהיה עד שהוספתי את הbreadCrumbs-->
-<script>
-    // from the mvc:   srRequest = "https://www.rollbase.com/rest/api/selectQuery?query=select+name,Latitude,longitude,locationId,LastSafeguardScore,LastScoreDate,LastReporter+from+ConstructionSite+where+R344829425=" + locationRegions[i] + "&maxRows=500&sessionId=" + sessionId;
-
-    $('.rbs-header3').secondLoactionsSelector({
-        objName: 'ConstructionSite',
-        columns: ['id', 'name', 'locationId']
-    });
-    $(".rbs-sidebar-recentItems-item").hide();
-    $(".rbs-sidebar-usermenu-profile").hide();
-
-    function resizeComponents() {
-        setTimeout(function () {
-            kendo.resize($("div.k-chart[data-role='chart'], div.k-gauge[data-role='lineargauge']"));
-        }, 90);
-    }
-
-    var lazyResize = _.debounce(resizeComponents, 100);
-
-    $(window).resize(lazyResize);
-
-</script>
-<style>
-    #rb-header-box > div.rbs-header3.k-content > span.k-widget.k-dropdown.k-header {
-        padding-right: 2%;
-        padding-top: 0.7%;
-    }
-</style>
+<script src="{!#PROD_SERV_URL}/js/fusioncharts.js"></script>
+<script src="{!#PROD_SERV_URL}/js/fusioncharts.gantt.js"></script>
+<script src="{!#PROD_SERV_URL}/js/fusioncharts.charts.js"></script>
+<script src="{!#PROD_SERV_URL}/js/fusioncharts.widgets.js"></script>

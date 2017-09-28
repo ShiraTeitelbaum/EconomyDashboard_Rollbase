@@ -1,69 +1,76 @@
-﻿<div id="mapIcon" class="col-md-12">
-  <!--<a id="viewDash" style="cursor:pointer;display:none;font-weight:bold;color:black;font-size:15px" dir="rtl">>></a>-->
-    <div id="mapIconImg"></div>
-    <a title="מפה" id="viewMap" style="font-weight:bold;color:black;font-size:15px" dir="rtl">
-    <!--<img id="imgMap" style="width: 5em;" />-->    
-    </a>
-    
-    <a title="דאשבורד" id="viewDash" dir="rtl" style="cursor: pointer;
-     /*display: none;*/ 
+﻿
+
+    <div id="mapIcon" class="col-md-12">
+
+
+        <!--<a id="viewDash" style="cursor:pointer;display:none;font-weight:bold;color:black;font-size:15px" dir="rtl">>></a>-->
+        <!--<div id="mapIconImg"></div>-->
+
+        <a title="מפה" id="viewMap" style="font-weight:bold;color:black;font-size:15px;" dir="rtl">
+            <!--<img id="imgMap" style="width: 5em; padding-right:10%;" />-->
+            <label id="imgMap" style="width: 0em;
+    padding-right: 6%;
+    float: left;"></label>
+        </a>
+
+        <a title="דאשבורד" id="viewDash" dir="rtl" style="cursor: pointer;
+     /*display: none;*/
     font-weight: bold;
     color: black;
-    font-size: 21px;
-    padding-left: 6%;">>></a>
-
-    
-</div>
+    font-size: 21px;">>></a>
 
 
-<div id="page" class="col-md-12">
-    <div id="panel-two_sec2" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Page In</h3>
-            <!--??? ??????-->
-            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
-            <!-- added same style as for panel-title to titleGray-->
-        </div>
-        <div class="panel-body" data-mh="group-one">
-            <div id="pageIn" style="height: 612px;">PAGE In</div>
+    </div>
 
+
+    <div id="page" class="col-md-12">
+        <div id="panel-pageIn" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">Page In</h3>
+                <!--מדד בטיחות סייפגארד-יומי-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-one">
+                <div id="pageIn" style="height: 612px;">PAGE In</div>
+
+            </div>
         </div>
     </div>
-</div>
 
 
-<div id="myMap" class="col-md-12" style="display:none;">
-    <div id="panel-two_sec2" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Map</h3>
-            <!--??? ??????-->
-            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
-            <!-- added same style as for panel-title to titleGray-->
-        </div>
-        <div class="panel-body" data-mh="group-one">
-            <div id="mapLeumi" style="height: 612px;"></div>
+    <div id="myMap" class="col-md-12" style="display:none;">
+        <div id="panel-MAP" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+                <!--מדד בטיחות סייפגארד-יומי-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-one">
+                <div id="mapLeumi" style="height: 612px;"></div>
 
+            </div>
         </div>
     </div>
-</div>
 
 
-<style>
-    .k-map .k-marker {
-        background-image: url('{!#HOSTED_FILE.KR2wk1ezSjKpGD8b5JOAug#url}');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-    }
+    <style>
+        .k-map .k-marker {
+            background-image: url('{!#HOSTED_FILE.KR2wk1ezSjKpGD8b5JOAug#url}');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
 
-    /*#mapIcon*/ 
-    /*#imgMap {*/
-    /*#viewMap*/
-    #mapIconImg {
-        height: 80px;
-        width: 99%;
-        background-image: url('{!#HOSTED_FILE.QxrdT7uxSqSXrCib7y75tA#url}');
-        background-repeat: no-repeat;
-    }
-</style>
+        /*#mapIcon*/
+        /*#imgMap {*/
+        /*#viewMap*/
+        #imgMap, #mapIconImg {
+            height: 80px;
+            width: 99%;
+            background-image: url('{!#HOSTED_FILE.QxrdT7uxSqSXrCib7y75tA#url}');
+            background-repeat: no-repeat;
+        }
+    </style>
 
 

@@ -1,42 +1,9 @@
 ﻿
 <script>
-    rb.newui.util.addEventListener("rbs_pageRender", function () {
-        alert("ffffd")
-        //window.onload = function () { window.location.reload() }
-        //window.location.reload();
+  
+    window.onload = function () {
+        alert("ffffd");
 
-        var something = (function () {
-            var executed = false;
-            return function () {
-                if (!executed) {
-
-                    alert("222")
-                    executed = true;
-                    $('.rbs-header3').secondLoactionsSelector({
-                        objName: 'ConstructionSite',
-                        columns: ['id', 'name', 'locationId']
-                    });
-                    $(".rbs-sidebar-recentItems-item").hide();
-                    $(".rbs-sidebar-usermenu-profile").hide();
-
-                    function resizeComponents() {
-                        setTimeout(function () {
-                            kendo.resize($("div.k-chart[data-role='chart'], div.k-gauge[data-role='lineargauge']"));
-                        }, 90);
-                    }
-
-                    var lazyResize = _.debounce(resizeComponents, 100);
-
-                    $(window).resize(lazyResize);
-
-                }
-            };
-        })();
-
-        something();
-
-        debugger;
-       
         function Location(values) {
             debugger;
             var gridData = [];
@@ -101,7 +68,7 @@
         }
 
 
-         //rbf_selectQuery("select name,Latitude,Longtitud,elementStage from element2 ORDER BY createdAt DESC" , 1000, Location);
+        //rbf_selectQuery("select name,Latitude,Longtitud,elementStage from element2 ORDER BY createdAt DESC" , 1000, Location);
         rbf_selectQuery('select name,Latitude,longitude from ConstructionSite', 100, Location);
 
         $('#viewMap').click(function () {
@@ -110,7 +77,7 @@
                 document.getElementById("myMap").style.display = 'inline';
                 document.getElementById("viewMap").title = "דאשבורד";
                 document.getElementById("viewDash").style.display = "inline";
-                //for the map that it'll be on the whole page 
+                //for the map that it'll be on the whole page
                 //$("map").data("kendoMap").resize(); //didnt make difference
             }
             else {
@@ -127,12 +94,12 @@
                 document.getElementById("viewMap").title = "מפה";
                 document.getElementById("viewDash").style.display = "none";
             }
-        });    
-    });
+        });
+    };
 </script>
 
-<script>
+<!--<script>
     function myFunction() {
         location.reload();
     }
-</script>
+</script>-->

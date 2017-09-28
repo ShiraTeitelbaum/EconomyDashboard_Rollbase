@@ -72,12 +72,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dss.css" />
+    <Content Include="dss.js" />
+    <Content Include="dssContextSelector.js" />
     <Content Include="footer.html" />
+    <Content Include="footerNisui.html" />
     <Content Include="Header.html" />
+    <Content Include="headerNisui.html" />
     <Content Include="HtmlPage4.html" />
     <Content Include="mapRefael.html" />
     <Content Include="nisui.html" />
     <Content Include="nisui2.html" />
+    <Content Include="projectPage1NISUI.html" />
+    <Content Include="projectPage3NewDynamicWithURL_IMG2.html" />
     <Content Include="projectPage3NEW_DynamicClasses.html" />
     <Content Include="projectPage1.html" />
     <Content Include="projectPage2.html" />
@@ -130,7 +136,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

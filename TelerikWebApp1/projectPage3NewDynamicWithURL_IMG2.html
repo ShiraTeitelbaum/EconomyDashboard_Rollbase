@@ -161,7 +161,7 @@
     <!--display:none-->
     <!-- Wrapper for slides -->
     <div id="divsWithLocImagesInHere2" class="carousel-inner">
-       
+
     </div>
 
     <!-- Left and right controls -->
@@ -196,7 +196,7 @@
         arrExceptions = [];
 
         j1 = 0;
-    
+
         //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
         rbf_selectQuery('SELECT URL_Image1,URL_Image2,ControlPointName FROM ItemCheckObject WHERE URL_Image1!="null" || URL_Image2!="null" and locationId = ' + e.detail.locationId, 26, function (values) {
             //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
@@ -249,7 +249,7 @@
                 }
             }
 
-            
+
             //empty the divsWithLocImagesInHere2
             document.getElementById('divsWithLocImagesInHere2').innerHTML = "";
             debugger
@@ -259,30 +259,30 @@
                 var iDivContainer = document.createElement('div');
                 iDivContainer.id = 'divWithLocImgContainer2_' + k;
                 //document.getElementById('divsWithLocImagesInHere2').appendChild(iDivContainer);
-                
+
                  var iDiv = document.createElement('div');
                  iDiv.id = 'item2_' + k;
 
                  if (k == 1)
                      iDiv.className = 'item active';
-                else                     
+                else
                      iDiv.className = 'item';
                  document.getElementById('divsWithLocImagesInHere2').appendChild(iDiv);
 
                  document.getElementById('item2_' + k).appendChild(iDivContainer);
             }
 
-         
+
 
             for (var i = 0; i < values.length; i++) {
-             
+
                 var divInSlider2 = document.createElement('div');
 
                 divInSlider2.id = 'div_LocImg2_' + i;
 
-                
+
                 divInSlider2.style.width = "16%";
-                
+
                 var myVar2;
                 if ((i % 6) == 0)
                 { myVar2 = (i / 6) + 1; }
@@ -338,7 +338,7 @@
         var captionText = document.getElementById("caption");
         modal.style.display = "block";
         modalImg.src = values1;
-        
+
         captionText.innerHTML = "תחום מבדק: " + values1Sec;
         captionText.style.fontSize = "20px";
 
