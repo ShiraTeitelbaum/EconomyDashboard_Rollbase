@@ -29,18 +29,17 @@
         <div class="panel-body" data-mh="group-one">
 
             <!--<div id="listLikuimAll" style="font-size:20px; color:red; width:100%;padding-top: 1%;padding-bottom: 10px;"></div>-->
-
             <!--<div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:18px;"></div>
             <div id="listLikuim5" style="    height: 360px;font-size:18px;"></div>-->
 
-            <div id="listLikuim" style="    height: 360px;width: 20%;float: right;font-size:13px; text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
-            <div id="listLikuim2" style="    height: 360px;width: 20%;float: right;font-size:13px;  text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
-            <div id="listLikuim3" style="    height: 360px;width: 20%;float: right;font-size:13px;  text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
-            <div id="listLikuim4" style="    height: 360px;width: 20%;float: right;font-size:13px;  text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
-            <div id="listLikuim5" style="    height: 360px;font-size:13px; text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
+            <div id="listLikuim" style="    height: 360px;  padding-right:1.5%; width: 17%;float: right;font-size:13px; text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
+            <div id="listLikuim2" style="    height: 360px; padding-right:3%; width: 17%;float: right;font-size:13px;  text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
+            <div id="listLikuim3" style="    height: 360px; padding-right:3%; width: 17%;float: right;font-size:13px;  text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
+            <div id="listLikuim4" style="    height: 360px; padding-right:3%; width: 17%;float: right;font-size:13px;  text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
+            <div id="listLikuim5" style="    height: 360px; padding-right:3%; width: 17%;float: right;font-size:13px; text-align:center; padding-top: 40px;padding-bottom: 12px;"></div>
 
         </div>
     </div>
@@ -123,7 +122,7 @@
         });
 
         function getControlPointScores() {
-          //  alert("getControlPointScores")
+            //  alert("getControlPointScores")
             var count = 0;
             for (var j = 0; j < arrCotrolPNames.length; j++) {
                 //rbf_selectNumber("SELECT ScoreItemCheck FROM ItemCheckObject where ControlPointName = " + arrCotrolPNames[i] + " Order By createdAt DESC", function (values) {
@@ -151,15 +150,15 @@
 
         function createImgsInListView() {
 
-         //   alert("createImgsInListView");
+            //   alert("createImgsInListView");
 
             for (var j2 = 0; j2 < arrCotrolPScores.length; j2++) {
                 debugger
                 if (arrCotrolPScores[j2] < 45)
                     arrColorsBorders[j2] = "#ecb09b";
-                    //arrColorsBorders[j2] = 'red';
-                   
-                if (arrCotrolPScores[j2] >= 45 && arrCotrolPScores[j2]<70)
+                //arrColorsBorders[j2] = 'red';
+
+                if (arrCotrolPScores[j2] >= 45 && arrCotrolPScores[j2] < 70)
                     arrColorsBorders[j2] = "#fff9b8";
                 else
                     arrColorsBorders[j2] = "#bfdbb5";
@@ -167,33 +166,33 @@
 
 
             //document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים" + "</br>";
-            
+
             for (var i = 0; i < arrCotrolPNames.length && i < 3; i++) {
-                
-                document.getElementById('listLikuim').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+
+                document.getElementById('listLikuim').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
                 document.getElementById('listLikuim').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
                 //document.getElementById('listLikuim').innerHTML += "ציון: " + arrCotrolPScores[i];
 
             }
             for (var i; i < arrCotrolPNames.length && i < 6; i++) {
-                document.getElementById('listLikuim2').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                document.getElementById('listLikuim2').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
                 document.getElementById('listLikuim2').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
-               // document.getElementById('listLikuim2').innerHTML += "ציון: " + arrCotrolPScores[i];
+                // document.getElementById('listLikuim2').innerHTML += "ציון: " + arrCotrolPScores[i];
             }
             for (var i; i < arrCotrolPNames.length && i < 9; i++) {
-                document.getElementById('listLikuim3').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                 document.getElementById('listLikuim3').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
-               // document.getElementById('listLikuim3').innerHTML += "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim3').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                document.getElementById('listLikuim3').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                // document.getElementById('listLikuim3').innerHTML += "ציון: " + arrCotrolPScores[i];
             }
             for (var i; i < arrCotrolPNames.length && i < 12; i++) {
-                document.getElementById('listLikuim4').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                 document.getElementById('listLikuim4').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim4').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                document.getElementById('listLikuim4').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
                 //document.getElementById('listLikuim4').innerHTML += "ציון: " + arrCotrolPScores[i];
             }
             for (var i; i < arrCotrolPNames.length; i++) {
-                document.getElementById('listLikuim5').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] +"'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                 document.getElementById('listLikuim5').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
-               // document.getElementById('listLikuim5').innerHTML += "ציון: " + arrCotrolPScores[i];
+                document.getElementById('listLikuim5').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
+                document.getElementById('listLikuim5').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrCotrolPScores[i];
+                // document.getElementById('listLikuim5').innerHTML += "ציון: " + arrCotrolPScores[i];
             }
         }
     }

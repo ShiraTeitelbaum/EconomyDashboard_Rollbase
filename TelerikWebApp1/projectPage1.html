@@ -1,5 +1,4 @@
-﻿
-<!--<div id="mapIcon" class="col-md-12">
+﻿<!--<div id="mapIcon" class="col-md-12">
     <button title="1" id="btn" onclick="myFunction()">לבחירת פרויקט</button>
 </div>
 
@@ -145,7 +144,7 @@
                 autoPlay: true,
                 navigatable: true,
                 media: {
-                    title: "gdrg",
+                    title: e.detail.name,
                     source: "'" + values[0] + "'"
                 }
             });
@@ -186,7 +185,6 @@
 </script>
 
 <style>
-
     /*for making the title of the tab to be a little in the middle*/
     html.k-rtl .rbs-sectionTitle:not(.isCollapsible) {
         margin-right: 39px;

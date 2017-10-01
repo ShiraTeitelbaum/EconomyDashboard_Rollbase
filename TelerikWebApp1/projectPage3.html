@@ -8,12 +8,6 @@
         float: left;
     }
 
-    /*[id^="donat"] {
-        width: 190px;
-        height: 180px;
-        float: left;
-    }*/
-
     .carousel {
         margin-bottom: 0;
         padding: 0 40px 30px 40px;
@@ -39,7 +33,7 @@
         right: 50%;
         top: auto;
         bottom: -10px;
-        margin-right: -19px;
+        /*margin-right: -19px;*/
     }
         /* The colour of the indicators */
         .carousel-indicators li {
@@ -167,42 +161,7 @@
     <!--display:none-->
     <!-- Wrapper for slides -->
     <div id="divsWithLocImagesInHere2" class="carousel-inner">
-        <!--style="padding-top: 20px;"-->
 
-        <!-- the most photos that can be is 26 photos- thats why dont need more than 5 circles -->
-        <div id="item2_1" class="item active">
-
-            <div id="divWithLocImgContainer2_1">
-
-            </div>
-        </div>
-
-
-        <div id="item2_2" class="item">
-
-            <div id="divWithLocImgContainer2_2">
-
-            </div>
-        </div>
-
-        <div id="item2_3" class="item">
-
-            <div id="divWithLocImgContainer2_3">
-
-            </div>
-        </div>
-        <div id="item2_4" class="item">
-
-            <div id="divWithLocImgContainer2_4">
-
-            </div>
-        </div>
-        <div id="item2_5" class="item">
-
-            <div id="divWithLocImgContainer2_5">
-
-            </div>
-        </div>
     </div>
 
     <!-- Left and right controls -->
@@ -219,13 +178,16 @@
 
 <!-- script for כשירות ציוד תאגידי ופרויקטאלי יחד -->
 <script>
-    
+
     //chart כשירות ציוד פרויקטאלי
     var arrNames1 = [];
     var arrEquipmentItems = [];
     var arrExceptions = [];
 
     var j1 = 0;
+
+    var allImagesUrlArray = [];
+    var allNamesForAllImages = [];
 
     //here will be the data for the taagidi donat
     //var data_1_active = 0, data_2_coachAdam = 0, data_3_begova = 0, data_4_Guidance = 0, data_5_permit = 0, data_6_residance = 0;
@@ -238,45 +200,85 @@
 
         j1 = 0;
 
-        //$('#panel-donats2').find('.titleGray').html("כשירות ציוד");
+        //for gathering the urlImg1 and urlImg2 to one array:
+        allImagesUrlArray = [];
+        allNamesForAllImages = [];
+        allCreatedAtDatesAllImages = [];
 
         //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
-        rbf_selectQuery('SELECT URL_Image1,ControlPointName FROM ItemCheckObject WHERE URL_Image1!="null" and locationId = ' + e.detail.locationId, 26, function (values) {
+        rbf_selectQuery('SELECT URL_Image1,URL_Image2,ControlPointName,createdAt FROM ItemCheckObject WHERE URL_Image1!="null" || URL_Image2!="null" and locationId = ' + e.detail.locationId, 26, function (values) {
             //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
 
+            // alert(values + " values");
+
+
+            //try here to do the teo arrays to one array
+            for (var i = 0; i < values.length; i++) {
+                allImagesUrlArray[i] = values[i][0];    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
+                allNamesForAllImages[i] = values[i][2];
+
+                //allCreatedAtDatesAllImages[i] = values[i][3];
+                allCreatedAtDatesAllImages[i] = rbf_formatDate(values[i][3], 'dd/mm/yyyy');
+            }
+
+            debugger
+            //and then the urlImg2 with its name too....
+            for (var j = 0, i; j < values.length; j++ , i++) {
+                allImagesUrlArray[i] = values[j][1];
+                allNamesForAllImages[i] = values[j][2];
+                //allCreatedAtDatesAllImages[i] = values[j][3];
+                allCreatedAtDatesAllImages[i] = rbf_formatDate(values[j][3], 'dd/mm/yyyy');
+            }
+
+            //deleting the null from the arrays
+
+            for (var i = 0; i < allImagesUrlArray.length; i++) {
+                if (allImagesUrlArray[i] == null || allImagesUrlArray[i] == "null")    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
+                {
+                    //i think because it was null- so when it did the splice it didnt do it well
+                    allImagesUrlArray.splice(i, 1);
+                    allNamesForAllImages.splice(i, 1);
+                    allCreatedAtDatesAllImages.splice(i, 1);
+                    i--;
+                }
+            }
+
+            //try to send the new two arrays instead of sending the values...
             for (var i = 0; i < values.length; i++) {
                 if (i == values.length - 1) {
-                    createDivsForImagesLocation2(values);
+                    createDivsForImagesLocation2(allImagesUrlArray, allNamesForAllImages);
                 }
             }
 
 
-            for (var i = 0; i < values.length; i++) {
-                createDivWithImgLoc2(j1, values[i]);
+            //for (var i = 0; i < values.length; i++) {
+            //    createDivWithImgLoc2(j1, values[i]);
+            //    //debugger
+            //    j1++;
+            //}
+
+            //try to send the specific record from the new two arrays instead of sending the values...
+            for (var i = 0; i < allImagesUrlArray.length; i++) {
+                createDivWithImgLoc2(j1, allImagesUrlArray[i], allNamesForAllImages[i], allCreatedAtDatesAllImages[i]);
                 //debugger
                 j1++;
             }
 
         });
-
-
-        //do here also select for the taagidi pieChart   - בעיקרון אפשר לשמור את הנתונים כמו ששמרתי בגורם אנוש ואז לא לעשות את השליפה כל פעם מחדש
-
-        // taagidiDonat();
-
     }
 
     $(document).on('secondLocations:context-update', updateDonatsAguranim);
 
 
-    function createDivsForImagesLocation2(values) {
-        if (values) {
-            ("got to createDivsForImagesLocation2");
-            //debugger
-            //just Clear Before
+    //function createDivsForImagesLocation2(values) {
+    function createDivsForImagesLocation2(allImagesUrlArray, allNamesForAllImages) {
+        //if (values) {
+        if (allImagesUrlArray) {
+            debugger
             document.getElementById('olForShowing2').innerHTML = "";
 
-            var count2 = ((values.length % 6) == 0) ? ((values.length / 6) + 1) : (Math.ceil(values.length / 6));
+            //var count2 = ((values.length % 6) == 0) ? ((values.length / 6) + 1) : (Math.ceil(values.length / 6));
+            var count2 = ((allImagesUrlArray.length % 6) == 0) ? ((allImagesUrlArray.length / 6) + 1) : (Math.ceil(allImagesUrlArray.length / 6));
 
             for (var j = 0; j < count2; j++) {
                 if (j == 0) {
@@ -298,75 +300,39 @@
                 }
             }
 
-            //then- build the divWithLocImgContainer2_
-            //need the same number of divWithLocImgContainer2_ (containers) divs as Count amount
 
-            //for (var k = 1; k <= count2; k++) {
-            //    debugger
-            //    document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
-            //}
+            //empty the divsWithLocImagesInHere2
+            document.getElementById('divsWithLocImagesInHere2').innerHTML = "";
+            debugger
 
+            for (var k = 1; k <= count2; k++) {
 
-            //here didn't do remove - because each time there is different number of divs depends on what location
-            //was chosen, therefor need to clear all of them- not just untill the number of count!!
+                var iDivContainer = document.createElement('div');
+                iDivContainer.id = 'divWithLocImgContainer2_' + k;
+                //document.getElementById('divsWithLocImagesInHere2').appendChild(iDivContainer);
 
-            for (var k = 1; k <= 5; k++) {
+                var iDiv = document.createElement('div');
+                iDiv.id = 'item2_' + k;
 
-                document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
-                //debugger
-                //if (document.getElementById('divWithLocImgContainer2_' + k)) {
-                //    alert("yes")
-                //    document.getElementById('divWithLocImgContainer2_' + k).innerHTML = "";
-                //}
-                //else {
-                //    alert("no- no innerHTML")
-                //}
+                if (k == 1)
+                    iDiv.className = 'item active';
+                else
+                    iDiv.className = 'item';
+                document.getElementById('divsWithLocImagesInHere2').appendChild(iDiv);
+
+                document.getElementById('item2_' + k).appendChild(iDivContainer);
             }
 
-            debugger
-
-            alert("before adding");
-            //document.getElementById('divsWithLocImagesInHere2').classList.add('item2_6');
-            //document.getElementsByClassName('carousel-inner').classList.add('item2_6');
-
-            //document.getElementsByClassName('carousel-inner').appendChild('item2_6');
-
-            var iDiv = document.createElement('div');
-            iDiv.id = 'item2_6';
-            iDiv.className = 'item';
-            //document.getElementsByTagName('body')[0].appendChild(iDiv);
 
 
-            //document.getElementById('divsWithLocImagesInHere2').children.appendChild(iDiv);
-            document.getElementById('divsWithLocImagesInHere2').appendChild(iDiv);
-
-            debugger
-            //for (var k = count2 + 1; k <= 5; k++) {
-            //    document.getElementById('item2_' + k).remove();
-
-            //    //if (document.getElementById('item2_' + k)) {
-            //    //    alert("yes")
-            //    //    document.getElementById('item2_' + k).remove();
-            //    //}
-            //    //else {
-            //    //    alert("no- no to remove")
-            //    //}
-            //}
-
-            for (var i = 0; i < values.length; i++) {
-                //    for (var i = 0; i <= values.length; i++) {  הוספתי את השווה...
-                //debugger
+            for (var i = 0; i < allImagesUrlArray.length; i++) {
 
                 var divInSlider2 = document.createElement('div');
 
                 divInSlider2.id = 'div_LocImg2_' + i;
 
-                //try now
+
                 divInSlider2.style.width = "16%";
-
-
-                //divInSlider2.style.paddingTop = "3em";
-                //divInSlider2.style.paddingBottom = "5em";
 
                 var myVar2;
                 if ((i % 6) == 0)
@@ -377,16 +343,13 @@
                 //  debugger
                 document.getElementById('divWithLocImgContainer2_' + myVar2).appendChild(divInSlider2);
 
-                // rbf_selectQuery("SELECT URL_LocationImage,LocationName FROM OurUserLocation WHERE LocationName = '" + values[i][0] + "'", 1, function (values1) {
-
-                //createDivWithImgLoc2(j1, values[i]);
-                //debugger
-                //j1++;
             }
         }
     }
 
-    function createDivWithImgLoc2(i, values1) {
+    //function createDivWithImgLoc2(i, values1) {
+    function createDivWithImgLoc2(i, urlSpecific, nameSpecific, createdAtDate) {
+
         debugger
 
         var divLoc = document.createElement('div');
@@ -397,27 +360,25 @@
         divForSiteName.style.fontSize = "14px";
         divForSiteName.style.color = "gray";
 
-        if (values1 != "") {
-            divLoc.style.backgroundImage = "url(" + values1[0] + ")";
+        if (urlSpecific != "") {
+            //if (values1 != "") {
+            //divLoc.style.backgroundImage = "url(" + values1[0] + ")";
+            divLoc.style.backgroundImage = "url(" + urlSpecific + ")";
             debugger
 
-            //divLoc.setAttribute("bakara", values1[1]);
-
-          //  divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] + "')");
-           // divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + divLoc + ")");
-          //  divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + this + ")");
             debugger
-            divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] +"' , '" + values1[1] + "')");
-            //divLoc.setAttribute("onclick", "clickedOnProjectImgTziud(" + values1 + ")");
+
+            // divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + urlSpecific + "' , '" + nameSpecific + "')");
+            divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + urlSpecific + "' , '" + nameSpecific + "' , '" + createdAtDate + "')");
         }
         else {
             divForSiteName.innerHTML = "לא מופיע שם אתר";
         }
 
         divLoc.style.height = "120px";
-        //divLoc.style.width = "185px";
         divLoc.style.width = "90%";
 
+        debugger
         if (document.getElementById('div_LocImg2_' + i)) {
             document.getElementById('div_LocImg2_' + i).appendChild(divLoc);
             document.getElementById('div_LocImg2_' + i).appendChild(divForSiteName);
@@ -428,28 +389,21 @@
 
     }
 
-    function clickedOnProjectImgTziud(values1, values1Sec) {
-      //  alert("clicked " + values1 + " values1Sec" + values1Sec);
+    function clickedOnProjectImgTziud(values1, values1Sec, createdAtDate) {
+
         debugger
-        // Get the modal
+        // olForShowing2.style.visible = false;
+        document.getElementById('olForShowing2').style.visibility = "hidden"; //hide the .carousel-indicators
+
         var modal = document.getElementById('myModal');
-
-        //// Get the image and insert it inside the modal - use its "alt" text as a caption
-        //var img = document.getElementById('myImg');
-
-        //debugger
-        // img.style.backgroundImage = "url(" + values1 + ")";
 
         var modalImg = document.getElementById("img01");
         var captionText = document.getElementById("caption");
-        //  img.onclick = function () {
         modal.style.display = "block";
-        //modalImg.src = this.src;
         modalImg.src = values1;
-        //captionText.innerHTML = this.alt;
 
-        //captionText.innerHTML.style.fontSiz= "20px";
-        captionText.innerHTML = "תחום מבדק: " + values1Sec;
+        //captionText.innerHTML = "תחום מבדק: " + values1Sec;
+        captionText.innerHTML = "סיווג ממצא: " + values1Sec + "</br>" + createdAtDate;
         captionText.style.fontSize = "20px";
 
 
@@ -459,6 +413,7 @@
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
+            document.getElementById('olForShowing2').style.visibility = "visible";  //show back the .carousel-indicators
         }
     }
 

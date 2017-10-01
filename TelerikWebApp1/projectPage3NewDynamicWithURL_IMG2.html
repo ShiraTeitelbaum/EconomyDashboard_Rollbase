@@ -33,7 +33,7 @@
         right: 50%;
         top: auto;
         bottom: -10px;
-        margin-right: -19px;
+        /*margin-right: -19px;*/
     }
         /* The colour of the indicators */
         .carousel-indicators li {
@@ -186,6 +186,9 @@
 
     var j1 = 0;
 
+    var allImagesUrlArray = [];
+    var allNamesForAllImages = [];
+
     //here will be the data for the taagidi donat
     //var data_1_active = 0, data_2_coachAdam = 0, data_3_begova = 0, data_4_Guidance = 0, data_5_permit = 0, data_6_residance = 0;
 
@@ -197,20 +200,66 @@
 
         j1 = 0;
 
-        //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
-        rbf_selectQuery('SELECT URL_Image1,URL_Image2,ControlPointName FROM ItemCheckObject WHERE URL_Image1!="null" || URL_Image2!="null" and locationId = ' + e.detail.locationId, 26, function (values) {
-            //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
-            debugger
+        //for gathering the urlImg1 and urlImg2 to one array:
+        allImagesUrlArray = [];
+        allNamesForAllImages = [];
+        allCreatedAtDatesAllImages = [];
 
+        //rbf_selectQuery('SELECT LocationName FROM GeneralDashboard', 100, function (values) {
+        rbf_selectQuery('SELECT URL_Image1,URL_Image2,ControlPointName,createdAt FROM ItemCheckObject WHERE URL_Image1!="null" || URL_Image2!="null" and locationId = ' + e.detail.locationId, 26, function (values) {
+            //rbf_selectQuery('SELECT URL_Image1,URL_Image2 FROM ItemCheckObject WHERE URL_Image1!="null" and URL_Image2!="null"', 100, function (values) {
+
+            // alert(values + " values");
+
+
+            //try here to do the teo arrays to one array
+            for (var i = 0; i < values.length; i++) {
+                allImagesUrlArray[i] = values[i][0];    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
+                allNamesForAllImages[i] = values[i][2];
+
+                //allCreatedAtDatesAllImages[i] = values[i][3];
+                allCreatedAtDatesAllImages[i] = rbf_formatDate(values[i][3], 'dd/mm/yyyy');
+            }
+
+            debugger
+            //and then the urlImg2 with its name too....
+            for (var j = 0, i; j < values.length; j++ , i++) {
+                allImagesUrlArray[i] = values[j][1];
+                allNamesForAllImages[i] = values[j][2];
+                //allCreatedAtDatesAllImages[i] = values[j][3];
+                allCreatedAtDatesAllImages[i] = rbf_formatDate(values[j][3], 'dd/mm/yyyy');
+            }
+
+            //deleting the null from the arrays
+
+            for (var i = 0; i < allImagesUrlArray.length; i++) {
+                if (allImagesUrlArray[i] == null || allImagesUrlArray[i] == "null")    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
+                {
+                    //i think because it was null- so when it did the splice it didnt do it well
+                    allImagesUrlArray.splice(i, 1);
+                    allNamesForAllImages.splice(i, 1);
+                    allCreatedAtDatesAllImages.splice(i, 1);
+                    i--;
+                }
+            }
+
+            //try to send the new two arrays instead of sending the values...
             for (var i = 0; i < values.length; i++) {
                 if (i == values.length - 1) {
-                    createDivsForImagesLocation2(values);
+                    createDivsForImagesLocation2(allImagesUrlArray, allNamesForAllImages);
                 }
             }
 
 
-            for (var i = 0; i < values.length; i++) {
-                createDivWithImgLoc2(j1, values[i]);
+            //for (var i = 0; i < values.length; i++) {
+            //    createDivWithImgLoc2(j1, values[i]);
+            //    //debugger
+            //    j1++;
+            //}
+
+            //try to send the specific record from the new two arrays instead of sending the values...
+            for (var i = 0; i < allImagesUrlArray.length; i++) {
+                createDivWithImgLoc2(j1, allImagesUrlArray[i], allNamesForAllImages[i], allCreatedAtDatesAllImages[i]);
                 //debugger
                 j1++;
             }
@@ -221,13 +270,15 @@
     $(document).on('secondLocations:context-update', updateDonatsAguranim);
 
 
-    function createDivsForImagesLocation2(values) {
-        if (values) {
-            alert("got to createDivsForImagesLocation2");
-           debugger
+    //function createDivsForImagesLocation2(values) {
+    function createDivsForImagesLocation2(allImagesUrlArray, allNamesForAllImages) {
+        //if (values) {
+        if (allImagesUrlArray) {
+            debugger
             document.getElementById('olForShowing2').innerHTML = "";
 
-            var count2 = ((values.length % 6) == 0) ? ((values.length / 6) + 1) : (Math.ceil(values.length / 6));
+            //var count2 = ((values.length % 6) == 0) ? ((values.length / 6) + 1) : (Math.ceil(values.length / 6));
+            var count2 = ((allImagesUrlArray.length % 6) == 0) ? ((allImagesUrlArray.length / 6) + 1) : (Math.ceil(allImagesUrlArray.length / 6));
 
             for (var j = 0; j < count2; j++) {
                 if (j == 0) {
@@ -260,21 +311,21 @@
                 iDivContainer.id = 'divWithLocImgContainer2_' + k;
                 //document.getElementById('divsWithLocImagesInHere2').appendChild(iDivContainer);
 
-                 var iDiv = document.createElement('div');
-                 iDiv.id = 'item2_' + k;
+                var iDiv = document.createElement('div');
+                iDiv.id = 'item2_' + k;
 
-                 if (k == 1)
-                     iDiv.className = 'item active';
+                if (k == 1)
+                    iDiv.className = 'item active';
                 else
-                     iDiv.className = 'item';
-                 document.getElementById('divsWithLocImagesInHere2').appendChild(iDiv);
+                    iDiv.className = 'item';
+                document.getElementById('divsWithLocImagesInHere2').appendChild(iDiv);
 
-                 document.getElementById('item2_' + k).appendChild(iDivContainer);
+                document.getElementById('item2_' + k).appendChild(iDivContainer);
             }
 
 
 
-            for (var i = 0; i < values.length; i++) {
+            for (var i = 0; i < allImagesUrlArray.length; i++) {
 
                 var divInSlider2 = document.createElement('div');
 
@@ -296,7 +347,9 @@
         }
     }
 
-    function createDivWithImgLoc2(i, values1) {
+    //function createDivWithImgLoc2(i, values1) {
+    function createDivWithImgLoc2(i, urlSpecific, nameSpecific, createdAtDate) {
+
         debugger
 
         var divLoc = document.createElement('div');
@@ -307,12 +360,16 @@
         divForSiteName.style.fontSize = "14px";
         divForSiteName.style.color = "gray";
 
-        if (values1 != "") {
-            divLoc.style.backgroundImage = "url(" + values1[0] + ")";
+        if (urlSpecific != "") {
+            //if (values1 != "") {
+            //divLoc.style.backgroundImage = "url(" + values1[0] + ")";
+            divLoc.style.backgroundImage = "url(" + urlSpecific + ")";
             debugger
 
             debugger
-            divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + values1[0] +"' , '" + values1[1] + "')");
+
+            // divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + urlSpecific + "' , '" + nameSpecific + "')");
+            divLoc.setAttribute("onclick", "clickedOnProjectImgTziud('" + urlSpecific + "' , '" + nameSpecific + "' , '" + createdAtDate + "')");
         }
         else {
             divForSiteName.innerHTML = "לא מופיע שם אתר";
@@ -321,6 +378,7 @@
         divLoc.style.height = "120px";
         divLoc.style.width = "90%";
 
+        debugger
         if (document.getElementById('div_LocImg2_' + i)) {
             document.getElementById('div_LocImg2_' + i).appendChild(divLoc);
             document.getElementById('div_LocImg2_' + i).appendChild(divForSiteName);
@@ -331,7 +389,12 @@
 
     }
 
-    function clickedOnProjectImgTziud(values1, values1Sec) {
+    function clickedOnProjectImgTziud(values1, values1Sec, createdAtDate) {
+
+        debugger
+        // olForShowing2.style.visible = false;
+        document.getElementById('olForShowing2').style.visibility = "hidden"; //hide the .carousel-indicators 
+
         var modal = document.getElementById('myModal');
 
         var modalImg = document.getElementById("img01");
@@ -339,7 +402,8 @@
         modal.style.display = "block";
         modalImg.src = values1;
 
-        captionText.innerHTML = "תחום מבדק: " + values1Sec;
+        //captionText.innerHTML = "תחום מבדק: " + values1Sec;
+        captionText.innerHTML = "סיווג ממצא: " + values1Sec + "</br>" + createdAtDate;
         captionText.style.fontSize = "20px";
 
 
@@ -349,6 +413,7 @@
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
+            document.getElementById('olForShowing2').style.visibility = "visible";  //show back the .carousel-indicators 
         }
     }
 
