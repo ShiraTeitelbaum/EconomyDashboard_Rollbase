@@ -138,7 +138,7 @@
         //for the video:
         rbf_selectQuery('SELECT SiteVideo FROM Checkup WHERE locationId = ' + e.detail.locationId + ' Order By updatedAt DESC', 1, function (values) {
             debugger
-            alert("mediaplayer url " + values[0]);
+            //alert("mediaplayer url " + values[0]);
 
             $("#mediaplayer").kendoMediaPlayer({
                 autoPlay: true,
