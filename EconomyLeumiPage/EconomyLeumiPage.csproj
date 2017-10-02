@@ -73,6 +73,7 @@
   <ItemGroup>
     <Content Include="onLoadLeumi.html" />
     <Content Include="Page1Leumi.html" />
+    <Content Include="Page1LeumiPanelsTogether.html" />
     <Content Include="Page1LeumiScript.html" />
     <Content Include="Page1LeumiScriptSofi.html" />
   </ItemGroup>
@@ -107,7 +108,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

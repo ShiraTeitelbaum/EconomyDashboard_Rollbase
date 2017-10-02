@@ -1,0 +1,501 @@
+﻿<!--<div id="mapIcon" class="col-md-12">
+    <button title="1" id="btn" onclick="myFunction()">Reload page</button>
+</div>-->
+
+<!--<div id="mapIcon" class="col-md-12">
+    <a title="מפה" id="viewMap" style="font-weight:bold;color:black;font-size:15px;" dir="rtl">
+        <label id="imgMap" style="width: 0em;
+    padding-right: 6%;
+    float: left;"></label>
+    </a>
+
+    <a title="דאשבורד" id="viewDash" dir="rtl" style="cursor: pointer;
+     display: none;
+    font-weight: bold;
+    color: black;
+    font-size: 21px;">>></a>
+</div>-->
+
+<div id="page" class="col-md-12">
+    <!-- מדד בטיחות לאומי -->
+    <div class="col-md-12">
+        <div style="height: 205.5px;" id="panel-leumiMadad" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+                <!--מדד בטיחות-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div style="padding-top: 33px;" class="panel-body" data-mh="group-one">
+                <div class="row">
+                    <div class="col-md-1">
+
+                    </div>
+                    <div class="col-md-7">
+                        <div id="gaugeLeumi"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="tile_stats_count">
+                            <h4 class="count_top">ציון</h4>
+                            <div class="count">0</div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div id="reportList"></div>-->
+            </div>
+        </div>
+    </div>
+
+    <!--מדד בטיחות לפי מחוזות-->
+    <div class="col-md-6">
+        <div id="panel-four-controlPanel" class="panel panel-default">
+            <div class="panel-heading" style="height: 19px;">
+                <h3 class="panel-title" style="height: 0px;color:transparent">My Group</h3>
+                <!--קבוצת היחוס שלי-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--מדד בטיחות לפי מחוזות לאורך זמן-->
+    <div class="col-md-6">
+        <div id="panel-lineAllMachozot" class="panel panel-default">
+            <div class="panel-heading" style="height: 19px;">
+                <!--מדד בטיחות סיפגארד לאורך זמן-->
+                <h3 class="panel-title" style="height: 0px;color:transparent">abc</h3>
+
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="line"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- מדדים -->
+    <div class="col-md-12">
+        <div id="panel-madadim" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">maakav</h3>
+                <!--מעקב כשירות עובדים פעילים-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+            </div>
+            <div class="panel-body" data-mh="group-four">
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים</h4>
+                    <div class="count 1">0</div>
+                </div>
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים שנבדקו</h4>
+                    <div class="count 2">0</div>
+                </div>             
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים אדומים</h4>
+                    <div class="count 3">0</div>
+                </div>
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים צהובים</h4>
+                    <div class="count 4">0</div>
+                </div>             
+            </div>
+        </div>
+    </div>
+
+    <!-- סיווג מפגעי בטיחות -->
+    <div class="col-md-12">
+        <div id="panel-hazard" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">Madad1</h3>
+                <!-- סיווג מפגעי בטיחות -->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit; direction:rtl"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="chartSivugLikuim"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- script -->
+<script>
+     //arrays for the bar chart
+    var names = [];
+    var grades = [];
+
+    //arrays for the line chart
+    var dates = [];
+    var madadArr = [];
+
+    //arrays for chartSivugLikuim chart
+    var namesArr1 = [];
+    var gradesArr1 = [];
+   
+    var gaugeLeumi = $("#gaugeLeumi").kendoLinearGauge({
+        pointer: {
+            color: "#000000",
+            size: 14,
+            shape: "arrow"
+        },
+        scale: {
+            majorUnit: 10,
+            minorUnit: 5,
+            min: 0,
+            max: 100,
+            ranges: [
+                {
+                    from: 0,
+                    to: 45,
+                    color: "#ecb09b"
+                },
+                {
+                    from: 45,
+                    to: 70,
+                    color: "#fff9b8"
+                },
+                {
+                    from: 70,
+                    to: 100,
+                    color: "#bfdbb5"
+                }
+            ],
+            majorTicks: {
+                size: 20
+            },
+            minorTicks: {
+                size: 27
+            },
+            vertical: false,
+            transitions: false
+        }
+    }).data('kendoLinearGauge');
+
+    var chart = $("#chart").kendoChart({
+        title: {
+            //text: "קבוצת היחוס שלי",
+            color: "#2f4050"
+        },
+        chartArea: {
+            background: "transparent"
+        },
+        legend: {
+            visible: false
+        },
+        series: [
+            {
+                name: "ציון לפרויקט: ",
+                type: "bar",
+                data: grades,
+                color: function (point) {
+                    //if (point.category == currentLocName) {
+                    //    if (point.value <= 45)
+                    //        return "rgba(236, 176, 155, 1)";
+                    //    if (point.value > 45 && point.value < 70)
+                    //        return "rgba(255, 249, 184, 1)";
+                    //    return "rgba(191, 219, 181, 1)";
+                    //}
+                    //else {
+                    if (point.value <= 45)
+                        return "#ecb09b";
+                    if (point.value > 45 && point.value < 70)
+                        return "#fff9b8";
+                    return "#bfdbb5";
+                    //}
+                },
+                labels: {
+                    template: " #: value #%",
+                    visible: true,
+                }
+            }
+        ],
+        seriesDefaults: {
+            bar: {
+                gap: 1.2,
+                stack: true
+            }
+        },
+        categoryAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                categories: names
+            }
+        ],
+        valueAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                line: {
+                    visible: false
+                }
+            },
+        ],
+        tooltip: {
+            template: "#= series.name #: #= value  #%",
+            visible: true
+        }
+    }).data('kendoChart');
+
+    var line = $("#line").kendoChart({
+        chartArea: {
+            background: "transparent"
+        },
+        legend: {
+            position: "top"
+        },
+        series: [
+            {
+                //name: "מדד בטיחות סיפגארד לאורך זמן",
+                //size: "20",
+                color: "#003047",
+                type: "line",
+                data: madadArr
+            }
+        ],
+        seriesDefaults: {
+            line: {
+                style: "smooth"
+            }
+        },
+        categoryAxis: [
+            {
+                majorGridLines: {
+                    visible: false
+                },
+                //data: dates
+                categories: dates
+            }
+        ],
+        valueAxis: [
+            {
+                labels: {
+                    format: "{0}"
+                },
+                line: {
+                    visible: false
+                },
+                majorUnit: "10",
+                max: "100",
+                axisCrossingValue: [
+                    -10
+                ]
+            }
+        ],
+        tooltip: {
+            format: "{0}",
+            visible: true
+        }
+    }).data('kendoChart');
+
+    var chartSivugLikuim = $("#chartSivugLikuim").kendoChart({
+        //   title: {
+        //    text: "סיווג ליקויים",
+        //     color: "#b59898"
+        //  },
+        chartArea: {
+            background: "transparent"
+        },
+        legend: {
+            visible: false
+        },
+        series: [
+            {
+                name: "ציון: ",
+                type: "bar",
+                //field: grades,
+                data: gradesArr1,
+                //color: "#b59898",
+                color: "#b1b4b6",
+                labels: {
+                    template: " #: value #%",
+                    visible: true,
+                }
+            }
+        ],
+        seriesDefaults: {
+            bar: {
+                gap: 1.2,
+                stack: true
+            }
+        },
+        categoryAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                // field: names
+                //data: names
+                categories: namesArr1
+            }
+        ],
+        valueAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                line: {
+                    visible: false
+                }
+            },
+        ],
+        tooltip: {
+            template: "#= series.name #: #= value  #%",
+            visible: true
+        }
+    }).data('kendoChart');
+
+    var updatePanelMachozot = function (e) {
+
+        //for the gauge
+        $('#panel-leumiMadad').find('.titleGray').html("מדד בטיחות");
+
+        //for MADADIM
+        $('#panel-madadim').find('.titleGray').html("מדדים");
+
+        rbf_selectQuery('SELECT NationalSafeguardScore,CountSites,CountCheckedSites,CountBadSites,CountAvgSites FROM National', 1, function (values) {
+            //gauge
+            gaugeLeumi.value(values[0][0]);
+            $('#panel-leumiMadad').find('.count').html(values[0][0] + "%");
+
+            //for MADADIM
+            $('#panel-madadim').find('.1').html(values[0][1]);
+            $('#panel-madadim').find('.2').html(values[0][2]);
+            $('#panel-madadim').find('.3').html(values[0][3]);
+            $('#panel-madadim').find('.4').html(values[0][4]);
+        });
+
+        //for bar chart
+        $('#panel-four-controlPanel').find('.titleGray').html("מדד בטיחות לפי מחוזות");
+        rbf_selectQuery("select name,LastSafeguardScore,locationId,CountBadSites,CountAvgSites,CountGreatSites from EconomyRegion", 20, function (values) {
+            debugger
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    names[i] = values[i][0];
+                    grades[i] = values[i][1];
+                    debugger
+                }
+            }
+            //  chart.dataSource.data(names, grades, currentLocName); //אולי לא צריך לשלוח...
+            chart.dataSource.data(names, grades);
+        });
+
+         //for line chart
+       $('#panel-lineAllMachozot').find('.titleGray').html("מדד בטיחות לאומי לאורך זמן");
+
+        //rbf_selectQuery('select CorporateSafeguardScore,CurDate from CorporateSafeguardScore' + " ORDER BY createdAt DESC", 10, function (values) {
+        //    if (values) {
+        //        alert("values" + values);
+        //    for (var i = 0, j = values.length - 1; i < values.length; i++ , j--) {
+        //    madadArr[j] = values[i][0];
+        //        dates[j] = values[i][1];
+        //    }
+        //}
+        //line.dataSource.data(dates, madadArr);
+        //});
+
+
+       // //for MADADIM
+       //rbf_selectNumber("SELECT count(id) FROM WorkerObject where CertAnibn_isExist=true and cbWorkerStatus=1 and locationId = " + e.detail.locationId, function (values) { //עניבנים
+          
+       //});
+
+       //rbf_selectNumber("SELECT count(id) FROM WorkerObject where ActivatingPlatformsCert=true and cbWorkerStatus=1 and locationId = " + e.detail.locationId, function (values) { //מפעילי במות הרמה
+       //    $('#panel-two-hadracha').find('.bamotHaramaNum').html(values);
+       //});
+
+       //rbf_selectNumber("SELECT count(id) FROM WorkerObject where isExist_signalCert=true and cbWorkerStatus=1 and locationId = " + e.detail.locationId, function (values) { //אתתים
+       //    $('#panel-two-hadracha').find('.atatimNum').html(values);
+       //});
+
+
+       //retreive all safety hazards for all the projects that are in this nation- there for dont need where...
+       $('#panel-hazard').find('.titleGray').html("סיווג מפגעי בטיחות");
+       rbf_selectQuery("SELECT count(id),ControlPointName FROM ItemCheckObject GROUP BY ControlPointName Order By count(id)", 50, function (values) {
+           if (values) {
+               for (var i = 0; i < values.length; i++) {   
+                   
+                   gradesArr1[i] = values[i][0];
+                   namesArr1[i] = values[i][1];
+               }
+               // createChart1(names, grades);
+           }
+           chartSivugLikuim.dataSource.data(namesArr1, gradesArr1); //אולי לא צריך לשלוח...
+       });
+
+    }
+    $(document).ready(updatePanelMachozot);
+</script>
+
+<div id="myMap" class="col-md-12" style="display:none;">
+    <div id="panel-MAP" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="mapLeumi" style="height: 612px;"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+
+    /*for coloring the background color of the dashboard*/
+    #rb-styleable-content-box {
+        /*background-color: gray;*/
+        background-color: darkgray;
+    }
+    /*for coloring the background color of the dashboard*/
+    .rbs-sectionContentPadding {
+        /*background-color: darkgray;*/
+        background-color: #d9d3d3;
+    }
+    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
+    .rbs-sectionTitleContainer {
+        /*padding: .5em 0;*/
+        background-color: white;
+    }
+    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
+    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
+        /*border-width: 0 !important;*/
+        background-color: darkgray;
+    }
+
+    /*add this in order to make the selector of Locations to be shown*/
+    .rbs-header3 .k-autocomplete.k-state-default, .k-picker-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-dropdown-wrap.k-state-default {
+        visibility: hidden;
+    }
+
+    .k-map .k-marker {
+        background-image: url('{!#HOSTED_FILE.KR2wk1ezSjKpGD8b5JOAug#url}');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    /*#mapIcon*/
+    /*#imgMap {*/
+    /*#viewMap*/
+    #imgMap, #mapIconImg {
+        height: 80px;
+        width: 99%;
+        background-image: url('{!#HOSTED_FILE.QxrdT7uxSqSXrCib7y75tA#url}');
+        background-repeat: no-repeat;
+    }
+</style>
+
+
