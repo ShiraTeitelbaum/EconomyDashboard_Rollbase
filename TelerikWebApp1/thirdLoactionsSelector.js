@@ -5,8 +5,8 @@
 
     var pluginName = 'thirdLoactionsSelector';
     var defaults = {
-        objName: 'DashboardSafety',
-        columns: ['id', 'LocationName', 'locationId']
+        objName: 'EconomyRegion',
+        columns: ['id', 'name', 'locationId']
     };
 
     var init = function () {
@@ -53,7 +53,7 @@
 
         _.selector = $('#thirdLoactionsSelector').kendoDropDownList({
             dataValueField: 'id',
-            dataTextField: 'LocationName',
+            dataTextField: 'name',
             dataSource: ds,
             value: _.initialId,
             animation: false,

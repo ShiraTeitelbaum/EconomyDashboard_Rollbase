@@ -71,29 +71,27 @@
          //rbf_selectQuery("select name,Latitude,Longtitud,elementStage from element2 ORDER BY createdAt DESC" , 1000, Location);
         rbf_selectQuery('select name,Latitude,longitude from ConstructionSite', 100, Location);
 
-        $('#viewMap').click(function () {
-            if (document.getElementById("viewMap").title == "מפה") {
-                document.getElementById("page").style.display = 'none';
-                document.getElementById("myMap").style.display = 'inline';
-                document.getElementById("viewMap").title = "דאשבורד";
-                document.getElementById("viewDash").style.display = "inline";
-                //for the map that it'll be on the whole page
-                //$("map").data("kendoMap").resize(); //didnt make difference
-            }
-            else {
-                document.getElementById("myMap").style.display = 'none';
-                document.getElementById("page").style.display = 'inline';
-                document.getElementById("viewMap").title = "מפה";
-                document.getElementById("viewDash").style.display = "none";
-            }
-        });
-        $('#viewDash').click(function () {
-            if (document.getElementById("viewDash").style.display == 'inline') {
-                document.getElementById("myMap").style.display = 'none';
-                document.getElementById("page").style.display = 'inline';
-                document.getElementById("viewMap").title = "מפה";
-                document.getElementById("viewDash").style.display = "none";
-            }
-        });
+        //$('#viewMap').click(function () {
+        //    if (document.getElementById("viewMap").title == "מפה") {
+        //        document.getElementById("page").style.display = 'none';
+        //        document.getElementById("myMap").style.display = 'inline';
+        //        document.getElementById("viewMap").title = "דאשבורד";
+        //        document.getElementById("viewDash").style.display = "inline";             
+        //    }
+        //    else {
+        //        document.getElementById("myMap").style.display = 'none';
+        //        document.getElementById("page").style.display = 'inline';
+        //        document.getElementById("viewMap").title = "מפה";
+        //        document.getElementById("viewDash").style.display = "none";
+        //    }
+        //});
+        //$('#viewDash').click(function () {
+        //    if (document.getElementById("viewDash").style.display == 'inline') {
+        //        document.getElementById("myMap").style.display = 'none';
+        //        document.getElementById("page").style.display = 'inline';
+        //        document.getElementById("viewMap").title = "מפה";
+        //        document.getElementById("viewDash").style.display = "none";
+        //    }
+        //});
     });
 </script>

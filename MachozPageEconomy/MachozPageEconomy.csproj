@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3451E829-7E52-4DE1-98F6-E33D3E8BF91E}</ProjectGuid>
+    <ProjectGuid>{2B0DCEAB-C929-4150-9139-4B3CEB87B749}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TelerikWebApp1</RootNamespace>
-    <AssemblyName>TelerikWebApp1</AssemblyName>
+    <RootNamespace>MachozPageEconomy</RootNamespace>
+    <AssemblyName>MachozPageEconomy</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -71,40 +71,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dss.css" />
-    <Content Include="dss.js" />
-    <Content Include="dssContextSelector.js" />
-    <Content Include="footer.html" />
-    <Content Include="footerNisui.html" />
-    <Content Include="Header.html" />
-    <Content Include="headerNisui.html" />
-    <Content Include="HtmlPage4.html" />
-    <Content Include="mapRefael.html" />
-    <Content Include="nisui.html" />
-    <Content Include="nisui2.html" />
-    <Content Include="projectPage1NISUI.html" />
-    <Content Include="projectPage3NewDynamicWithURL_IMG2.html" />
-    <Content Include="projectPage3NEW_DynamicClasses.html" />
-    <Content Include="projectPage1.html" />
-    <Content Include="projectPage2.html" />
-    <Content Include="projectPage2New.html" />
-    <Content Include="projectPage3.html" />
-    <Content Include="sideBar.html" />
-    <Content Include="_.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="secondLoactionsSelector.js" />
-    <Content Include="secondLocations.js" />
-    <Content Include="StyleSheetForEveryPage.css" />
-    <Content Include="thirdLoactionsSelector.js" />
-    <Content Include="thirdLocations.js" />
-    <Content Include="web.config" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
+    <Content Include="machozPageHTML.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -129,7 +96,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49573</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49573/</IISUrl>
+          <IISUrl>http://localhost:56266/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -44,7 +44,7 @@
         //alert("hi 1")
         var _ = this;
 
-        var ds = new kendo.data.DataSource({
+        var ds = new kendo.data.DataSource({           
             data: _.dataSource,
             schema: {
                 model: { id: 'id' }
