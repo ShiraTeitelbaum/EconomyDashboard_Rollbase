@@ -1,0 +1,69 @@
+﻿<select id="selectTab" name="selectTab" style="font-size: 15px;padding: 6px;">
+    <option value="Marketing Calander">Marketing Calander</option>
+    <option value="Campaign Manager">Campaign Manager</option>
+    <option value="Leads Management">Leads Management</option>
+</select>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#selectTab').on('change', function () {
+            switch ($('#selectTab option:selected').val()) {
+                case 'Marketing Calander':
+                    alert("I am 1");
+                    break;
+                case 'Campaign Manager':
+                    document.getElementById("MarketingCalander").style.display = 'none';
+                    document.getElementById("CampaignManager").style.display = 'inline';
+                    document.getElementById("LeadsManagement").style.display = 'none';                   
+                    break;
+                case 'Leads Management':
+                    alert("I am 3");
+                    break;
+            }
+        });
+    });
+</script>
+<br />
+<br />
+
+<div id="MarketingCalander" class="col-md-12">
+    <div id="panel-MAP" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="mapLeumi" style="height: 612px;"> Marketing Calander</div>
+
+        </div>
+    </div>
+</div>
+<div id="CampaignManager" class="col-md-12" style="display:none;">
+    <div id="panel-MAP" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="mapLeumi" style="height: 612px;"> CampaignManager </div>
+
+        </div>
+    </div>
+</div>
+<div id="LeadsManagement" class="col-md-12" style="display:none;">
+    <div id="panel-MAP" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="mapLeumi" style="height: 612px;"> LeadsManagement </div>
+
+        </div>
+    </div>
+</div>
