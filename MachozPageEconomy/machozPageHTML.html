@@ -1,7 +1,7 @@
 ﻿
 <div id="pageMachoz" class="col-md-12">
     <!-- מדד בטיחות אזורי -->
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div id="panel-MecoziMadad" class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
@@ -29,21 +29,6 @@
         </div>
     </div>
 
-    <!--מדד בטיחות לפי מחוזות-->
-    <div class="col-md-6">
-        <div id="panel-four-controlPanel" class="panel panel-default">
-            <div class="panel-heading" style="height: 19px;">
-                <h3 class="panel-title" style="height: 0px;color:transparent">My Group</h3>
-                <!--קבוצת היחוס שלי-->
-                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
-                <!-- added same style as for panel-title to titleGray-->
-            </div>
-            <div class="panel-body" data-mh="group-two">
-                <div id="chart"></div>
-            </div>
-        </div>
-    </div>
-   
     <!-- מדדים -->
     <div class="col-md-12">
         <div id="panel-madadimMazhoz" class="panel panel-default">
@@ -73,9 +58,24 @@
         </div>
     </div>
 
+    <!--מדד בטיחות לפי מחוזות-->
+    <div class="col-md-6">
+        <div id="panel-four-controlPanel" class="panel panel-default">
+            <div class="panel-heading" style="height: 19px;">
+                <h3 class="panel-title" style="height: 0px;color:transparent">My Group</h3>
+                <!--קבוצת היחוס שלי-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+   
     <!-- סיווג מפגעי בטיחות -->
-    <div class="col-md-12">
-        <div id="panel-hazard" class="panel panel-default">
+    <div class="col-md-6">
+        <div id="panel-hazard-machoz" class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" style="height: 0px;color:transparent">Madad1</h3>
                 <!-- סיווג מפגעי בטיחות -->
@@ -100,6 +100,7 @@
     //arrays for chartSivugLikuim chart
     var namesArr1 = [];
     var gradesArr1 = [];
+    var idRegion;
 
     var gaugeMachoz = $("#gaugeMachoz").kendoLinearGauge({
         pointer: {
@@ -189,74 +190,81 @@
         }
     }).data('kendoChart');
 
-    var chartSivugLikuim = $("#chartSivugLikuim").kendoChart({
-        //   title: {
-        //    text: "סיווג ליקויים",
-        //     color: "#b59898"
-        //  },
-        chartArea: {
-            background: "transparent"
-        },
-        legend: {
-            visible: false
-        },
-        series: [
-            {
-                name: "ציון: ",
-                type: "bar",
-                //field: grades,
-                data: gradesArr1,
-                //color: "#b59898",
-                color: "#b1b4b6",
-                labels: {
-                    template: " #: value #%",
-                    visible: true,
-                }
-            }
-        ],
-        seriesDefaults: {
-            bar: {
-                gap: 1.2,
-                stack: true
-            }
-        },
-        categoryAxis: [
-            {
-                majorGridLines: {
-                    width: 10,
-                    visible: false
-                },
-                // field: names
-                //data: names
-                categories: namesArr1
-            }
-        ],
-        valueAxis: [
-            {
-                majorGridLines: {
-                    width: 10,
-                    visible: false
-                },
-                line: {
-                    visible: false
-                }
-            },
-        ],
-        tooltip: {
-            template: "#= series.name #: #= value  #%",
-            visible: true
-        }
-    }).data('kendoChart');
-
+    //moved the chartSivugLikuim into the updatePanelMachozPage function- because it was saving the chart from a different Machoz if the current machoz didnt have any safety Hazards 
+    
     var updatePanelMachozPage = function (e) {
 
+    //moved the chartSivugLikuim into the updatePanelMachozPage function- because it was saving the chart from a different Machoz if the current machoz didnt have any safety Hazards 
+        var chartSivugLikuim = $("#chartSivugLikuim").kendoChart({
+            //   title: {
+            //    text: "סיווג ליקויים",
+            //     color: "#b59898"
+            //  },
+            chartArea: {
+                background: "transparent"
+            },
+            legend: {
+                visible: false
+            },
+            series: [
+                {
+                    name: "ציון: ",
+                    type: "bar",
+                    //field: grades,
+                    data: gradesArr1,
+                    //color: "#b59898",
+                    color: "#b1b4b6",
+                    labels: {
+                        template: " #: value #%",
+                        visible: true,
+                    }
+                }
+            ],
+            seriesDefaults: {
+                bar: {
+                    gap: 1.2,
+                    stack: true
+                }
+            },
+            categoryAxis: [
+                {
+                    majorGridLines: {
+                        width: 10,
+                        visible: false
+                    },
+                    // field: names
+                    //data: names
+                    categories: namesArr1
+                }
+            ],
+            valueAxis: [
+                {
+                    majorGridLines: {
+                        width: 10,
+                        visible: false
+                    },
+                    line: {
+                        visible: false
+                    },
+                    majorUnit: 5
+                },
+            ],
+            tooltip: {
+                template: "#= series.name #: #= value  #%",
+                visible: true
+            }
+        }).data('kendoChart');
+        
+        debugger
         //for the gauge
         $('#panel-MecoziMadad').find('.titleGray').html("מדד בטיחות אזורי");
 
         //for MADADIM
         $('#panel-madadimMazhoz').find('.titleGray').html("מדדים");
 
-        rbf_selectQuery('SELECT LastSafeguardScore,CountSites,CountCheckedSites,CountBadSites,CountAvgSites,CountGreatSites,name FROM EconomyRegion', 1, function (values) {
+        //rbf_selectQuery('SELECT LastSafeguardScore,CountSites,CountCheckedSites,CountBadSites,CountAvgSites,CountGreatSites,name FROM EconomyRegion', 1, function (values) {
+        rbf_selectQuery("SELECT LastSafeguardScore,CountSites,CountCheckedSites,CountBadSites,CountAvgSites,CountGreatSites,name FROM EconomyRegion WHERE id = " + e.detail.id , 1, function (values) {
+        debugger
             //gauge
             gaugeMachoz.value(values[0][0]);
             $('#panel-MecoziMadad').find('.count').html(values[0][0] + "%");
@@ -278,48 +286,36 @@
             chart.dataSource.data(nameMacoz, redSites, yellowSites, greenSites);           
         });
 
-        //for bar chart
-       //retreive all safety hazards for all the projects that are in this nation- there for dont need where...
+       //for bar chartSivugLikuim
+       //retreive all safety hazards for all the projects that are in this MACHOZ
 
-       //$('#panel-hazard').find('.titleGray').html("סיווג מפגעי בטיחות");
-       //rbf_selectQuery("SELECT count(id),ControlPointName FROM ItemCheckObject GROUP BY ControlPointName Order By count(id)", 50, function (values) {
-       //    if (values) {
-       //        for (var i = 0; i < values.length; i++) {
+        $('#panel-hazard-machoz').find('.titleGray').html("סיווג מפגעי בטיחות");
 
-       //            gradesArr1[i] = values[i][0];
-       //            namesArr1[i] = values[i][1];
-       //        }
-       //        // createChart1(names, grades);
-       //    }
-       //    chartSivugLikuim.dataSource.data(namesArr1, gradesArr1); //אולי לא צריך לשלוח...
-       //});
+       // document.getElementById('chartSivugLikuim').innerHTML = "";
+        rbf_selectQuery("SELECT count(id),ControlPointName FROM ItemCheckObject WHERE R366999205 = " + e.detail.id + " GROUP BY ControlPointName Order By count(id)", 50, function (values) {
+       
+        //  rbf_selectQuery("SELECT count(id),ControlPointName FROM ItemCheckObject GROUP BY ControlPointName Order By count(id)", 50, function (values) {
+         //   document.getElementById('chartSivugLikuim').innerHTML = "";
+             if (values) {
+               for (var i = 0; i < values.length; i++) {
 
-    }
-    $(document).ready(updatePanelMachozPage);
-</script>
+                   gradesArr1[i] = values[i][0];
+                   namesArr1[i] = values[i][1];
+                 }
+             //  chartSivugLikuim.dataSource.data(namesArr1, gradesArr1);
+            }        
+            
+             chartSivugLikuim.dataSource.data(namesArr1, gradesArr1); //אולי לא צריך לשלוח...
 
-<div id="myMapMachoz" class="col-md-12">
-    <!--style="display:none;-->
-    <div id="panel-MAP-machoz" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
-            <!--מדד בטיחות סייפגארד-יומי-->
-            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
-            <!-- added same style as for panel-title to titleGray-->
-        </div>
-        <div class="panel-body" data-mh="group-one">
-            <div id="mapMachoz" style="height: 612px;"></div>
+            //clear the relebants array- that it wont save the data from last chosen Machoz
+             namesArr1 = [];
+             gradesArr1 = [];
+       });
 
-        </div>
-    </div>
-</div>
 
-<!-- script for Machoz MAP -->
-<script>
-    rb.newui.util.addEventListener("rbs_pageRender", function () {
-    
+        //map functions
         function LocationMachozMap(values) {
-            debugger;
+            debugger
             var gridData = [];
             if (values) {
                 for (var i = 0; i < values.length; i++) {
@@ -380,13 +376,29 @@
             $("#mapMachoz").unbind("mousewheel");
             $("#mapMachoz").unbind("DOMMouseScroll");
         }
-
-
-        //rbf_selectQuery("select name,Latitude,Longtitud,elementStage from element2 ORDER BY createdAt DESC" , 1000, Location);
-        rbf_selectQuery('select name,Latitude,longitude from EconomyRegion', 100, LocationMachozMap);
         
-    });
+        rbf_selectQuery("select name,Latitude,longitude from ConstructionSite WHERE R344829425= " + e.detail.id, 100, LocationMachozMap);
+
+    }
+    //$(document).ready(updatePanelMachozPage);
+    $(document).on('thirdLocations:context-update', updatePanelMachozPage);
 </script>
+
+<div id="myMapMachoz" class="col-md-12">
+    <!--style="display:none;-->
+    <div id="panel-MAP-machoz" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="mapMachoz" style="height: 612px;"></div>
+
+        </div>
+    </div>
+</div>
 
 <!-- script for adding the selector for the Machozot -->
 <script>
