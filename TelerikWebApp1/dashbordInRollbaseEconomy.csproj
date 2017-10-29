@@ -89,6 +89,7 @@
     <Content Include="projectPage2.html" />
     <Content Include="projectPage2New.html" />
     <Content Include="projectPage3.html" />
+    <Content Include="ProjectPage_section3_imagesGallery_SOFI.html" />
     <Content Include="sideBar.html" />
     <Content Include="_.js" />
   </ItemGroup>
@@ -137,7 +138,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
