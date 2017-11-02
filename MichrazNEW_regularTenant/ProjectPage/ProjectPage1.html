@@ -1,0 +1,253 @@
+﻿<!--הערכת בטיחות באתר בניה-->
+
+<div class="col-md-6">
+    <div style="height: 205.5px;" id="panel-two" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+            <!--מדד בטיחות-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="row">
+                <div class="col-md-1">
+
+                </div>
+                <div class="col-md-7">
+                    <div id="gauge"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="tile_stats_count">
+                        <h4 class="count_top">ציון</h4>
+                        <div class="count">0</div>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="reportList"></div>-->
+        </div>
+    </div>
+
+
+    <div style="height: 205.5px;" id="panel-two_second" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">Madad2</h3>
+            <!--דוח בקרה אחרון-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="row">
+                <div id="reportList"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var gauge = $("#gauge").kendoLinearGauge({
+        pointer: {
+            color: "#000000",
+            size: 14,
+            shape: "arrow"
+        },
+        scale: {
+            majorUnit: 10,
+            minorUnit: 5,
+            min: 0,
+            max: 100,
+            ranges: [
+                {
+                    from: 0,
+                    to: 45,
+                    color: "#ecb09b"
+                },
+                {
+                    from: 45,
+                    to: 70,
+                    color: "#fff9b8"
+                },
+                {
+                    from: 70,
+                    to: 100,
+                    color: "#bfdbb5"
+                }
+            ],
+            majorTicks: {
+                size: 20
+            },
+            minorTicks: {
+                size: 27
+            },
+            vertical: false,
+            transitions: false
+        }
+    }).data('kendoLinearGauge');
+
+</script>
+
+<!-- PANEL 1 -->
+
+<div class="col-md-6">
+    <div id="panel-one" class="panel panel-default">
+        <div class="panel-heading" style="height: 20.39px;">
+            <h3 class="panel-title" style="height: 0px;color:transparent">siur</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div class="demo-section k-content wide" style="max-width: 644px;">
+                <div id="mediaplayer" style="height:360px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var updateAllPanels = function (e) {
+        document.getElementById('mediaplayer').innerHTML = "";
+
+        document.getElementsByClassName('rbs-pageTitle')[0].innerHTML = e.detail.LocationName;
+
+        debugger
+
+        $('#panel-two').find('.titleGray').html("מדד בטיחות");
+        $('#panel-two_second').find('.titleGray').html("דו''ח בקרה אחרון");
+        $('#panel-one').find('.titleGray').html("סיור רחפן");
+
+        //debugger
+        rbf_selectQuery('SELECT CheckupScore FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' ORDER BY createdAt DESC', 1, function (values) {
+            // debugger
+            gauge.value(values[0][0]);
+            $('#panel-two').find('.count').html(values[0][0] + "%");
+        });
+
+
+        //for the video:
+        //rbf_selectQuery('SELECT DroneURL FROM CheckupObject WHERE DroneURL!="null" and locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
+        rbf_selectQuery('SELECT DroneURL FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
+            debugger
+            //alert("mediaplayer url " + values[0]);
+
+            if (values.length > 0) {
+                $("#mediaplayer").kendoMediaPlayer({
+                    autoPlay: false,
+                    navigatable: false,
+                    media: {
+                        title: e.detail.LocationName,
+                        source: "'" + values[0] + "'"
+                    }
+                });
+            }
+            else {
+                $("#mediaplayer").kendoMediaPlayer({
+                    autoPlay: false,
+                    navigatable: false,
+                    media: {
+                        title: e.detail.LocationName,
+                        source: "https://www.youtube.com/watch?v=tc3xhD24iTU"
+                    }
+                });
+            }
+        });
+
+        //when ill for sure have CheckupReport_URL - can add the gauge here- intead of having the query above 
+        //for the last report!
+        rbf_selectQuery('SELECT CheckupReport_URL,createdAt,CheckupScore FROM CheckupObject WHERE CheckupReport_URL!="null" and locationId = ' + e.detail.locationId + ' ORDER BY createdAt DESC', 1, function (values) {
+            document.getElementById('reportList').innerHTML = "";
+            if (values.length > 0) {
+
+                //gauge.value(values[0][2]);
+                //$('#panel-two').find('.count').html(values[0][2] + "%");
+
+                //for (var i = 0; i < values.length; i++) {
+
+                var reportLink = document.createElement('a');
+                reportLink.target = "_blank";
+                reportLink.href = values[0][0];
+                reportLink.id = 'reportLink' + 0;
+                //reportLink.innerHTML = values[i][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[i][2] + "\n";
+
+                reportLink.innerHTML = values[0][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[0][2] + "</br>";
+                //reportLink.innerHTML = values[i][1] + "</br>";
+
+                //see that it wont do problems
+                //if (i != (values.length - 1))   //for some reason with the last report does too much space- paddingRight
+                //    reportLink.style.paddingRight = "24px";
+                reportLink.style.fontSize = "18px";
+
+                //document.getElementById('reportList').innerHTML = "";
+                document.getElementById('reportList').appendChild(reportLink);
+                //}
+
+            }
+        });
+    }
+    $(document).on('secondLocations:context-update', updateAllPanels);
+
+    //the mediaPlayer will happens for now- once just when entering the page
+
+</script>
+
+<style>
+    /*for making the title of the tab to be a little in the middle*/
+    html.k-rtl .rbs-sectionTitle:not(.isCollapsible) {
+        margin-right: 39px;
+    }
+
+    /*for coloring the background color of the dashboard*/
+    #rb-styleable-content-box {
+        /*background-color: gray;*/
+        background-color: darkgray;
+    }
+    /*for coloring the background color of the dashboard*/
+    .rbs-sectionContentPadding {
+        /*background-color: darkgray;*/
+        background-color: #d9d3d3;
+    }
+    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
+    .rbs-sectionTitleContainer {
+        /*padding: .5em 0;*/
+        background-color: white;
+    }
+    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
+    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
+        /*border-width: 0 !important;*/
+        background-color: darkgray;
+    }
+
+
+    .k-gauge svg g text {
+        padding-left: 5px;
+        font: 18px;
+    }
+
+    .k-gauge g text {
+        padding-left: 5px;
+        font: 18px;
+    }
+
+
+    /*זה אכן שלט הכתב- אבל לא היה אפשר לעשות פאדינג*/
+    .k-gauge text {
+        padding-right: 5px;
+        font: 18px;
+    }
+
+    /*ul.breadcrumb {
+            background-color: transparent;
+        }*/
+</style>
+
+
+
+<!-- script for adding the selector for the Projects -->
+<script>
+    $('.rbs-header3').secondLoactionsSelector({
+        objName: 'OurUserLocation',
+        //columns: ['id', 'name', 'locationId']
+        columns: ['id', 'LocationName', 'locationId']
+    });
+</script>

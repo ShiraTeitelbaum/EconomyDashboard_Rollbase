@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeumiSOFI", "LeumiSOFI\Leum
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketingDashboard", "MarketingDashboard\MarketingDashboard.csproj", "{D4C59402-BF1E-4E45-90F6-108B16A188ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichrazNEW_regularTenant", "MichrazNEW_regularTenant\MichrazNEW_regularTenant.csproj", "{ECC201B6-5031-44E7-A5BA-36EC21D2ECAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D4C59402-BF1E-4E45-90F6-108B16A188ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C59402-BF1E-4E45-90F6-108B16A188ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C59402-BF1E-4E45-90F6-108B16A188ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECC201B6-5031-44E7-A5BA-36EC21D2ECAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECC201B6-5031-44E7-A5BA-36EC21D2ECAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECC201B6-5031-44E7-A5BA-36EC21D2ECAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECC201B6-5031-44E7-A5BA-36EC21D2ECAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
