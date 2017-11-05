@@ -82,6 +82,7 @@
     <Content Include="LeumiPage\LeumiNisui3.html" />
     <Content Include="LeumiPage\LeumiWithoutSection2.html" />
     <Content Include="LeumiSection2Nisui\HtmlPage1.html" />
+    <Content Include="LeumiSection2Nisui\noasAvg.html" />
     <Content Include="MachozPage\curMachozPage.html" />
     <Content Include="MachozPage\MachozNisui.html" />
     <Content Include="MachozPage\machozPageHTML.html" />

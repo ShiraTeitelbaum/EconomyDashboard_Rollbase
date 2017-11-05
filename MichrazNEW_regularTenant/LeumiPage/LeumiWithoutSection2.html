@@ -114,6 +114,8 @@
     //arrays for chartSivugLikuim chart
     var namesArr1 = [];
     var gradesArr1 = [];
+    var avg_score = [];
+    var mahoz = [];
 
     var gaugeLeumi = $("#gaugeLeumi").kendoLinearGauge({
         pointer: {
@@ -298,6 +300,52 @@
             $('#panel-leumiMadad').find('.count').html(values[0][0] + "%");
         });
 
+
+        //avg per machoz       
+    rbf_selectQuery("SELECT locationId,LocationName FROM OurUserLocation WHERE ParentID = -1 GROUP BY locationId", 100, function (values10) {//all machozot
+    console.log("values10")
+    console.log(values10)
+    mahoz = [], index_mahoz=0;
+  	avg_score = [], index_avg_score=0;
+  	var i, index1 = 0;
+    for(i=0 ; i < values10.length; i++) {
+                rbf_selectQuery("SELECT locationId,LocationName FROM OurUserLocation WHERE ParentID = " + values10[i][0] + " GROUP BY locationId", 100, function (values11) {
+                    console.log("values11")
+                    console.log(values11)
+
+                    var str = "SELECT avg(CheckupScore) FROM CheckupObject WHERE locationId = ";
+                    if (values11.length > 0) {
+                        // alert(22222)
+                        str += values11[0][0];
+
+                        for (var j = 1; j < values11.length; j++) {
+                            str += " or locationId = "
+                            str += values11[j][0];
+                        }
+                        console.log("str")
+                        console.log(str)
+                        rbf_selectNumber(str, function (values12) {
+                            //alert(444)
+                            console.log("values12")
+                            console.log(values12)
+                            console.log("i")
+                            console.log(i)
+                            mahoz[index_mahoz] = values10[index1][1]; index1++; index_mahoz++;
+                            avg_score[index_avg_score] = values12; index_avg_score++;
+                            console.log("mahoz")
+                            console.log(mahoz)
+                            console.log("avg_score")
+                            console.log(avg_score)
+                        });
+                    }
+
+                    
+                });
+        }
+
+    chart.dataSource.data(avg_score, mahoz);
+     });
+   
 
         //sivug mifgaim
         $('#panel-hazard').find('.titleGray').html("סיווג מפגעי בטיחות");
