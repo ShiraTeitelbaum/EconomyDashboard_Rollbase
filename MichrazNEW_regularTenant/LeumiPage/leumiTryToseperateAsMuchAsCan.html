@@ -1,0 +1,346 @@
+﻿
+<div id="page" class="col-md-12">
+    <!-- מדד בטיחות לאומי -->
+    <div class="col-md-12">
+        <div style="height: 205.5px;" id="panel-leumiMadad" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+                <!--מדד בטיחות-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div style="padding-top: 33px;" class="panel-body" data-mh="group-one">
+                <div class="row">
+                    <div class="col-md-1">
+
+                    </div>
+                    <div class="col-md-7">
+                        <div id="gaugeLeumi"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="tile_stats_count">
+                            <h4 class="count_top">ציון</h4>
+                            <div class="count">0</div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div id="reportList"></div>-->
+            </div>
+        </div>
+    </div>
+
+    <!--מדד בטיחות לפי מחוזות-->
+    <div class="col-md-6">
+        <div id="panel-four-controlPanel" class="panel panel-default">
+            <div class="panel-heading" style="height: 19px;">
+                <h3 class="panel-title" style="height: 0px;color:transparent">My Group</h3>
+                <!--קבוצת היחוס שלי-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <!--מדד בטיחות לפי מחוזות לאורך זמן-->
+    <div class="col-md-6">
+        <div id="panel-lineAllMachozot" class="panel panel-default">
+            <div class="panel-heading" style="height: 19px;">
+                <!--מדד בטיחות סיפגארד לאורך זמן-->
+                <h3 class="panel-title" style="height: 0px;color:transparent">abc</h3>
+
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="line"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- script -->
+<script>
+
+    //var for dynamic queries
+    var QueryCountSites;
+    var QueryCountCheckedSites;
+    var QueryCountGreenSites;
+    var QueryCountYellowSites;
+    var QueryCountRedSites;
+    var QueryLocationForMap;
+    var str = "";
+    var regions = [];
+    var countNum = 0;
+
+     //arrays for the bar chart
+    var names = [];
+    var grades = [];
+
+    //arrays for the line chart
+    var namesMazhozot1 = [];
+    var namesMazhozot = [];
+    var redSites = [];
+    var yellowSites = [];
+    var greenSites = [];
+
+    //arrays for chartSivugLikuim chart
+    var namesArr1 = [];
+    var gradesArr1 = [];
+
+    //סיווג אתרים לפי מחוז
+    var line = $("#line").kendoChart({
+        legend: {
+            visible: true,
+            position: "top"
+        },
+        seriesDefaults: {
+            type: "bar",
+            stack: true
+        },
+        series: [{
+            name: "אתרים אדומים",
+            data: redSites,
+            color: "#ecb09b"
+        },
+        {
+            name: "אתרים צהובים",
+            data: yellowSites,
+            color: "#fff9b8"
+        },
+        {
+            name: "אתרים ירוקים",
+            data: greenSites,
+            //color: "rgba(247, 2, 2, 0.71)"
+            color: "#bfdbb5"
+        }
+        ],
+        valueAxis: {
+            max: 30,
+            line: {
+                visible: false
+            },
+            minorGridLines: {
+                visible: true
+            }
+        },
+        categoryAxis: {
+            categories: namesMazhozot1,
+            //max: 30,
+            majorGridLines: {
+                visible: false
+            }
+        },
+        tooltip: {
+            visible: true,
+            template: "#= series.name #: #= value #"
+        }
+    }).data('kendoChart');
+
+    var updatePanelMachozot = function (e) {
+
+        //get the locations that related to the cur machoz
+        rbf_selectQuery("SELECT locationId,LocationName FROM OurUserLocation WHERE ParentID = -1 GROUP BY locationId", 100, function (values10) {//all machozot
+            for (var i1 = 0; i1 < values10.length; i1++) {
+                regions[i1] = values10[i1][0];
+                namesMazhozot1[i1] = values10[i1][1];
+
+                if (i1 == values10.length - 1)//after fillin gall regions ids and names- go to function to calculate each region's counters
+                {
+                    calcRegionCounters();
+                    debugger
+                    alert("after calc");
+                    $('#panel-lineAllMachozot').find('.titleGray').html("סיווג אתרים לפי מחוזות");
+
+                    //line.dataSource.data(namesMazhozot, redSites, yellowSites, greenSites);
+
+                    for (var k = 0; k < redSites.length; k++) {
+                        alert("redSites[k]: " + redSites[k] + " the k is: " + k);
+                    }
+                }
+            }
+
+            line.dataSource.data(namesMazhozot, redSites, yellowSites, greenSites);
+        });
+
+        function calcRegionCounters() {
+            alert("in calc");
+            debugger
+            //for (var i = 0; i < regions.length; i++) {//for each machoz get its locations
+            for (var i = 0; i < 2; i++) {//for each machoz get its locations
+                rbf_selectQuery("SELECT locationId FROM OurUserLocation WHERE ParentID = " + regions[i] + " GROUP BY locationId", 100, function (values) {
+                    if (values.length > 0) { // if there are locations that related to machoz
+                        debugger
+
+                        QueryCountSites = "SELECT count(id) FROM CheckupObject WHERE locationId = ";
+                        QueryCountCheckedSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore!='null' and CheckupScore!= -1 and locationId = ";
+                        QueryCountGreenSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore > 70 and locationId = ";
+                        QueryCountYellowSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore > 45 and CheckupScore < 70 and locationId = ";
+                        QueryCountRedSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore < " + 45 + " and locationId = ";
+                        // QueryLocationForMap = "SELECT name,lat,lon FROM $ORG_LOCN WHERE id = ";
+
+                        //for סיווג מפגעי בטיחות
+                        //קודם כל לשלוף את כל המבדקים
+                        // var QuerySivugMifgaiBetichut = "SELECT id FROM CheckupObject WHERE locationId = ";
+
+                        str = "";
+
+                        //var strMap = "";
+
+                        for (var j = 0; j < values.length; j++) {  //run on the ids of the locations that related to the cur machoz
+                            if (j != 0) {
+                                str += " or locationId = ";
+                                //strMap += " or id = ";
+                            }
+                            str += values[j][0];
+                            // strMap += values[i][0];
+
+                            if (j == values.length - 1)
+                            {
+                                alert("j == values.length - 1");
+                                debugger
+                                QueryCountSites += str;
+                                QueryCountCheckedSites += str;
+                                QueryCountRedSites += str;
+                                QueryCountYellowSites += str;
+                                QueryCountGreenSites += str;
+                                advancedCalc(countNum);
+                                countNum++;
+                            }
+                        }
+
+                        //QueryCountSites += str;
+                        //QueryCountCheckedSites += str;
+                        //QueryCountRedSites += str;
+                        //QueryCountYellowSites += str;
+                        //QueryCountGreenSites += str;
+
+                        //advancedCalc(i);
+                    }
+                   
+                });
+                //namesMazhozot[i] = namesMazhozot1[i];
+
+                //whenever took this out- caused a problem- maybe that's what made it to do each bar on its time and not just all the loop and then has problems...'
+                //actually i think because it was stuck cause it didnt recognized values10 so i could see something- because it's deletes the rest every time...
+
+                //advancedCalc(i);
+            }
+        }
+
+        function advancedCalc(countNum) {
+            alert("in advancedCalc the countNum is: " + countNum);
+            rbf_selectQuery(QueryCountSites,1, function (values1) {
+                //נראה לי שמה שקורה זה שצריך לאפס את ה
+                //values1 , values2, values4 וכולי
+                $('#panel-madadim').find('.1').html(values1);
+               // alert("values1" + values1 + "    countNum:  " + countNum);
+                // $('#panel-madadim').find('.1').html += (values1);
+
+                //QueryCountCheckedSites
+                rbf_selectQuery(QueryCountCheckedSites,1, function (values3) {
+                    $('#panel-madadim').find('.2').html(values3);
+                   // alert("values3 " + values3 + "    countNum:  " + countNum);
+                    //QueryCountRedSites
+                    rbf_selectQuery(QueryCountRedSites,1, function (values4) {
+                        $('#panel-madadim').find('.3').html(values4);
+                        debugger
+                        redSites[countNum] = values4;
+                        alert("values4: " + values4 + "    countNum:  " + countNum);
+                        //QueryCountYellowSites
+                        rbf_selectQuery(QueryCountYellowSites,1, function (values5) {
+                            $('#panel-madadim').find('.4').html(values5);
+                            yellowSites[countNum] = values5;
+                            alert("values5: " + values5 + "    countNum:  " + countNum);
+                            //QueryCountGreenSites
+                            rbf_selectQuery(QueryCountGreenSites,1, function (values6) {
+                                greenSites[countNum] = values6;
+                                alert("values6: " + values6 + "    countNum:  " + countNum);
+                                // nameMacoz[0] = e.detail.LocationName;
+                                //namesMazhozot[i] = "fffff"+i;
+
+                                values4 = "";
+
+                                //has to do it just once!
+                                //create the chart for סיווג אתרים למחוז הספציפי
+                                // $('#panel-four-controlPanel').find('.titleGray').html("סיווג אתרים למחוז הספציפי");
+                                //line.dataSource.data(namesMazhozot, redSites, yellowSites, greenSites);
+
+                                //if (i == regions.length - 1)//if the loop ran on all the machozot already
+                                //{
+                                //    //has to do it just once!
+                                //    //create the chart for סיווג אתרים למחוז הספציפי
+                                //    $('#panel-four-controlPanel').find('.titleGray').html("סיווג אתרים למחוז הספציפי");
+                                //    line.dataSource.data(namesMazhozot, redSites, yellowSites, greenSites);
+                                //}
+                            });
+                        });
+                    });
+                });
+            });
+
+        }
+    }
+    $(document).ready(updatePanelMachozot);
+</script>
+
+<!-- script for adding the selector for the Machozot - just because had error with the ConstructionSite object- and maybe it tries for the selector to get there...-->
+<script>
+    $('.rbs-header3').thirdLoactionsSelector({
+        objName: 'OurUserLocation',
+        columns: ['id', 'LocationName', 'locationId']
+    });
+</script>
+<!-- script for adding the selector for the Projects -->
+<script>
+    $('.rbs-header3').secondLoactionsSelector({
+        objName: 'OurUserLocation',
+        //columns: ['id', 'name', 'locationId']
+        columns: ['id', 'LocationName', 'locationId']
+    });
+</script>
+
+
+<style>
+    /*for coloring the background color of the dashboard*/
+    #rb-styleable-content-box {
+        /*background-color: gray;*/
+        background-color: darkgray;
+    }
+    /*for coloring the background color of the dashboard*/
+    .rbs-sectionContentPadding {
+        /*background-color: darkgray;*/
+        background-color: #d9d3d3;
+    }
+    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
+    .rbs-sectionTitleContainer {
+        /*padding: .5em 0;*/
+        background-color: white;
+    }
+    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
+    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
+        /*border-width: 0 !important;*/
+        background-color: darkgray;
+    }
+
+    /*add this in order to make the selector of Locations to be shown*/
+    .rbs-header3 .k-autocomplete.k-state-default, .k-picker-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-dropdown-wrap.k-state-default {
+        visibility: hidden;
+    }
+
+    /*.k-map .k-marker {
+        background-image: url('{!#HOSTED_FILE.KR2wk1ezSjKpGD8b5JOAug#url}');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    #imgMap, #mapIconImg {
+        height: 80px;
+        width: 99%;
+        background-image: url('{!#HOSTED_FILE.QxrdT7uxSqSXrCib7y75tA#url}');
+        background-repeat: no-repeat;
+    }*/
+</style>

@@ -1,0 +1,465 @@
+﻿
+<div id="page" class="col-md-12">
+    <!-- מדד בטיחות לאומי -->
+    <div class="col-md-12">
+        <div style="height: 205.5px;" id="panel-leumiMadad" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">Madad</h3>
+                <!--מדד בטיחות-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div style="padding-top: 33px;" class="panel-body" data-mh="group-one">
+                <div class="row">
+                    <div class="col-md-1">
+
+                    </div>
+                    <div class="col-md-7">
+                        <div id="gaugeLeumi"></div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="tile_stats_count">
+                            <h4 class="count_top">ציון</h4>
+                            <div class="count">0</div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div id="reportList"></div>-->
+            </div>
+        </div>
+    </div>
+
+    <!--מדד בטיחות לפי מחוזות-->
+    <div class="col-md-6">
+        <div id="panel-four-controlPanel" class="panel panel-default">
+            <div class="panel-heading" style="height: 19px;">
+                <h3 class="panel-title" style="height: 0px;color:transparent">My Group</h3>
+                <!--קבוצת היחוס שלי-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- מדדים -->
+    <div class="col-md-12">
+        <div id="panel-madadim" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">maakav</h3>
+                <!--מעקב כשירות עובדים פעילים-->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+            </div>
+            <div class="panel-body" data-mh="group-four">
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים</h4>
+                    <div class="count 1">0</div>
+                </div>
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים שנבדקו</h4>
+                    <div class="count 2">0</div>
+                </div>
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים אדומים</h4>
+                    <div class="count 3">0</div>
+                </div>
+                <div class="col-xs-3">
+                    <h4 class="count_top">כמות אתרים צהובים</h4>
+                    <div class="count 4">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- סיווג מפגעי בטיחות -->
+    <div class="col-md-12">
+        <div id="panel-hazard" class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="height: 0px;color:transparent">Madad1</h3>
+                <!-- סיווג מפגעי בטיחות -->
+                <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit; direction:rtl"></div>
+                <!-- added same style as for panel-title to titleGray-->
+            </div>
+            <div class="panel-body" data-mh="group-two">
+                <div id="chartSivugLikuim"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- script -->
+<script>
+
+    //var for dynamic queries
+    var QueryCountSites;
+    var QueryCountCheckedSites;
+    var QueryCountGreenSites;
+    var QueryCountYellowSites;
+    var QueryCountRedSites;
+    var QueryLocationForMap;
+    var str = "";
+
+    //arrays for the bar chart
+    var names = [];
+    var grades = [];
+
+    //arrays for the line chart
+    var namesMazhozot = [];
+    var redSites = [];
+    var yellowSites = [];
+    var greenSites = [];
+
+    //arrays for chartSivugLikuim chart
+    var namesArr1 = [];
+    var gradesArr1 = [];
+
+    var gaugeLeumi = $("#gaugeLeumi").kendoLinearGauge({
+        pointer: {
+            color: "#000000",
+            size: 14,
+            shape: "arrow"
+        },
+        scale: {
+            majorUnit: 10,
+            minorUnit: 5,
+            min: 0,
+            max: 100,
+            ranges: [
+                {
+                    from: 0,
+                    to: 45,
+                    color: "#ecb09b"
+                },
+                {
+                    from: 45,
+                    to: 70,
+                    color: "#fff9b8"
+                },
+                {
+                    from: 70,
+                    to: 100,
+                    color: "#bfdbb5"
+                }
+            ],
+            majorTicks: {
+                size: 20
+            },
+            minorTicks: {
+                size: 27
+            },
+            vertical: false,
+            transitions: false
+        }
+    }).data('kendoLinearGauge');
+
+    var chart = $("#chart").kendoChart({
+        title: {
+            //text: "קבוצת היחוס שלי",
+            color: "#2f4050"
+        },
+        chartArea: {
+            background: "transparent"
+        },
+        legend: {
+            visible: false
+        },
+        series: [
+            {
+                name: "ציון לפרויקט: ",
+                type: "bar",
+                data: grades,
+                color: function (point) {
+                    //if (point.category == currentLocName) {
+                    //    if (point.value <= 45)
+                    //        return "rgba(236, 176, 155, 1)";
+                    //    if (point.value > 45 && point.value < 70)
+                    //        return "rgba(255, 249, 184, 1)";
+                    //    return "rgba(191, 219, 181, 1)";
+                    //}
+                    //else {
+                    if (point.value <= 45)
+                        return "#ecb09b";
+                    if (point.value > 45 && point.value < 70)
+                        return "#fff9b8";
+                    return "#bfdbb5";
+                    //}
+                },
+                labels: {
+                    template: " #: value #%",
+                    visible: true,
+                }
+            }
+        ],
+        seriesDefaults: {
+            bar: {
+                gap: 1.2,
+                stack: true
+            }
+        },
+        categoryAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                categories: names
+            }
+        ],
+        valueAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                line: {
+                    visible: false
+                }
+            },
+        ],
+        tooltip: {
+            template: "#= series.name #: #= value  #%",
+            visible: true
+        }
+    }).data('kendoChart');
+
+    var chartSivugLikuim = $("#chartSivugLikuim").kendoChart({
+        //   title: {
+        //    text: "סיווג ליקויים",
+        //     color: "#b59898"
+        //  },
+        chartArea: {
+            background: "transparent"
+        },
+        legend: {
+            visible: false
+        },
+        series: [
+            {
+                name: "ציון: ",
+                type: "bar",
+                //field: grades,
+                data: gradesArr1,
+                //color: "#b59898",
+                color: "#b1b4b6",
+                labels: {
+                    template: " #: value #%",
+                    visible: true,
+                }
+            }
+        ],
+        seriesDefaults: {
+            bar: {
+                gap: 1.2,
+                stack: true
+            }
+        },
+        categoryAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                // field: names
+                //data: names
+                categories: namesArr1
+            }
+        ],
+        valueAxis: [
+            {
+                majorGridLines: {
+                    width: 10,
+                    visible: false
+                },
+                line: {
+                    visible: false
+                }
+            },
+        ],
+        tooltip: {
+            template: "#= series.name #: #= value  #%",
+            visible: true
+        }
+    }).data('kendoChart');
+
+    var updatePanelMachozot = function (e) {
+
+        //for the gauge
+        $('#panel-leumiMadad').find('.titleGray').html("מדד בטיחות");
+
+        //for MADADIM
+        $('#panel-MAP').find('.titleGray').html("מפה");
+
+        //מדד בטיחות
+        rbf_selectQuery('SELECT avg(CheckupScore) FROM CheckupObject', 1, function (values) {
+            //gauge
+            gaugeLeumi.value(values[0][0]);
+            $('#panel-leumiMadad').find('.count').html(values[0][0] + "%");
+        });
+
+
+        //sivug mifgaim
+        $('#panel-hazard').find('.titleGray').html("סיווג מפגעי בטיחות");
+       rbf_selectQuery("SELECT count(id),name FROM ControlPointCheckup GROUP BY R370259027 Order By count(id)", 50, function (values) {
+          if (values) {
+               for (var i = 0; i < values.length; i++) {
+
+                gradesArr1[i] = values[i][0];
+                   namesArr1[i] = values[i][1];
+               }
+               // createChart1(names, grades);
+           }
+          chartSivugLikuim.dataSource.data(namesArr1, gradesArr1); //אולי לא צריך לשלוח...
+       });
+
+       //for the map
+       function LocationMapLeumi(values) {
+           debugger;
+          
+           var gridData = [];
+           if (values) {
+               for (var i = 0; i < values.length; i++) {
+                   var data = {
+                       shape: "pinTarget",
+                       location: [values[i][1], values[i][2]],
+                       tooltip: {
+                           content: "<div id='btnToProj'>" + values[i][0] + "</div>"
+                       },
+                       //elementStage: values[i][3]
+                       //colorField: "green"
+                   }
+                   gridData.push(data);
+               }
+               createMapLeumi(gridData);
+           }
+       }
+
+       function createMapLeumi(gridData) {
+           debugger;
+
+           $("#mapLeumi").kendoMap({
+               //center: ["31.7656212", "35.1910332"],
+               center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+               zoom: 10,
+               layers: [{
+                   type: "tile",
+                   urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                   subdomains: ["a", "b", "c"],
+                   attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+               }],
+               markers: gridData,
+               markerActivate: function (e) {
+                   debugger;
+                   switch (e.marker.options.name) {
+                       case 1:
+                           e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.ayQV5lowQYmXik2rZoq-pw#url}')";
+                           break;
+                       case 2:
+                           e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.7TZs_6K6RY-lYib9PCXJjw#url}')";
+                           break;
+                       case 3:
+                           e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.__Qr4g-2QBSUaezKEZbFzg#url}')";
+                           break;
+                       case 4:
+                           e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.eT7hqe9NRlyNy5rRnpbbgQ#url}')";
+                           break;
+                       case 5:
+                           e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.WiWtoo-XSNqIZGpbM-ZD-g#url}')";
+                           break;
+                       case 6:
+                           e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.qIRMXeBEQXOmnMTWfTDFqA#url}')";
+                           break;
+                       default:
+                   }
+               }
+           });
+           $("#mapLeumi").unbind("mousewheel");
+           $("#mapLeumi").unbind("DOMMouseScroll");
+       }
+
+       $('#panel-madadim').find('.titleGray').html("מדדים");
+
+       rbf_selectQuery('select name,lat,lon from $ORG_LOCN WHERE ParentID!= -1', 100, LocationMapLeumi);
+    }
+    $(document).ready(updatePanelMachozot);
+</script>
+
+<div id="myMap" class="col-md-12">
+    <!--style="display:none;-->
+    <div id="panel-MAP" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="height: 0px;color:transparent">MAP</h3>
+            <!--מדד בטיחות סייפגארד-יומי-->
+            <div class="titleGray" style="margin-top: 0;margin-bottom: 0;font-size: 16px;color: inherit;direction: rtl;"></div>
+            <!-- added same style as for panel-title to titleGray-->
+        </div>
+        <div class="panel-body" data-mh="group-one">
+            <div id="mapLeumi" style="height: 612px;"></div>
+
+        </div>
+    </div>
+</div>
+
+<!-- script for adding the selector for the Machozot - just because had error with the ConstructionSite object- and maybe it tries for the selector to get there...-->
+<script>
+    $('.rbs-header3').thirdLoactionsSelector({
+        objName: 'OurUserLocation',
+        columns: ['id', 'LocationName', 'locationId']
+    });
+</script>
+<!-- script for adding the selector for the Projects -->
+<script>
+    $('.rbs-header3').secondLoactionsSelector({
+        objName: 'OurUserLocation',
+        //columns: ['id', 'name', 'locationId']
+        columns: ['id', 'LocationName', 'locationId']
+    });
+</script>
+
+
+<style>
+    /*for coloring the background color of the dashboard*/
+    #rb-styleable-content-box {
+        /*background-color: gray;*/
+        background-color: darkgray;
+    }
+    /*for coloring the background color of the dashboard*/
+    .rbs-sectionContentPadding {
+        /*background-color: darkgray;*/
+        background-color: #d9d3d3;
+    }
+    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
+    .rbs-sectionTitleContainer {
+        /*padding: .5em 0;*/
+        background-color: white;
+    }
+    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
+    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
+        /*border-width: 0 !important;*/
+        background-color: darkgray;
+    }
+
+    /*add this in order to make the selector of Locations to be shown*/
+    .rbs-header3 .k-autocomplete.k-state-default, .k-picker-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-dropdown-wrap.k-state-default {
+        visibility: hidden;
+    }
+
+    .k-map .k-marker {
+        background-image: url('{!#HOSTED_FILE.KR2wk1ezSjKpGD8b5JOAug#url}');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+    /*.k-map .k-marker {
+        background-image: url('{!#HOSTED_FILE.KR2wk1ezSjKpGD8b5JOAug#url}');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    #imgMap, #mapIconImg {
+        height: 80px;
+        width: 99%;
+        background-image: url('{!#HOSTED_FILE.QxrdT7uxSqSXrCib7y75tA#url}');
+        background-repeat: no-repeat;
+    }*/
+</style>

@@ -73,6 +73,16 @@
   <ItemGroup>
     <Content Include="footer.html" />
     <Content Include="footerNew.html" />
+    <Content Include="LeumiPage\leumiTryToSeperateAsMuchAsCan.html" />
+    <Content Include="LeumiPage\HtmlPage1.html" />
+    <Content Include="LeumiPage\leumiSeperateToDifferentArr.html" />
+    <Content Include="LeumiPage\Leumi.html" />
+    <Content Include="LeumiPage\LeumiNisui.html" />
+    <Content Include="LeumiPage\LeumiNisui2.html" />
+    <Content Include="LeumiPage\LeumiNisui3.html" />
+    <Content Include="LeumiPage\LeumiWithoutSection2.html" />
+    <Content Include="LeumiSection2Nisui\HtmlPage1.html" />
+    <Content Include="MachozPage\curMachozPage.html" />
     <Content Include="MachozPage\MachozNisui.html" />
     <Content Include="MachozPage\machozPageHTML.html" />
     <Content Include="MachozPage\thirdLoactionsSelector.js" />
@@ -115,7 +125,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
