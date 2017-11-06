@@ -71,8 +71,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dssC_safety.js" />
     <Content Include="footer.html" />
-    <Content Include="footerNew.html" />
+    <Content Include="footerNew_Economy_addSelectorForTablet.html" />
+    <Content Include="footerFromSafety.html" />
+    <Content Include="Header.html" />
+    <Content Include="HeaderNew.html" />
+    <Content Include="LeumiPage\LeumiSOFI.html" />
+    <Content Include="LeumiPage\LeumiSOFI2.html" />
     <Content Include="LeumiPage\leumiTryToSeperateAsMuchAsCan.html" />
     <Content Include="LeumiPage\HtmlPage1.html" />
     <Content Include="LeumiPage\leumiSeperateToDifferentArr.html" />
@@ -88,6 +94,8 @@
     <Content Include="MachozPage\machozPageHTML.html" />
     <Content Include="MachozPage\thirdLoactionsSelector.js" />
     <Content Include="MachozPage\thirdLocations.js" />
+    <Content Include="naomisChangesFromSafety.html" />
+    <Content Include="partialNaomisChanges.css" />
     <Content Include="ProjectPage\NewPage2.html" />
     <Content Include="ProjectPage\ProjectPage1.html" />
     <Content Include="ProjectPage\ProjectPage2.html" />

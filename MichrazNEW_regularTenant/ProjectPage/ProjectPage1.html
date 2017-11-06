@@ -153,7 +153,7 @@
             }
         });
 
-        //when ill for sure have CheckupReport_URL - can add the gauge here- intead of having the query above 
+        //when ill for sure have CheckupReport_URL - can add the gauge here- intead of having the query above
         //for the last report!
         rbf_selectQuery('SELECT CheckupReport_URL,createdAt,CheckupScore FROM CheckupObject WHERE CheckupReport_URL!="null" and locationId = ' + e.detail.locationId + ' ORDER BY createdAt DESC', 1, function (values) {
             document.getElementById('reportList').innerHTML = "";
@@ -190,58 +190,6 @@
     //the mediaPlayer will happens for now- once just when entering the page
 
 </script>
-
-<style>
-    /*for making the title of the tab to be a little in the middle*/
-    html.k-rtl .rbs-sectionTitle:not(.isCollapsible) {
-        margin-right: 39px;
-    }
-
-    /*for coloring the background color of the dashboard*/
-    #rb-styleable-content-box {
-        /*background-color: gray;*/
-        background-color: darkgray;
-    }
-    /*for coloring the background color of the dashboard*/
-    .rbs-sectionContentPadding {
-        /*background-color: darkgray;*/
-        background-color: #d9d3d3;
-    }
-    /*כל הקטע שבו כתוב למשל "מדדי בטיחות"*/
-    .rbs-sectionTitleContainer {
-        /*padding: .5em 0;*/
-        background-color: white;
-    }
-    /*הפס הקטנטן מתחת לכותרת "מדדי בטיחות " למשל*/
-    ul.k-panelbar.rbs-sectionStyle1, ul.k-panelbar.rbs-sectionStyle1 li.k-item {
-        /*border-width: 0 !important;*/
-        background-color: darkgray;
-    }
-
-
-    .k-gauge svg g text {
-        padding-left: 5px;
-        font: 18px;
-    }
-
-    .k-gauge g text {
-        padding-left: 5px;
-        font: 18px;
-    }
-
-
-    /*זה אכן שלט הכתב- אבל לא היה אפשר לעשות פאדינג*/
-    .k-gauge text {
-        padding-right: 5px;
-        font: 18px;
-    }
-
-    /*ul.breadcrumb {
-            background-color: transparent;
-        }*/
-</style>
-
-
 
 <!-- script for adding the selector for the Projects -->
 <script>

@@ -1,0 +1,25 @@
+﻿/*for making the title of the tab to be a little in the middle*/
+html.k-rtl .rbs-sectionTitle:not(.isCollapsible) {
+    margin-right: 39px;
+}
+
+/*בשביל שלא יהיה בורדר לבן מסביב לכל הפאנלים*/
+.panel {
+    margin: 0 10px 20px;
+    border-color: darkgray;
+}
+
+/*שהריבוע של הפאנל עצמו יהיה גם כן בלי קצוות עגולים*/
+.k-animation-container, .k-animation-container *, .k-animation-container :after, .k-block .k-header, .k-list-container, .k-widget, .k-widget *, .k-widget :before {
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    border-radius: 0px;
+}
+
+/*to have no shadow over the panels*/
+.panel {
+    -webkit-box-shadow: 0 0px 0px rgba(0,0,0,.05);
+    /*box-shadow: 0 0px 0px rgba(0,0,0,.05);*/
+    box-shadow: 0 0 0 0;
+    border-style: none;
+}

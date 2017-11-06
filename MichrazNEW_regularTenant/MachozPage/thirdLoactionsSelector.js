@@ -17,7 +17,10 @@
         selectorElement.id = 'thirdLoactionsSelector';
         //selectorElement.setAttribute('style', 'float: right; margin: 10px 50px 0 0;');
         //changed here the margin and then the selector of the locations 'thirdLocationselector' is in the middle of the title
-        selectorElement.setAttribute('style', 'float: right; margin: 0 0 0 0;');
+
+
+        //selectorElement.setAttribute('style', 'float: right; margin: 0 0 0 0;');
+        selectorElement.setAttribute('style', '0px 210px 14px 0px;');
 
         _.element.appendChild(selectorElement);
 
