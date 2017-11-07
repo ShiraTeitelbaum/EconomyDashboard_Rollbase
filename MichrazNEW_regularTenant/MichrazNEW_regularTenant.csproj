@@ -94,6 +94,7 @@
     <Content Include="MachozPage\machozPageHTML.html" />
     <Content Include="MachozPage\thirdLoactionsSelector.js" />
     <Content Include="MachozPage\thirdLocations.js" />
+    <Content Include="MachozPage\tryNewMachozPage.html" />
     <Content Include="naomisChangesFromSafety.html" />
     <Content Include="partialNaomisChanges.css" />
     <Content Include="ProjectPage\NewPage2.html" />

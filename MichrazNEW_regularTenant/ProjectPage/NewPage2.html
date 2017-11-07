@@ -57,6 +57,9 @@
 
     var updateSec_2_Panels = function (e) {
 
+        //maybe if here will make it empty it will make the tchumim to not have photos from the last chosen location
+        arrCotrolPNames = [];
+
         $('#panel-one_sec2').find('.titleGray').html("תחומים נבדקים");
         $('#panel-two_sec2').find('.titleGray').html("מיקום גאוגרפי");
 
@@ -84,10 +87,13 @@
                             //alert("clali " + clali);
 
                             //it needed a second- guess in order to make everything readu- the createDivs and....
-                            if (clali == 0) { setTimeout(function () { clali = 1; getControlPoint_URL(); }, 1000); }
-                            else {
-                                getControlPoint_URL();
-                            }
+                            //if (clali == 0)
+                           // {
+                                setTimeout(function () { clali = 1; getControlPoint_URL(); }, 1000);
+                           // }
+                           // else {
+                            //    getControlPoint_URL();
+                           // }
                         }
 
                     }

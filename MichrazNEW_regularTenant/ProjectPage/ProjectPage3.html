@@ -210,51 +210,56 @@
         rbf_selectQuery('SELECT id FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
             var id1 = values[0][0];
             rbf_selectQuery('SELECT URL_Image1,URL_Image2,name,createdAt FROM ControlPointCheckup WHERE (URL_Image1!="null" || URL_Image2!="null") and R370258935 = ' + id1, 26, function (values) {
-            //try here to do the teo arrays to one array
-            debugger
-            alert(id1 + " id1 in gallery");
-            for (var i = 0; i < values.length; i++) {
-                allImagesUrlArray[i] = values[i][0];    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
-                allNamesForAllImages[i] = values[i][2];
-                allCreatedAtDatesAllImages[i] = rbf_formatDate(values[i][3], 'dd/mm/yyyy');
-            }
+                if (values.length > 0) {
+                    debugger
+                    // alert(id1 + " id1 in gallery");
+                    for (var i = 0; i < values.length; i++) {
+                        allImagesUrlArray[i] = values[i][0];    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
+                        allNamesForAllImages[i] = values[i][2];
+                        allCreatedAtDatesAllImages[i] = rbf_formatDate(values[i][3], 'dd/mm/yyyy');
+                    }
 
-            debugger
-            //and then the urlImg2 with its name too....
-            for (var j = 0, i; j < values.length; j++ , i++) {
-                allImagesUrlArray[i] = values[j][1];
-                allNamesForAllImages[i] = values[j][2];
-                //allCreatedAtDatesAllImages[i] = values[j][3];
-                allCreatedAtDatesAllImages[i] = rbf_formatDate(values[j][3], 'dd/mm/yyyy');
-            }
+                    debugger
+                    //and then the urlImg2 with its name too....
+                    for (var j = 0, i; j < values.length; j++ , i++) {
+                        allImagesUrlArray[i] = values[j][1];
+                        allNamesForAllImages[i] = values[j][2];
+                        //allCreatedAtDatesAllImages[i] = values[j][3];
+                        allCreatedAtDatesAllImages[i] = rbf_formatDate(values[j][3], 'dd/mm/yyyy');
+                    }
 
-            //deleting the null from the arrays
+                    //deleting the null from the arrays
 
-            for (var i = 0; i < allImagesUrlArray.length; i++) {
-                if (allImagesUrlArray[i] == null || allImagesUrlArray[i] == "null")    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
-                {
-                    //i think because it was null- so when it did the splice it didnt do it well
-                    allImagesUrlArray.splice(i, 1);
-                    allNamesForAllImages.splice(i, 1);
-                    allCreatedAtDatesAllImages.splice(i, 1);
-                    i--;
+                    for (var i = 0; i < allImagesUrlArray.length; i++) {
+                        if (allImagesUrlArray[i] == null || allImagesUrlArray[i] == "null")    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
+                        {
+                            //i think because it was null- so when it did the splice it didnt do it well
+                            allImagesUrlArray.splice(i, 1);
+                            allNamesForAllImages.splice(i, 1);
+                            allCreatedAtDatesAllImages.splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    //try to send the new two arrays instead of sending the values...
+                    for (var i = 0; i < values.length; i++) {
+                        if (i == values.length - 1) {
+                            createDivsForImagesLocation2(allImagesUrlArray, allNamesForAllImages);
+                        }
+                    }
+
+                    //try to send the specific record from the new two arrays instead of sending the values...
+                    for (var i = 0; i < allImagesUrlArray.length; i++) {
+                        createDivWithImgLoc2(j1, allImagesUrlArray[i], allNamesForAllImages[i], allCreatedAtDatesAllImages[i]);
+                        //debugger
+                        j1++;
+                    }
                 }
-            }
-
-            //try to send the new two arrays instead of sending the values...
-            for (var i = 0; i < values.length; i++) {
-                if (i == values.length - 1) {
-                    createDivsForImagesLocation2(allImagesUrlArray, allNamesForAllImages);
+                else {
+                    document.getElementById('olForShowing2').innerHTML = "";
+                    document.getElementById('divsWithLocImagesInHere2').innerHTML = "";
+                    
                 }
-            }
-
-            //try to send the specific record from the new two arrays instead of sending the values...
-            for (var i = 0; i < allImagesUrlArray.length; i++) {
-                createDivWithImgLoc2(j1, allImagesUrlArray[i], allNamesForAllImages[i], allCreatedAtDatesAllImages[i]);
-                //debugger
-                j1++;
-            }
-
             });
         });
     }
