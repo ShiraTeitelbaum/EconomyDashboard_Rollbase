@@ -129,7 +129,6 @@
         //rbf_selectQuery('SELECT DroneURL FROM CheckupObject WHERE DroneURL!="null" and locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
         rbf_selectQuery('SELECT DroneURL FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
             debugger
-            //alert("mediaplayer url " + values[0]);
 
             if (values.length > 0) {
                 $("#mediaplayer").kendoMediaPlayer({
@@ -159,18 +158,15 @@
             document.getElementById('reportList').innerHTML = "";
             if (values.length > 0) {
 
-                //gauge.value(values[0][2]);
-                //$('#panel-two').find('.count').html(values[0][2] + "%");
-
-                //for (var i = 0; i < values.length; i++) {
 
                 var reportLink = document.createElement('a');
                 reportLink.target = "_blank";
                 reportLink.href = values[0][0];
                 reportLink.id = 'reportLink' + 0;
-                //reportLink.innerHTML = values[i][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[i][2] + "\n";
 
-                reportLink.innerHTML = values[0][1] + '&nbsp &nbsp' + "ציון דו''ח: " + '&nbsp &nbsp' + values[0][2] + "</br>";
+                var date1 = rbf_formatDate(values[0][1], 'dd/MM/yyyy');
+
+                reportLink.innerHTML = date1 + '&nbsp &nbsp  &nbsp' + "ציון דו''ח: " + '&nbsp' + values[0][2] + "</br>";
                 //reportLink.innerHTML = values[i][1] + "</br>";
 
                 //see that it wont do problems

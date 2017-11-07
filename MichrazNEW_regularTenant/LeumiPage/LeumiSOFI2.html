@@ -107,7 +107,7 @@
 
 <!-- script -->
 <script>
-    var sumRed = 0, sumYellow = 0, sumChecked = 0, sumSites = 0;
+    var sumRed = 0, sumYellow = 0, sumChecked = 0, sumSites = 0, sumGreen=0;
     //var for dynamic queries
     var QueryCountSites;
     var QueryCountCheckedSites;
@@ -380,12 +380,13 @@
                 sumYellow += values10[i][3];
 
                 greenSites[i] = values10[i][4];
+                sumGreen += values10[i][4];
             }            
             chart.dataSource.data(names, grades);
             line.dataSource.data(names, redSites, yellowSites, greenSites);
             //for MADADIM
             //$('#panel-madadim').find('.1').html(values[0][1]);
-          //  $('#panel-madadim').find('.2').html(values[0][2]);
+            $('#panel-madadim').find('.2').html(sumGreen + sumRed + sumYellow);
             $('#panel-madadim').find('.3').html(sumRed);
             $('#panel-madadim').find('.4').html(sumYellow);
         });

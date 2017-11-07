@@ -207,9 +207,12 @@
         allNamesForAllImages = [];
         allCreatedAtDatesAllImages = [];
 
-        //rbf_selectQuery('SELECT URL_Image1,URL_Image2,ControlPointName,createdAt FROM ControlPointCheckup WHERE (URL_Image1!="null" || URL_Image2!="null") and locationId = ' + e.detail.locationId, 26, function (values) {
-        rbf_selectQuery('SELECT URL_Image1,URL_Image2,name,createdAt FROM ControlPointCheckup WHERE (URL_Image1!="null" || URL_Image2!="null") and locationId = ' + e.detail.locationId, 26, function (values) {
+        rbf_selectQuery('SELECT id FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
+            var id1 = values[0][0];
+            rbf_selectQuery('SELECT URL_Image1,URL_Image2,name,createdAt FROM ControlPointCheckup WHERE (URL_Image1!="null" || URL_Image2!="null") and R370258935 = ' + id1, 26, function (values) {
             //try here to do the teo arrays to one array
+            debugger
+            alert(id1 + " id1 in gallery");
             for (var i = 0; i < values.length; i++) {
                 allImagesUrlArray[i] = values[i][0];    //insert the urlImg1 with its name.... and then the urlImg2 with its name too....
                 allNamesForAllImages[i] = values[i][2];
@@ -252,6 +255,7 @@
                 j1++;
             }
 
+            });
         });
     }
 

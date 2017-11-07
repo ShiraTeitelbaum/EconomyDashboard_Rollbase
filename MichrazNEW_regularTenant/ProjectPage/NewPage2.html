@@ -46,6 +46,7 @@
 </div>
 
 <script>
+
     var arrCotrolPNames = [];
     var arrCotrolPImages = [];
     var arrCotrolPScores = [];
@@ -66,9 +67,94 @@
         document.getElementById('listLikuim4').innerHTML = "";
         document.getElementById('listLikuim5').innerHTML = "";
 
-        function Location(values) {
+        rbf_selectQuery('SELECT id FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
+            var id = values[0][0];
             debugger
-            //alert("Loc")
+            rbf_selectQuery("SELECT ControlPointScore,name,R370259027 FROM ControlPointCheckup WHERE R370258935 = " + id, 20, function (values1) {
+                debugger
+                if (values1) {
+                    for (var i = 0; i < values1.length; i++) {
+                        arrCotrolPNames[i] = values1[i][1];
+                        arrControlPointScore[i] = values1[i][0];
+                        arrIdRelatedPhoto[i] = values1[i][2];
+
+                        if (i == values.length - 1) {
+                            //put it in the header- that it would change on the first time and thats it- just on the first time wait before brining the photos to tchumim
+
+                            //alert("clali " + clali);
+
+                            //it needed a second- guess in order to make everything readu- the createDivs and....
+                            if (clali == 0) { setTimeout(function () { clali = 1; getControlPoint_URL(); }, 1000); }
+                            else {
+                                getControlPoint_URL();
+                            }
+                        }
+
+                    }
+                }
+            });
+        });
+        function getControlPoint_URL() {
+            //alert("get c....")
+            var count = 0;
+            for (var j = 0; j < arrIdRelatedPhoto.length; j++) {
+                //rbf_selectNumber("SELECT ControlPointIcon_URL FROM ControlPointEconomy where id = '" + arrIdRelatedPhoto[j] + "'", function (values2) {
+                rbf_selectQuery("SELECT URLImageReport FROM ControlPointEconomy where id = " + arrIdRelatedPhoto[j], 1, function (values2) {
+
+                    arrContolP_URL[count] = values2;
+                    count++;
+                    debugger
+
+                    if (count == arrIdRelatedPhoto.length - 1) {
+                        createImgsInListView();
+                    }
+
+                });
+            }
+        }
+
+        function createImgsInListView() {
+
+            for (var j2 = 0; j2 < arrControlPointScore.length; j2++) {
+                debugger
+                if (arrControlPointScore[j2] < 45)
+                    arrColorsBorders[j2] = "#e03838";
+                //arrColorsBorders[j2] = "#ecb09b";
+
+                else if (arrControlPointScore[j2] >= 45 && arrControlPointScore[j2] < 70)
+                    arrColorsBorders[j2] = "#fff9b8";
+                else
+                    arrColorsBorders[j2] = "#bfdbb5";
+            }
+
+            //document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים" + "</br>";
+
+            for (var i = 0; i < arrCotrolPNames.length && i < 3; i++) {
+
+                document.getElementById('listLikuim').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrContolP_URL[i] + "' </img></div>";
+                document.getElementById('listLikuim').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
+
+            }
+            for (var i; i < arrCotrolPNames.length && i < 6; i++) {
+                document.getElementById('listLikuim2').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrContolP_URL[i] + "' </img></div>";
+                document.getElementById('listLikuim2').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 9; i++) {
+                document.getElementById('listLikuim3').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrContolP_URL[i] + "' </img></div>";
+                document.getElementById('listLikuim3').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
+            }
+            for (var i; i < arrCotrolPNames.length && i < 12; i++) {
+                document.getElementById('listLikuim4').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrContolP_URL[i] + "' </img></div>";
+                document.getElementById('listLikuim4').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
+            }
+            for (var i; i < arrCotrolPNames.length; i++) {
+                document.getElementById('listLikuim5').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrContolP_URL[i] + "' </img></div>";
+                document.getElementById('listLikuim5').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
+            }
+        }
+
+        rbf_selectQuery('select name,lat,lon from $ORG_LOCN WHERE id = ' + e.detail.locationId, 1, Location);
+        function Location(values) {
             var gridData = [];
             if (values) {
                 for (var i = 0; i < values.length; i++) {
@@ -77,8 +163,7 @@
                         location: [values[i][1], values[i][2]],
                         tooltip: {
                             content: "<div id='btnToProj'>" + values[i][0] + "</div>"
-                        },
-                        //colorField: "green"
+                        }
                     }
                     gridData.push(data);
                 }
@@ -87,7 +172,6 @@
         }
         function createMap(gridData) {
             $("#map").kendoMap({
-                //center: ["31.7656212", "35.1910332"],
                 center: [gridData[0]["location"][0], gridData[0]["location"][1]],
                 zoom: 10,
                 layers: [{
@@ -102,110 +186,6 @@
             $("#map").unbind("DOMMouseScroll");
         }
 
-       //// rbf_selectQuery('select name,Latitude,longitude from ConstructionSite WHERE locationId = ' + e.detail.locationId, 1, Location);
-
-       rbf_selectQuery('select name,lat,lon from $ORG_LOCN WHERE id = ' + e.detail.locationId, 1, Location);
-
-        //<------------------------------------------------------------------------>
-
-        //rbf_selectQuery('SELECT name,imageURL FROM ControlPoint', 20, function (values) {
-        //    debugger
-        //    if (values) {
-        //        for (var i = 0; i < values.length; i++) {
-        //            arrCotrolPNames[i] = values[i][0];
-        //            arrCotrolPImages[i] = values[i][1];
-        //            //arrCotrolPScores[i] = -1; //in the score for now put -1
-        //            //arrCotrolPoints[i][1] = values[i][1];
-        //            // arrCotrolPoints[i][2] = -1;
-        //            if (i == values.length - 1) {
-        //                getControlPointScores();
-
-        //            }
-        //        }
-        //    }
-        //});
-
-        rbf_selectQuery('SELECT id FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
-            var id = values[0][0];
-            rbf_selectQuery("SELECT ControlPointScore,name,R370259027 FROM ControlPointCheckup WHERE R370258935 = " + id + " and locationId = " + e.detail.locationId + " Order By createdAt DESC", 20, function (values1) {
-                debugger
-                if (values1) {
-                 for (var i = 0; i < values1.length; i++) {
-                    arrCotrolPNames[i] = values1[i][1];
-                    arrControlPointScore[i] = values1[i][0];
-                    arrIdRelatedPhoto[i] = values1[i][2];
-                   
-                    if (i == values.length - 1) {
-                        getControlPoint_URL();
-                    }
-
-                }
-            }
-            });
-        });
-        function getControlPoint_URL() {
-          
-            var count = 0;
-            for (var j = 0; j < arrIdRelatedPhoto.length; j++) {
-                //rbf_selectNumber("SELECT ControlPointIcon_URL FROM ControlPointEconomy where id = '" + arrIdRelatedPhoto[j] + "'", function (values2) {
-                rbf_selectQuery("SELECT URLImageReport FROM ControlPointEconomy where id = " + arrIdRelatedPhoto[j],1, function (values2) {
-
-                    arrContolP_URL[count] = values2;
-                    count++;
-                    debugger
-
-                    if (count == arrIdRelatedPhoto.length-1) {
-                        createImgsInListView();
-                    }
-
-                });
-            }
-        }
-
-        function createImgsInListView() {
-
-            for (var j2 = 0; j2 < arrControlPointScore.length; j2++) {
-                debugger
-                if (arrControlPointScore[j2] < 45)
-                    arrColorsBorders[j2] = "#e03838";
-                    //arrColorsBorders[j2] = "#ecb09b";
-               
-               else if (arrControlPointScore[j2] >= 45 && arrControlPointScore[j2] < 70)
-                    arrColorsBorders[j2] = "#fff9b8";
-                else
-                    arrColorsBorders[j2] = "#bfdbb5";
-            }
-
-            //document.getElementById('listLikuimAll').innerHTML = ":רשימת הליקויים החריגים" + "</br>";
-
-            for (var i = 0; i < arrCotrolPNames.length && i < 3; i++) {
-
-                document.getElementById('listLikuim').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrContolP_URL[i] + "' </img></div>";
-                document.getElementById('listLikuim').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
-                //document.getElementById('listLikuim').innerHTML += "ציון: " + arrCotrolPScores[i];
-
-            }
-            for (var i; i < arrCotrolPNames.length && i < 6; i++) {
-               // document.getElementById('listLikuim2').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                document.getElementById('listLikuim2').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
-                // document.getElementById('listLikuim2').innerHTML += "ציון: " + arrCotrolPScores[i];
-            }
-            for (var i; i < arrCotrolPNames.length && i < 9; i++) {
-               // document.getElementById('listLikuim3').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                document.getElementById('listLikuim3').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
-                // document.getElementById('listLikuim3').innerHTML += "ציון: " + arrCotrolPScores[i];
-            }
-            for (var i; i < arrCotrolPNames.length && i < 12; i++) {
-              //  document.getElementById('listLikuim4').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                document.getElementById('listLikuim4').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
-                //document.getElementById('listLikuim4').innerHTML += "ציון: " + arrCotrolPScores[i];
-            }
-            for (var i; i < arrCotrolPNames.length; i++) {
-              //  document.getElementById('listLikuim5').innerHTML += "<div style='padding-top: 14px; border-style:solid; border-width:3px; border-color:" + arrColorsBorders[i] + "'><img height='60px' width='60px' src='" + arrCotrolPImages[i] + "' </img></div>";
-                document.getElementById('listLikuim5').innerHTML += arrCotrolPNames[i] + "</br>" + "ציון: " + arrControlPointScore[i];
-                // document.getElementById('listLikuim5').innerHTML += "ציון: " + arrCotrolPScores[i];
-            }
-        }
     }
     $(document).on('secondLocations:context-update', updateSec_2_Panels);
 
