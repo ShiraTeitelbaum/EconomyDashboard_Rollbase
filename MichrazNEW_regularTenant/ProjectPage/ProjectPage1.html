@@ -130,7 +130,10 @@
         rbf_selectQuery('SELECT DroneURL FROM CheckupObject WHERE locationId = ' + e.detail.locationId + ' Order By createdAt DESC', 1, function (values) {
             debugger
 
-            if (values.length > 0) {
+            if (values.length > 0 && values[0][0] != null && values[0][0] != "null") {
+
+                document.getElementById('mediaplayer').style.fontSize = "14px";
+
                 $("#mediaplayer").kendoMediaPlayer({
                     autoPlay: true,
                     navigatable: false,
@@ -140,15 +143,9 @@
                     }
                 });
             }
-            else {
-                $("#mediaplayer").kendoMediaPlayer({
-                    autoPlay: false,
-                    navigatable: false,
-                    media: {
-                        title: e.detail.LocationName,
-                        source: "https://www.youtube.com/watch?v=tc3xhD24iTU"
-                    }
-                });
+            else {               
+                document.getElementById('mediaplayer').innerHTML = "אין מידע זמין";
+                document.getElementById('mediaplayer').style.fontSize = "20px";
             }
         });
 
@@ -172,7 +169,7 @@
                 //see that it wont do problems
                 //if (i != (values.length - 1))   //for some reason with the last report does too much space- paddingRight
                 //    reportLink.style.paddingRight = "24px";
-                reportLink.style.fontSize = "18px";
+                reportLink.style.fontSize = "16px";
 
                 //document.getElementById('reportList').innerHTML = "";
                 document.getElementById('reportList').appendChild(reportLink);

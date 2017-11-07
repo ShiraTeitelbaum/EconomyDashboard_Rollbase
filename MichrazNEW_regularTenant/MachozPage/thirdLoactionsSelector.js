@@ -117,7 +117,7 @@
             var self = this;
 
             //var query = 'SELECT ' + columns.join(',') + ' FROM ' + objName;
-            var query = "SELECT " + columns.join(',') + " FROM " + objName + " WHERE ParentID=-1";
+            var query = "SELECT " + columns.join(',') + " FROM " + objName + " WHERE ParentID=-1 GROUP BY locationId";
 
             rbf_selectQuery(query, 20, function (result) {
                 var data = thirdLocations.transformRecords(result, columns);
@@ -152,4 +152,3 @@
     };
 
 })(jQuery, window, document);
-

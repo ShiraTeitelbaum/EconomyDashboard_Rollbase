@@ -263,11 +263,11 @@
             if (values.length > 0) { // if there are locations that related to machoz
                 debugger
                 var QueryAvg = "SELECT avg(CheckupScore) FROM CheckupObject WHERE locationId = ";
-                var QueryCountSites = "SELECT count(id) FROM CheckupObject WHERE locationId = ";
-                var QueryCountCheckedSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore!='null' and CheckupScore!= -1 and locationId = ";
-                var QueryCountGreenSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore > 70 and locationId = ";
-                var QueryCountYellowSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore > 45 and CheckupScore < 70 and locationId = ";
-                var QueryCountRedSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore < " + 45 + " and locationId = ";
+                //var QueryCountSites = "SELECT count(id) FROM CheckupObject WHERE locationId = ";
+                //var QueryCountCheckedSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore!='null' and CheckupScore!= -1 and locationId = ";
+                //var QueryCountGreenSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore > 70 and locationId = ";
+                //var QueryCountYellowSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore > 45 and CheckupScore < 70 and locationId = ";
+                //var QueryCountRedSites = "SELECT count(id) FROM CheckupObject WHERE CheckupScore < " + 45 + " and locationId = ";
                 var QueryLocationForMap = "SELECT name,lat,lon FROM $ORG_LOCN WHERE id = ";
 
                 //for סיווג מפגעי בטיחות
@@ -286,11 +286,11 @@
                 }
 
                 QueryAvg += str;
-                QueryCountSites += str;
-                QueryCountCheckedSites += str;
-                QueryCountRedSites += str;
-                QueryCountYellowSites += str;
-                QueryCountGreenSites += str;
+                //QueryCountSites += str;
+                //QueryCountCheckedSites += str;
+                //QueryCountRedSites += str;
+                //QueryCountYellowSites += str;
+                //QueryCountGreenSites += str;
 
                 QuerySivugMifgaiBetichut += str;
                 QueryLocationForMap += strMap;
@@ -298,43 +298,43 @@
                 //average
                 rbf_selectQuery(QueryAvg, 1, function (values2) {
                     gaugeMachoz.value(values2[0][0]);
-                    $('#panel-MecoziMadad').find('.count').html(values2[0][0] + "%");
+                    $('#panel-MecoziMadad').find('.count').html((values2[0][0]).toFixed(2) + "%");
                 });
 
                 //because we need to make sure that all sites queries happen before creating the chart- do it in it...
                 //QueryCountSites
-                rbf_selectNumber(QueryCountSites, function (values1) {
-                    $('#panel-madadimMazhoz').find('.1').html(values1);
+                //rbf_selectNumber(QueryCountSites, function (values1) {
+                //    $('#panel-madadimMazhoz').find('.1').html(values1);
 
-                    //QueryCountCheckedSites
-                    rbf_selectNumber(QueryCountCheckedSites, function (values3) {
-                        $('#panel-madadimMazhoz').find('.2').html(values3);
+                //    //QueryCountCheckedSites
+                //    rbf_selectNumber(QueryCountCheckedSites, function (values3) {
+                //        $('#panel-madadimMazhoz').find('.2').html(values3);
 
-                        //QueryCountRedSites
-                        rbf_selectNumber(QueryCountRedSites, function (values4) {
-                            $('#panel-madadimMazhoz').find('.3').html(values4);
-                            redSites[0] = values4;
+                //        //QueryCountRedSites
+                //        rbf_selectNumber(QueryCountRedSites, function (values4) {
+                //            $('#panel-madadimMazhoz').find('.3').html(values4);
+                //            redSites[0] = values4;
 
-                            //QueryCountYellowSites
-                            rbf_selectNumber(QueryCountYellowSites, function (values5) {
-                                $('#panel-madadimMazhoz').find('.4').html(values5);
-                                yellowSites[0] = values5;
+                //            //QueryCountYellowSites
+                //            rbf_selectNumber(QueryCountYellowSites, function (values5) {
+                //                $('#panel-madadimMazhoz').find('.4').html(values5);
+                //                yellowSites[0] = values5;
 
-                                //QueryCountGreenSites
-                                rbf_selectNumber(QueryCountGreenSites, function (values6) {
-                                    greenSites[0] = values6;
+                //                //QueryCountGreenSites
+                //                rbf_selectNumber(QueryCountGreenSites, function (values6) {
+                //                    greenSites[0] = values6;
 
-                                    nameMacoz[0] = e.detail.LocationName;
+                //                    nameMacoz[0] = e.detail.LocationName;
 
-                                    //create the chart for סיווג אתרים למחוז הספציפי
-                                    $('#panel-four-controlPanel').find('.titleGray').html("סיווג אתרים למחוז הספציפי");
-                                    chart.dataSource.data(nameMacoz, redSites, yellowSites, greenSites);
-                                    //if its problem that it doesnt change the name in the category- if there arent any locations put it anyway- to create the chart and not just if there are locations related to cur machoz
-                                });
-                            });
-                        });
-                    });
-                });
+                //                    //create the chart for סיווג אתרים למחוז הספציפי
+                //                    $('#panel-four-controlPanel').find('.titleGray').html("סיווג אתרים למחוז הספציפי");
+                //                    chart.dataSource.data(nameMacoz, redSites, yellowSites, greenSites);
+                //                    //if its problem that it doesnt change the name in the category- if there arent any locations put it anyway- to create the chart and not just if there are locations related to cur machoz
+                //                });
+                //            });
+                //        });
+                //    });
+                //});
 
                 //סיווג מפגעי בטיחות
                 //here will be all the mivdakim of all the locations that connected to this machoz
@@ -387,6 +387,23 @@
                 gaugeMachoz.value(0);
                 $('#panel-MecoziMadad').find('.count').html(0 + "%");
             }
+        });
+
+        //for madadim
+        rbf_selectQuery("SELECT CountSites,CountRedSite,CountYellowSite,CountGreenSite FROM RegionScore WHERE locationId = " + e.detail.locationId, 1, function (values) {
+            $('#panel-madadimMazhoz').find('.1').html(values[0][0]);
+            $('#panel-madadimMazhoz').find('.2').html(values[0][1] + values[0][2] + values[0][3]);//checkedSites
+            $('#panel-madadimMazhoz').find('.3').html(values[0][1]);//red sites
+            $('#panel-madadimMazhoz').find('.4').html(values[0][2]);//yellowSites
+            redSites[0] = values[0][1];
+            yellowSites[0] = values[0][2];
+            greenSites[0] = values[0][3];
+            nameMacoz[0] = e.detail.LocationName;
+
+            //create the chart for סיווג אתרים למחוז הספציפי
+            $('#panel-four-controlPanel').find('.titleGray').html("סיווג אתרים למחוז הספציפי");
+            chart.dataSource.data(nameMacoz, redSites, yellowSites, greenSites);
+            //if its problem that it doesnt change the name in the category- if there arent any locations put it anyway- to create the chart and not just if there are locations related to cur machoz
         });
 
         //סיווג מפגעי בטיחות

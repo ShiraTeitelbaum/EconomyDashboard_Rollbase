@@ -107,7 +107,7 @@
 
 <!-- script -->
 <script>
-    var sumRed = 0, sumYellow = 0, sumChecked = 0, sumSites = 0, sumGreen=0;
+    var sumRed = 0, sumYellow = 0, sumSites = 0, sumGreen = 0, sumCount = 0;
     //var for dynamic queries
     var QueryCountSites;
     var QueryCountCheckedSites;
@@ -117,7 +117,7 @@
     var QueryLocationForMap;
     var str = "";
 
-     //arrays for the bar chart
+    //arrays for the bar chart
     var names = [];
     var grades = [];
 
@@ -360,17 +360,17 @@
         rbf_selectQuery('SELECT avg(CheckupScore) FROM CheckupObject', 1, function (values) {
             //gauge
             gaugeLeumi.value(values[0][0]);
-            $('#panel-leumiMadad').find('.count').html(values[0][0] + "%");
+            $('#panel-leumiMadad').find('.count').html((values[0][0]).toFixed(2) + "%");
         });
 
-        
+
         $('#panel-lineAllMachozot').find('.titleGray').html("סיווג אתרים לפי מחוזות");
         $('#panel-four-controlPanel').find('.titleGray').html("מדד בטיחות לפי מחוזות");
-        rbf_selectQuery("SELECT name, AvgRegionScore, CountRedSite, CountYellowSite, CountGreenSite FROM RegionScore", 100, function (values10) {
+        rbf_selectQuery("SELECT name, AvgRegionScore, CountRedSite, CountYellowSite, CountGreenSite, CountSites FROM RegionScore Order By AvgRegionScore DESC", 100, function (values10) {
 
             for (var i = 0; i < values10.length; i++) {
                 names[i] = values10[i][0];
-                grades[i] = values10[i][1];
+                grades[i] = values10[i][1].toFixed(2);
 
                 //can send the same names as in the other chart- it teh same macozot...
                 redSites[i] = values10[i][2];
@@ -381,14 +381,17 @@
 
                 greenSites[i] = values10[i][4];
                 sumGreen += values10[i][4];
-            }            
+
+                sumCount += values10[i][5];
+            }
             chart.dataSource.data(names, grades);
             line.dataSource.data(names, redSites, yellowSites, greenSites);
             //for MADADIM
-            //$('#panel-madadim').find('.1').html(values[0][1]);
+            $('#panel-madadim').find('.1').html(sumCount);
             $('#panel-madadim').find('.2').html(sumGreen + sumRed + sumYellow);
             $('#panel-madadim').find('.3').html(sumRed);
             $('#panel-madadim').find('.4').html(sumYellow);
+
         });
 
         //sivug mifgaim
@@ -512,7 +515,6 @@
 
 
 <style>
-    
     /*add this in order to make the selector of Locations to be shown*/
     .rbs-header3 .k-autocomplete.k-state-default, .k-picker-wrap.k-state-default, .k-numeric-wrap.k-state-default, .k-dropdown-wrap.k-state-default {
         visibility: hidden;
@@ -523,5 +525,11 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
     }
-   
+
+    /*שהריבוע של הפאנל עצמו יהיה גם כן בלי קצוות עגולים*/
+    .k-animation-container, .k-animation-container *, .k-animation-container :after, .k-block .k-header, .k-list-container, .k-widget, .k-widget *, .k-widget :before {
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        border-radius: 0px;
+    }
 </style>
