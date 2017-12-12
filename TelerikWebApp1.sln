@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MichrazNEW_regularTenant", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EconomyDashboardTRIAL", "EconomyDashboardTRIAL\EconomyDashboardTRIAL.csproj", "{D09FE9D0-3204-4278-AFA6-BA241471A685}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Economy12_12_2017", "Economy12_12_2017\Economy12_12_2017.csproj", "{54CDC023-EA88-44F3-9E0E-C5B5F9939A56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D09FE9D0-3204-4278-AFA6-BA241471A685}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D09FE9D0-3204-4278-AFA6-BA241471A685}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D09FE9D0-3204-4278-AFA6-BA241471A685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54CDC023-EA88-44F3-9E0E-C5B5F9939A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54CDC023-EA88-44F3-9E0E-C5B5F9939A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54CDC023-EA88-44F3-9E0E-C5B5F9939A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54CDC023-EA88-44F3-9E0E-C5B5F9939A56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
