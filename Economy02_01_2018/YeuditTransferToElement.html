@@ -1,0 +1,223 @@
+﻿<style>
+    .k-map .k-marker {
+        background-image: url('{!#HOSTED_FILE.ayQV5lowQYmXik2rZoq-pw#url}');
+        background-size: 1.5em 2.8em;
+        background-repeat: no-repeat;
+    }
+
+    .panel-default > .panel-heading {
+        background: #0e5b7e;
+        color: white;
+    }
+
+    .panel {
+        margin: 0 0px 0px;
+    }
+</style>
+
+<script>
+    var locationId = -1;
+
+    function showMap(map, LocId) {
+        function Location(values) {
+            var gridData = [];
+            if (values) {
+                for (var i = 0; i < values.length; i++) {
+                    debugger
+                    var data = {
+                        shape: "pinTarget",
+                        location: [values[i][1], values[i][2]],
+                        elementStage: values[i][3],
+                        id: values[i][5],
+                        tooltip: {
+                            content: '<div  id="btnToProj" dir="ltr">' + values[i][0] + '<br/>' + 'stage num: ' + values[i][3] + '<br/>' + 'kp: ' + values[i][4] + '</div>',
+                            showOn: "click",
+                            show: getElementById
+                        },
+                    }
+                    gridData.push(data);
+                }
+                if (map == "roadMap") {
+                    createMap(gridData);
+                }
+                else {
+                    createMapBing(gridData);
+                }
+            }
+        }
+
+        var pageId, tabId;
+        function getElementById(e) {
+            sessionStorage.setItem("elementId", e.sender.marker.options.id);
+            sessionStorage.setItem("locationId", locationId);
+            rbf_getIdByOriginalId('webpage', '-fT-aZ4wTbW4PtEwfT7-qA', function (value) {
+                pageId = parseInt(value) - 1;
+                window.location.href = 'https://www.rollbase.com/prod1/m/main.jsp?pageId=' + pageId + '&tabId=' + tabId;
+            })
+
+            //get Tab Id
+            tabId = getQueryVar('{!#LINK.Ah7m2gWfRvaKhMpoGxVdMA#tab}', 'tabId');
+            tabId.toString();
+            function getQueryVar(myUrl, varName) {
+                var queryStr = myUrl + '&';
+                var regex = new RegExp('.*?[&\\?]' + varName + '=(.*?)&.*');
+                val = queryStr.replace(regex, "$1");
+                return val == queryStr ? false : val;
+            }
+            //dataSource.add({ href: 'https://www.rollbase.com/prod1/m/main.jsp?pageId=' + pageId + '&tabId=' + tabId, text: 'Search', isCurrent: true, onmousedown: "tabsStyle('btn2')" });
+            //window.location.href = "https://www.rollbase.com/prod1/m/main.jsp?pageId=371732555&tabId=371732557";
+        }
+
+
+        function createMap(gridData) {
+            ////alert("createMap")
+            debugger;
+            if (gridData.length > 0) {
+                $("#map").kendoMap({
+                    center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                    zoom: 17,
+                    layers: [{
+                        type: "tile",
+                        urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                        subdomains: ["a", "b", "c"],
+                        attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                    }],
+                    markers: gridData,
+                    markerActivate: function (e) {
+                        debugger
+                        //var markerId = e.marker.options.id;
+                        switch (e.marker.options.elementStage) {
+                            case 1://red
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.ayQV5lowQYmXik2rZoq-pw#url}')";
+
+                                break;
+                            case 2://orange
+                                //e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.7TZs_6K6RY-lYib9PCXJjw#url}')";
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.WiWtoo-XSNqIZGpbM-ZD-g#url}')";
+                                break;
+                            case 3://yellow
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.__Qr4g-2QBSUaezKEZbFzg#url}')";
+                                break;
+                            case 4://green
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.eT7hqe9NRlyNy5rRnpbbgQ#url}')";
+                                break;
+                            case 5://blue
+                                //e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.WiWtoo-XSNqIZGpbM-ZD-g#url}')";
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.7TZs_6K6RY-lYib9PCXJjw#url}')";
+                                break;
+                            case 6://purple
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.qIRMXeBEQXOmnMTWfTDFqA#url}')";
+                                break;
+                            default:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.ayQV5lowQYmXik2rZoq-pw#url}')";
+
+                        }
+
+                    }
+                });
+            }
+            else {
+                $("#map").kendoMap({
+                    center: [31.76728, 35.19334],
+                    zoom: 17,
+                    layers: [{
+                        type: "tile",
+                        urlTemplate: "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                        subdomains: ["a", "b", "c"],
+                        attribution: "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+                    }],
+
+                });
+            }
+            // scrool map
+            //$("#map").unbind("mousewheel");
+            //$("#map").unbind("DOMMouseScroll");
+        }
+        function createMapBing(gridData) {
+            if (gridData.length > 0) {
+                $("#map").kendoMap({
+                    center: [gridData[0]["location"][0], gridData[0]["location"][1]],
+                    zoom: 17,
+                    layers: [{
+                        type: "bing",
+                        imagerySet: "aerialWithLabels",
+                        key: "AqaPuZWytKRUA8Nm5nqvXHWGL8BDCXvK8onCl2PkC581Zp3T_fYAQBiwIphJbRAK"
+                    }],
+                    markers: gridData,
+                    markerActivate: function (e) {
+                        switch (e.marker.options.elementStage) {
+                            case 1:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.ayQV5lowQYmXik2rZoq-pw#url}')";
+                                break;
+                            case 2:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.WiWtoo-XSNqIZGpbM-ZD-g#url}')";
+                                break;
+                            case 3:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.__Qr4g-2QBSUaezKEZbFzg#url}')";
+                                break;
+                            case 4:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.eT7hqe9NRlyNy5rRnpbbgQ#url}')";
+                                break;
+                            case 5:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.7TZs_6K6RY-lYib9PCXJjw#url}')";
+                                break;
+                            case 6:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.qIRMXeBEQXOmnMTWfTDFqA#url}')";
+                                break;
+                            case 7:
+                                e.marker.element[0].style.backgroundImage = "url('{!#HOSTED_FILE.ueoyGMV8QM22oBZYGYv1hg#url}')";
+                                break;
+                            default:
+                        }
+                    }
+                });
+            }
+            else {
+                $("#map").kendoMap({
+                    center: [31.76728, 35.19334],
+                    zoom: 17,
+                    layers: [{
+                        type: "bing",
+                        imagerySet: "aerialWithLabels",
+                        key: "AqaPuZWytKRUA8Nm5nqvXHWGL8BDCXvK8onCl2PkC581Zp3T_fYAQBiwIphJbRAK"
+                    }],
+
+                });
+            }
+        }
+        if (LocId == -1) {
+            rbf_selectQuery("select name,Latitude,Longtitud,elementStage,KP,id from element2 ORDER BY updatedAt DESC ", 20000, Location);
+        }
+        else {
+            rbf_selectQuery('SELECT name,Latitude,Longtitud,elementStage,KP,id FROM element2 WHERE locationId = ' + LocId + ' ORDER BY updatedAt DESC', 20000, Location);
+        }
+    }
+
+    function takeLocIdToShowMap(map) {
+        showMap(map, locationId);
+    }
+
+    var updatePanel = function (e) {
+        var index = sessionStorage.getItem("a");
+        if (index == 0) {
+            mylocationId = -1;
+            sessionStorage.setItem("a", 1);
+        }
+        if (e.detail != null && index != 0) {
+            locationId = e.detail.locationId;
+        }
+        done(locationId);
+        showFunnel(locationId);
+
+        if (locationId == -1) {
+            showMap("roadMap", locationId);
+        }
+        else {
+            showMap("roadMap", locationId);
+        }
+    }
+    $(document).on('dss:context-update', updatePanel);
+
+</script>
+
+
