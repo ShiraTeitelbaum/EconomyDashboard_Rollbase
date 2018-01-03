@@ -448,29 +448,15 @@
             debugger
             var locNameFromSession = e.sender.options.content;
             var res = locNameFromSession.substring(20);
-            alert("res: " + res);
+           
             //set in session the name of the reqired location
-
-            //var reqLoc = res.substring(0, res.length - 6);
-            var reqLoc = res.slice(0, -6);
-            
-            alert("reqLoc: " + reqLoc);
-
-            //sessionStorage.setItem("reqLoc", res.substring(0, res.length - 6));
             sessionStorage.setItem("reqLoc", res.slice(0, -6));
 
             debugger
-            alert("res is: " + res);
             var tryGetId = sessionStorage.getItem(res);
-            alert("tryGetId: " + tryGetId);
-            //var locInteger = parseInt(tryGetId);
-            //alert("locInteger" + locInteger);
-
 
             debugger
             sessionStorage.setItem("elementId", e.sender.marker.options.id);
-            // sessionStorage.setItem("locationId", locationId);
-           // sessionStorage.setItem("locationId", tryGetId);
             sessionStorage.setItem("locIdForTransfer", tryGetId);
 
             rbf_getIdByOriginalId('webpage', 'sFG1B4eTQOeknaRuDl2fGA', function (value) {

@@ -1,6 +1,4 @@
-﻿<!-- maybe do here that if it came from click on map (maybe do setItem there to something in order to know if so...) so if yes- change the e.locationId
-    or run on the selector and set the locationId-->
-
+﻿
 <!--הערכת בטיחות באתר בניה-->
 
 <div class="col-md-6">
@@ -111,54 +109,27 @@
 
     var updateAllPanels = function (e) {
         debugger
-        alert("got here")
        // document.getElementsByClassName("k-dropdown-wrap k-state-default")[0].click();
         debugger
-
-       // נותן רק את שתי הערכים: 1 של הראשון ברשימה של סלקטור בעמוד מחוז ואחד זה הראשון מהסלקטור מעמוד פרויקט
-        //var len = document.getElementsByClassName("k-input").length;
-        //for (var i = 0; i < len; i++) {
-        //    if (document.getElementsByClassName("k-input")[i].innerHTML == "בני ברק") {
-        //        alert("בני ברק");
-        //        debugger
-        //        document.getElementsByClassName("k-input")[i].selectedIndex = i;
-        //    }
-        //}
-
-
-
-        //var nameLocExist = document.getElementById("secondLoactionsSelector").parentElement.children[0].innerText;
-        //alert("nameLocExist " + nameLocExist);
-        //debugger
-       
-        //document.getElementById("secondLoactionsSelector").selectedIndex = 1;
-        ////document.getElementById("secondLoactionsSelector").parentElement.children[0].innerText = "שלום";
 
         //if got here after click on a location from the map
         if (sessionStorage.getItem("specificFlag") == 1)
         {
-            
-    //.rbs - header3.k - autocomplete.k - state -default, .k-picker - wrap.k - state -default, .k-numeric - wrap.k - state -default, .k-dropdown - wrap.k - state -default {
-    //    visibility: hidden;
-    //}
-            debugger
-            //hide the selector
-           // document.getElementsByClassName(".rbs-header3").style.visibility = "hidden";
-            //document.getElementsByClassName("rbs-header3").style.display = "none";
-           // document.getElementsByClassName("rbs-header3")[0].style.display = "none";
-
-            //document.getElementsByClassName(".rbs-header3 .k-autocomplete .k-state-default").style.visibility = "hidden";
-          
-            //document.getElementById("secondLoactionsSelector").style.display = "none";
 
             sessionStorage.setItem("specificFlag", 0);
-
-            //e.detail.locationId = "123";
-            //e.detail.locationId = sessionStorage.getItem("locationId");
             e.detail.locationId = sessionStorage.getItem("locIdForTransfer");
-            //e.detail.LocationName="לוקיישן חדש"
             e.detail.LocationName = sessionStorage.getItem("reqLoc");
+
+            //dont know if it is [0], [1], [2]
+
+            document.getElementsByClassName('k-dropdown-wrap k-state-default')[1].style.display = "none";
+            document.getElementsByClassName('k-dropdown-wrap k-state-default')[0].style.display = "none";
+            document.getElementsByClassName('k-dropdown-wrap k-state-default')[2].style.display = "none";
         }
+        //check if needed to add the else- or if it happens anyways... 
+        //else {
+        //    document.getElementsByClassName('k-dropdown-wrap k-state-default')[1].style.display = "inline";
+        //}
 
         document.getElementById('mediaplayer').innerHTML = "";
 

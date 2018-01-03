@@ -71,8 +71,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LeumiMapWithTransferNEW.html" />
     <Content Include="LeumiMapWithTransfer.html" />
     <Content Include="Leumi.html" />
+    <Content Include="ProjectPageSection1_NEW.html" />
     <Content Include="ProjectPageSection1_Nisui.html" />
     <Content Include="ProjectPageSection1.html" />
     <Content Include="secondLoactionsSelector.js" />
